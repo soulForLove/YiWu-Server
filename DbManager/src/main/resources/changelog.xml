@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!--测试数据,生产环境请去除-->
+    <include file="structure/0.1.0.xml"/>
+    <include file="test/0.1.0.xml"/>
+    <include file="initial/0.1.0.xml"/>
+
+
+</databaseChangeLog>
