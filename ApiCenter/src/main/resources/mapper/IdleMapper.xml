@@ -75,20 +75,20 @@
 
     <insert id="insert" parameterType="com.yiwu.changething.sec1.model.IdleModel">
         INSERT INTO yw_idle (
-        yi.id,
-        yi.`name`,
-        yi.description,
-        yi.price,
-        yi.num,
-        yi.type_id,
-        yi.production_date,
-        yi.production_place,
-        yi.guarantee_date,
-        yi.extent,
-        yi.create_time,
-        yi.create_by,
-        yi.update_time,
-        yi.update_by
+        id,
+        `name`,
+        description,
+        price,
+        num,
+        type_id,
+        production_date,
+        production_place,
+        guarantee_date,
+        extent,
+        create_time,
+        create_by,
+        update_time,
+        update_by
         )
         VALUES  (
         #{id},
@@ -103,7 +103,7 @@
         #{extent},
         now(),
         #{createBy},
-        null,
+        now(),
         null
         )
     </insert>
@@ -120,7 +120,7 @@
         production_place = #{productionPlace},
         guarantee_date = #{guaranteeDate},
         extent = #{extent},
-        update_time = #{updateTime},
+        update_time = now(),
         update_by = #{updateBy}
         WHERE
         id =  #{id}

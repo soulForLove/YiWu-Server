@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -53,6 +54,8 @@ public class IdleService {
      * @param idleModel
      */
     public void insert(IdleModel idleModel) {
+        String id = UUID.randomUUID().toString();
+        idleModel.setId(id);
         idleMapper.insert(idleModel);
     }
 
