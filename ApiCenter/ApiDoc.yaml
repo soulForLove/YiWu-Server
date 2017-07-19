@@ -1,0 +1,2041 @@
+swagger: '2.0'
+info:
+  version: '1.0-SNAPSHOT'
+  title: YiWu-Server-ApiCenter
+  description: 数据服务
+host: 127.0.0.1:8088
+basePath: /YiWu-Server
+schemes:
+  - http
+paths:
+  /player/list/total:
+      get:
+        tags:
+          - player
+        description: 获取球员总和统计数据
+        parameters:
+          - in: query
+            name: minAge
+            description: 最低年龄
+            required: false
+            type: integer
+          - in: query
+            name: maxAge
+            description: 最高年龄
+            required: false
+            type: integer
+          - in: query
+            name: gender
+            description: 性别
+            required: false
+            type: string
+            enum:
+               - F
+               - M
+          - in: query
+            name: searchName
+            description: 搜索名称
+            required: false
+            type: string
+          - in: query
+            name: participantType
+            description: 学校级别
+            required: false
+            type: string
+            enum:
+               - PRIMARY
+               - MIDDLE
+               - HIGH
+               - UNIVERSITY
+               - OTHER
+          - $ref: "#/parameters/pageSize"
+          - $ref: "#/parameters/page"
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  description: 统计数据数量
+                playerData:
+                  type: array
+                  description: 统计数据总和
+                  items:
+                    type: object
+                    description: 球员统计数据模型
+                    $ref: '#/definitions/PlayerDataModel'
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/list/average:
+      get:
+        tags:
+          - player
+        description: 获取球员场均统计数据
+        parameters:
+          - in: query
+            name: minAge
+            description: 最低年龄
+            required: false
+            type: integer
+          - in: query
+            name: maxAge
+            description: 最高年龄
+            required: false
+            type: integer
+          - in: query
+            name: gender
+            description: 性别
+            required: false
+            type: string
+            enum:
+               - F
+               - M
+          - in: query
+            name: searchName
+            description: 搜索名称
+            required: false
+            type: string
+          - in: query
+            name: participantType
+            description: 学校级别
+            required: false
+            type: string
+            enum:
+               - PRIMARY
+               - MIDDLE
+               - HIGH
+               - UNIVERSITY
+               - OTHER
+          - $ref: "#/parameters/pageSize"
+          - $ref: "#/parameters/page"
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  description: 统计数据数量
+                playerData:
+                  type: array
+                  description: 统计数据场均
+                  items:
+                    type: object
+                    description: 球员统计数据模型
+                    $ref: '#/definitions/PlayerDataModel'
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/basicInfo/{playerId}:
+      get:
+        tags:
+          - player
+        description: 获取球员个人信息
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              $ref: '#/definitions/PlayerModel'
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/scheduleList/{playerId}:
+      get:
+        tags:
+          - player
+        description: 获取球员比赛记录（有采集数据场次）
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: query
+            name: competitionId
+            description: 赛事id
+            required: false
+            type: string
+          - $ref: "#/parameters/pageSize"
+          - $ref: "#/parameters/page"
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: array
+              items:
+                 type: object
+                 $ref: '#/definitions/ScheduleModel'
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/competitionList:
+      get:
+        tags:
+          - player
+        description: 获取赛事列表
+        parameters:
+          - in: query
+            name: playerId
+            description: 球员id
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: array
+              items:
+                 type: object
+                 properties:
+                    year:
+                      type: string
+                    competitionModelList:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        competitionName:
+                          type: string
+                          description: 赛事名称
+                        gender:
+                          type: string
+                          description: 赛事组别（男女）
+                          enum:
+                            - F
+                            - M
+                        startNumber:
+                          type: string
+                          description: 首发人数
+                          enum:
+                            - FIVE
+                            - EIGHT
+                            - ELEVEN
+                        participantType:
+                          type: string
+                          description: 赛事级别
+                          enum:
+                            - PRIMARY
+                            - MIDDLE
+                            - HIGH
+                            - UNIVERSITY
+                            - OTHER
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/searchByName:
+      get:
+        tags:
+          - player
+        description: 获取球员列表，查找球员
+        parameters:
+          - in: query
+            name: playerName
+            description: 球员名称
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  participantName:
+                    type: string
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/compare/{playerId}:
+      get:
+        tags:
+          - player
+        description: 获取球员场均数据
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: query
+            name: competitionId
+            description: 赛事id
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+               type: object
+               $ref: '#/definitions/PlayerDataModel'
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/scheduleCharts/{playerId}:
+      get:
+        tags:
+          - player
+        description: 获取球员的数据图表（比赛数据）
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: query
+            name: competitionId
+            description: 赛事id
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                scheduleDataList:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/ScheduleDataModel"
+                totalData:
+                    type: object
+                    $ref: "#/definitions/ScheduleDataModel"
+                averageData:
+                    type: object
+                    $ref: "#/definitions/ScheduleDataModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/statsCharts/{playerId}:
+      get:
+        tags:
+          - player
+        description: 获取球员的数据图表（统计数据）
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: query
+            name: competitionId
+            description: 赛事id
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                statsDataList:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+                totalData:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+                averageData:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/halfStats/{playerId}/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取某球员各个半场的统计数据以及全场统计数据
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                firstHalf:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+                secondHalf:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsDataModel"
+                extraFirstHalf:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsDataModel"
+                extraSecondHalf:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsDataModel"
+                fullStats:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsExpandDataModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/scheduleInfo/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取比赛信息
+        parameters:
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              $ref: "#/definitions/ScheduleModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/scheduleData/{playerId}/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取某个球员个人数据以及比赛数据
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              $ref: "#/definitions/PlayerReportModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/distanceStats/{playerId}/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取球员各个半场双方控球时的跑动距离
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                possessDistance:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/HalfStatsDistanceModel"
+                oppDistance:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+                allDistance:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/defenseStats/{playerId}/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取全场防守数据点
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                steals:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/HalfStatsDistanceModel"
+                intercepts:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+                clearances:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+                court:
+                   type: object
+                   $ref: "#/definitions/CourtModel"
+
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/passAreaStats/{playerId}/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取传球区域数据点
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: array
+              items:
+                type: object
+                $ref: "#/definitions/PassAreaModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/heatData/{playerId}/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取球员比赛热点数据
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                court:
+                   type: object
+                   $ref: "#/definitions/CourtModel"
+                heatData:
+                   type: array
+                   items:
+                     type: object
+                     properties:
+                        x:
+                          type: number
+                          format: double
+                        y:
+                          type: number
+                          format: double
+                        weight:
+                          type: integer
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /player/report/timeDistribution/{playerId}/{scheduleId}:
+      get:
+        tags:
+          - player
+        description: 获取某球员某场比赛各个时间段的时间分布
+        parameters:
+          - in: path
+            name: playerId
+            description: 球员id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                timeDistribution:
+                   type: array
+                fullTime:
+                   type: integer
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/list:
+        get:
+          tags:
+            - participant
+          description: 获取学校数据列表
+          parameters:
+            - in: query
+              name: participantId
+              description: 学校id
+              required: false
+              type: string
+            - in: query
+              name: participantName
+              description: 学校名称
+              required: false
+              type: string
+            - in: query
+              name: participantOrder
+              description: 排序过滤
+              required: false
+              type: string
+              enum:
+                 - CS
+                 - SC
+                 - WIN
+                 - LOST
+                 - DR
+                 - WR
+                 - GO
+                 - LOSS
+                 - P
+                 - BP
+                 - GP
+            - in: query
+              name: participantType
+              description: 学校级别
+              required: false
+              type: string
+              enum:
+                 - PRIMARY
+                 - MIDDLE
+                 - HIGH
+                 - UNIVERSITY
+                 - OTHER
+            - $ref: "#/parameters/pageSize"
+            - $ref: "#/parameters/page"
+          responses:
+            200:
+              description: 请求成功
+              schema:
+                type: object
+                properties:
+                  totalCount:
+                    type: integer
+                    description: 数据数量
+                  participantList:
+                    type: array
+                    description: 数据列表
+                    items:
+                      type: object
+                      description: 学校数据模型
+                      $ref: '#/definitions/ParticipantBasicModel'
+            500:
+                $ref: "#/responses/Standard500ErrorResponse"
+            404:
+                $ref: "#/responses/Standard404ErrorResponse"
+          security:
+            - access_token: []
+  /participant/scheduleList/{participantId}:
+      get:
+        tags:
+          - participant
+        description: 获取球队比赛记录（有采集数据场次）
+        parameters:
+          - in: path
+            name: participantId
+            description: 学校id
+            required: true
+            type: string
+          - in: query
+            name: competitionId
+            description: 赛事id
+            required: false
+            type: string
+          - $ref: "#/parameters/pageSize"
+          - $ref: "#/parameters/page"
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: array
+              items:
+                 type: object
+                 $ref: '#/definitions/ScheduleModel'
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/basic/competitionList:
+      get:
+        tags:
+          - participant
+        description: 获取赛事列表
+        parameters:
+          - in: query
+            name: participantId
+            description: 学校id
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: array
+              items:
+                 type: object
+                 properties:
+                    year:
+                      type: string
+                    competitionModelList:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        competitionName:
+                          type: string
+                          description: 赛事名称
+                        gender:
+                          type: string
+                          description: 赛事组别（男女）
+                          enum:
+                            - F
+                            - M
+                        startNumber:
+                          type: string
+                          description: 首发人数
+                          enum:
+                            - FIVE
+                            - EIGHT
+                            - ELEVEN
+                        participantType:
+                          type: string
+                          description: 赛事级别
+                          enum:
+                            - PRIMARY
+                            - MIDDLE
+                            - HIGH
+                            - UNIVERSITY
+                            - OTHER
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/basic/info/{participantId}:
+      get:
+        tags:
+          - participant
+        description: 获取学校信息
+        parameters:
+          - in: path
+            name: participantId
+            description: 学校id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+                type: object
+                $ref: '#/definitions/ParticipantBasicModel'
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/scheduleCharts/{participantId}:
+      get:
+        tags:
+          - participant
+        description: 获取球队的数据图表（比赛数据）
+        parameters:
+          - in: path
+            name: participantId
+            description: 学校id
+            required: true
+            type: string
+          - in: query
+            name: competitionId
+            description: 赛事id
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                scheduleDataList:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/ScheduleDataModel"
+                totalData:
+                    type: object
+                    $ref: "#/definitions/ScheduleDataModel"
+                averageData:
+                    type: object
+                    $ref: "#/definitions/ScheduleDataModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/statsCharts/{participantId}:
+      get:
+        tags:
+          - participant
+        description: 获取球队的数据图表（统计数据）
+        parameters:
+          - in: path
+            name: participantId
+            description: 学校id
+            required: true
+            type: string
+          - in: query
+            name: competitionId
+            description: 赛事id
+            required: false
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                statsDataList:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+                totalData:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+                averageData:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/report/defenseStats/{teamId}/{scheduleId}:
+      get:
+        tags:
+          - participant
+        description: 获取全场防守数据点
+        parameters:
+          - in: path
+            name: teamId
+            description: 球队id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                steals:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/HalfStatsDistanceModel"
+                intercepts:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+                clearances:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+                court:
+                   type: object
+                   $ref: "#/definitions/CourtModel"
+
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/report/distanceStats/{teamId}/{scheduleId}:
+      get:
+        tags:
+          - participant
+        description: 获取球队各个半场双方控球时的跑动距离
+        parameters:
+          - in: path
+            name: teamId
+            description: 球队id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                possessDistance:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/HalfStatsDistanceModel"
+                oppDistance:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+                allDistance:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/HalfStatsDistanceModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/report/halfStats/{teamId}/{scheduleId}:
+      get:
+        tags:
+          - participant
+        description: 获取某球队各个半场的统计数据以及全场统计数据
+        parameters:
+          - in: path
+            name: teamId
+            description: 球队id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                firstHalf:
+                  type: array
+                  items:
+                    type: object
+                    $ref: "#/definitions/StatsDataModel"
+                secondHalf:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsDataModel"
+                extraFirstHalf:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsDataModel"
+                extraSecondHalf:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsDataModel"
+                fullStats:
+                   type: array
+                   items:
+                      type: object
+                      $ref: "#/definitions/StatsExpandDataModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/report/passAreaStats/{teamId}/{scheduleId}:
+      get:
+        tags:
+          - participant
+        description: 获取传球区域数据点
+        parameters:
+          - in: path
+            name: teamId
+            description: 球队id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: array
+              items:
+                type: object
+                $ref: "#/definitions/PassAreaModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/report/scheduleInfo/{scheduleId}:
+      get:
+        tags:
+          - participant
+        description: 获取比赛信息
+        parameters:
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              $ref: "#/definitions/ScheduleModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/report/scheduleData/{teamId}/{scheduleId}:
+      get:
+        tags:
+          - participant
+        description: 获取某球队数据以及比赛数据
+        parameters:
+          - in: path
+            name: teamId
+            description: 球队id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              $ref: "#/definitions/ParticipantReportModel"
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/report/timeDistribution/{teamId}/{scheduleId}:
+      get:
+        tags:
+          - participant
+        description: 获取某球队某场比赛各个时间段的时间分布
+        parameters:
+          - in: path
+            name: teamId
+            description: 球队id
+            required: true
+            type: string
+          - in: path
+            name: scheduleId
+            description: 比赛id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                timeDistribution:
+                   type: array
+                fullTime:
+                   type: integer
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/honor/competitionList/{participantId}:
+      get:
+        tags:
+          - participant
+        description: 获取对应机构的赛事列表
+        parameters:
+          - in: path
+            name: participantId
+            description: 学校id
+            required: true
+            type: string
+          - $ref: "#/parameters/pageSize"
+          - $ref: "#/parameters/page"
+        responses:
+          200:
+            description: 请求成功
+            schema:
+                 type: object
+                 properties:
+                    totalCount:
+                      type: integer
+                    competitionList:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          competitionName:
+                            type: string
+                            description: 赛事名称
+                          gender:
+                            type: string
+                            description: 赛事组别（男女）
+                            enum:
+                              - F
+                              - M
+                          startNumber:
+                            type: string
+                            description: 首发人数
+                            enum:
+                              - FIVE
+                              - EIGHT
+                              - ELEVEN
+                          participantType:
+                            type: string
+                            description: 赛事级别
+                            enum:
+                              - PRIMARY
+                              - MIDDLE
+                              - HIGH
+                              - UNIVERSITY
+                              - OTHER
+                          createAt:
+                            type: number
+                            format: double
+                          teamId:
+                            type: string
+                          teamName:
+                            type: string
+                          teamLogo:
+                            type: string
+                          rank:
+                            type: integer
+                    participant:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        participantName:
+                          type: string
+                        participantLogo:
+                          type: string
+                          format: double
+                        participantType:
+                          type: string
+                          enum:
+                               - PRIMARY
+                               - MIDDLE
+                               - HIGH
+                               - UNIVERSITY
+                               - OTHER
+                        competitions:
+                          type: integer
+
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+  /participant/honor/playerList/{teamId}:
+      get:
+        tags:
+          - participant
+        description: 获取对应球队的球员列表
+        parameters:
+          - in: path
+            name: teamId
+            description: 球队id
+            required: true
+            type: string
+        responses:
+          200:
+            description: 请求成功
+            schema:
+                 type: array
+                 items:
+                   type: object
+                   properties:
+                      playerId:
+                        type: string
+                      avatar:
+                        type: string
+                      name:
+                        type: string
+                      number:
+                        type: integer
+                      position:
+                        type: string
+                        enum:
+                          - GK
+                          - DF
+                          - CB
+                          - SB
+                          - MF
+                          - CDM
+                          - SM
+                          - CAM
+                          - FW
+                          - CF
+                          - SF
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+        security:
+          - access_token: []
+securityDefinitions:
+  access_token:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+    Error:
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    PlayerDataModel:
+      properties:
+        teamId:
+          type: string
+          description: 球队id
+        playerId:
+          type: string
+          description: 球员id
+        playerName:
+          type: string
+          description: 球员名称
+        participantName:
+          type: string
+          description: 机构名称
+        age:
+          type: integer
+          description: 年龄
+        avatar:
+          type: string
+          description: 球员头像
+        gender:
+          type: string
+          description: 性别
+          enum:
+            - F
+            - M
+        possessTime:
+          type: number
+          description: 控球时间
+          format: double
+        touches:
+          type: number
+          description: 触球次数
+          format: double
+        totalPass:
+          type: number
+          description: 总共传球次数
+          format: double
+        successPass:
+          type: number
+          description: 传球成功次数
+          format: double
+        successPassRate:
+          type: number
+          description: 传球成功率
+          format: double
+        clearances:
+          type: number
+          description: 解围次数
+          format: double
+        intercepts:
+          type: number
+          description: 拦截次数
+          format: double
+        steals:
+          type: number
+          description: 抢断次数
+          format: double
+        goal:
+          type: number
+          description: 进球数
+          format: double
+        redCard:
+          type: number
+          description: 红牌
+          format: double
+        yellowCard:
+          type: number
+          description: 黄牌
+          format: double
+        playDuration:
+          type: number
+          description: 上场时长
+          format: double
+        appearance:
+          type: number
+          description: 出场次数
+          format: double
+        distance:
+          type: number
+          description: 跑动距离
+          format: double
+        maxDribbSp:
+          type: number
+          description: 最快带球速度
+          format: double
+        fastestSpeed:
+          type: number
+          description: 最快跑动速度
+          format: double
+        effectiveDistance:
+          type: number
+          description: 有效跑动距离
+          format: double
+        highSpeedDistance:
+          type: number
+          description: 高速跑动距离
+          format: double
+        sprintSpeedDistance:
+          type: number
+          description: 冲刺跑动距离
+          format: double
+    PlayerModel:
+      properties:
+          id:
+            type: string
+          birthday:
+            type: string
+            description: 出生日期
+            format: date
+          age:
+            type: integer
+            description: 年龄
+          avatar:
+            type: string
+            description: 头像
+          name:
+            type: string
+            description: 姓名
+          certificateId:
+            type: string
+            description: 身份证或护照
+          certificateType:
+            type: string
+            description: 认证类型
+            enum:
+              - IDENTITYCARD
+              - PASSPORT
+          gender:
+            type: string
+            description: 性别
+            enum:
+              - F
+              - M
+          phone:
+            type: string
+            description: 电话
+          height:
+            type: number
+            description: 身高
+            format: double
+          weight:
+            type: number
+            description: 体重
+            format: double
+          nation:
+            type: string
+            description: 民族
+          participantId:
+            type: string
+            description: 机构id
+          participantName:
+            type: string
+            description: 机构名称
+    ScheduleModel:
+      properties:
+          id:
+            type: string
+          teamId:
+            type: string
+            description: 球队id
+          competitionId:
+            type: string
+            description: 赛事id
+          competitionName:
+            type: string
+            description: 赛事名称
+          homeRegistrationId:
+            type: string
+            description: 主队id
+          guestRegistrationId:
+            type: string
+            description: 客队id
+          homeTeamName:
+            type: string
+            description: 主队名称
+          guestTeamName:
+            type: string
+            description: 客队名称
+          homeScore:
+            type: integer
+            description: 主队得分
+          guestScore:
+            type: integer
+            description: 客队得分
+          homeLogo:
+            type: string
+            description: 主队logo
+          guestLogo:
+            type: string
+            description: 客队logo
+          matchDate:
+            type: string
+            description: 比赛时间
+            format: date
+    ScheduleDataModel:
+      properties:
+        playerId:
+          type: string
+          description: 球员id
+        participantId:
+          type: string
+          description: 学校id
+        teamId:
+          type: string
+          description: 球队id
+        scheduleId:
+          type: string
+          description: 比赛id
+        competitionId:
+          type: string
+          description: 赛事id
+        matchDate:
+          type: string
+          format: date
+          description: 比赛日期
+        goal:
+          type: number
+          format: double
+          description: 进球数
+        redCard:
+          type: number
+          format: double
+          description: 红牌
+        yellowCard:
+          type: number
+          format: double
+          description: 黄牌
+        playDuration:
+          type: number
+          format: double
+          description: 上场时长
+        appearance:
+          type: number
+          format: double
+          description: 出场次数
+    StatsDataModel:
+        properties:
+          playerId:
+            type: string
+            description: 球员id
+          participantId:
+            type: string
+            description: 学校id
+          teamId:
+            type: string
+            description: 球队id
+          scheduleId:
+            type: string
+            description: 比赛id
+          competitionId:
+            type: string
+            description: 赛事id
+          matchDate:
+            type: string
+            format: date
+            description: 比赛日期
+          possessTime:
+            type: number
+            description: 控球时间
+            format: double
+          touches:
+            type: number
+            description: 触球次数
+            format: double
+          totalPass:
+            type: number
+            description: 总共传球次数
+            format: double
+          successPass:
+            type: number
+            description: 传球成功次数
+            format: double
+          successPassRate:
+            type: number
+            description: 传球成功率
+            format: double
+          clearances:
+            type: number
+            description: 解围次数
+            format: double
+          intercepts:
+            type: number
+            description: 拦截次数
+            format: double
+          steals:
+            type: number
+            description: 抢断次数
+            format: double
+          distance:
+            type: number
+            description: 跑动距离
+            format: double
+          maxDribbSp:
+            type: number
+            description: 最快带球速度
+            format: double
+          fastestSpeed:
+            type: number
+            description: 最快跑动速度
+            format: double
+          effectiveDistance:
+            type: number
+            description: 有效跑动距离
+            format: double
+          highSpeedDistance:
+            type: number
+            description: 高速跑动距离
+            format: double
+          sprintSpeedDistance:
+            type: number
+            description: 冲刺跑动距离
+            format: double
+    StatsExpandDataModel:
+      properties:
+        playerId:
+          type: string
+          description: 球员id
+        teamId:
+          type: string
+          description: 球队id
+        scheduleId:
+          type: string
+          description: 比赛id
+        competitionId:
+          type: string
+          description: 赛事id
+        matchDate:
+          type: string
+          format: date
+          description: 比赛日期
+        possessTime:
+          type: number
+          description: 控球时间
+          format: double
+        touches:
+          type: number
+          description: 触球次数
+          format: double
+        totalPass:
+          type: number
+          description: 总共传球次数
+          format: double
+        successPass:
+          type: number
+          description: 传球成功次数
+          format: double
+        successPassRate:
+          type: number
+          description: 传球成功率
+          format: double
+        clearances:
+          type: number
+          description: 解围次数
+          format: double
+        intercepts:
+          type: number
+          description: 拦截次数
+          format: double
+        steals:
+          type: number
+          description: 抢断次数
+          format: double
+        distance:
+          type: number
+          description: 跑动距离
+          format: double
+        maxDribbSp:
+          type: number
+          description: 最快带球速度
+          format: double
+        fastestSpeed:
+          type: number
+          description: 最快跑动速度
+          format: double
+        effectiveDistance:
+          type: number
+          description: 有效跑动距离
+          format: double
+        highSpeedDistance:
+          type: number
+          description: 高速跑动距离
+          format: double
+        sprintSpeedDistance:
+          type: number
+          description: 冲刺跑动距离
+          format: double
+        walkingDistance:
+          type: number
+          format: double
+          description: 走或站立
+        joggingDistance:
+          type: number
+          format: double
+          description: 慢跑
+        lowSpeedDistance:
+          type: number
+          format: double
+          description: 低速跑
+        midSpeedDistance:
+          type: number
+          format: double
+          description: 中速跑
+        shots:
+          type: integer
+          description: 射门次数
+        shotOnTarget:
+          type: integer
+          description: 射中次数
+        score:
+          type: integer
+          description: 进球
+        cornerCount:
+          type: integer
+          description: 角球个数
+        freeKickCount:
+          type: integer
+          description: 任意球个数
+        possessRatio:
+          type: number
+          format: double
+          description: 控球率
+    PlayerReportModel:
+      properties:
+        teamId:
+          type: string
+          description: 球队id
+        playerId:
+          type: string
+          description: 球员id
+        playerName:
+          type: string
+          description: 球员名称
+        participantName:
+          type: string
+          description: 机构名称
+        age:
+          type: integer
+          description: 年龄
+        gender:
+          type: string
+          description: 性别
+          enum:
+            - F
+            - M
+        possessTime:
+          type: number
+          description: 控球时间
+          format: double
+        touches:
+          type: number
+          description: 触球次数
+          format: double
+        totalPass:
+          type: number
+          description: 总共传球次数
+          format: double
+        successPass:
+          type: number
+          description: 传球成功次数
+          format: double
+        successPassRate:
+          type: number
+          description: 传球成功率
+          format: double
+        clearances:
+          type: number
+          description: 解围次数
+          format: double
+        intercepts:
+          type: number
+          description: 拦截次数
+          format: double
+        steals:
+          type: number
+          description: 抢断次数
+          format: double
+        goal:
+          type: number
+          description: 进球数
+          format: double
+        redCard:
+          type: number
+          description: 红牌
+          format: double
+        yellowCard:
+          type: number
+          description: 黄牌
+          format: double
+        playDuration:
+          type: number
+          description: 上场时长
+          format: double
+        appearance:
+          type: number
+          description: 出场次数
+          format: double
+        distance:
+          type: number
+          description: 跑动距离
+          format: double
+        maxDribbSp:
+          type: number
+          description: 最快带球速度
+          format: double
+        fastestSpeed:
+          type: number
+          description: 最快跑动速度
+          format: double
+        effectiveDistance:
+          type: number
+          description: 有效跑动距离
+          format: double
+        highSpeedDistance:
+          type: number
+          description: 高速跑动距离
+          format: double
+        sprintSpeedDistance:
+          type: number
+          description: 冲刺跑动距离
+          format: double
+        position:
+          type: string
+          enum:
+            - GK
+            - DF
+            - CB
+            - SB
+            - MF
+            - CDM
+            - SM
+            - CAM
+            - FW
+            - CF
+            - SF
+        avatar:
+          type: string
+        teamName:
+          type: string
+        teamLogo:
+          type: string
+        number:
+          type: integer
+    HalfStatsDistanceModel:
+      type: object
+      properties:
+        timeEventType:
+          type: string
+          description: 本场类型
+          enum:
+           - FIRSTHALF
+           - SECONDHALF
+           - EXTRATIMEFIRSTHALF
+           - EXTRATIMESECONDHALF
+        statsDistanceModel:
+          type: object
+          properties:
+            distance:
+              type: number
+              format: double
+              description: 跑动距离
+            effectiveDistance:
+              type: number
+              format: double
+              description: 有效跑动距离
+            highSpeedDistance:
+              type: number
+              format: double
+              description: 高速跑动距离
+            sprintSpeedDistance:
+              type: number
+              format: double
+              description: 冲刺跑动距离
+    CourtModel:
+      properties:
+        goalWidth:
+          type: number
+          format: double
+        length:
+          type: number
+          format: double
+        width:
+          type: number
+          format: double
+        lengthOffset:
+          type: integer
+        widthOffset:
+          type: integer
+    PassAreaModel:
+      properties:
+        totalPass:
+          type: integer
+        successPass:
+          type: integer
+        successPassRate:
+          type: number
+          format: double
+        xStepCount:
+          type: integer
+        yStepCount:
+          type: integer
+    ParticipantBasicModel:
+      properties:
+        id:
+          type: string
+        participantName:
+          type: string
+        participantLogo:
+          type: string
+          format: double
+        participantType:
+          type: string
+          enum:
+               - PRIMARY
+               - MIDDLE
+               - HIGH
+               - UNIVERSITY
+               - OTHER
+        competitions:
+          type: integer
+        schedules:
+          type: integer
+        win:
+          type: integer
+        lost:
+          type: integer
+        draw:
+          type: integer
+        goals:
+          type: integer
+        losses:
+          type: integer
+        winRate:
+          type: number
+          format: double
+        players:
+          type: integer
+        boyPlayers:
+          type: integer
+        girlPlayers:
+          type: integer
+    ParticipantReportModel:
+      properties:
+          teamId:
+            type: string
+          teamName:
+            type: string
+          teamLogo:
+            type: string
+          coach:
+            type: string
+          participantName:
+            type: string
+          participantLogo:
+            type: string
+          participantId:
+            type: string
+          goal:
+            type: integer
+          ownGoal:
+            type: integer
+          redCard:
+            type: integer
+          yellowCard:
+            type: integer
+responses:
+  Standard500ErrorResponse:
+    description: 请求失败
+    schema:
+      $ref: "#/definitions/Error"
+  Standard404ErrorResponse:
+    description: 页面不存在
+parameters:
+  pageSize:
+    name: pageSize
+    in: query
+    description: 每页大小
+    type: integer
+    format: int32
+    required: false
+  page:
+    in: query
+    name: page
+    description: 页码
+    type: integer
+    format: int32
+    required: false
