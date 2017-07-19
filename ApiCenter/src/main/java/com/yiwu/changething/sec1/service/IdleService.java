@@ -46,4 +46,31 @@ public class IdleService {
     public Integer getIdleCount(String name) {
         return idleMapper.getIdleCount(name);
     }
+
+    /**
+     * 新增商品信息
+     *
+     * @param idleModel
+     */
+    public void insert(IdleModel idleModel) {
+        idleMapper.insert(idleModel);
+    }
+
+    /**
+     * 修改商品信息
+     *
+     * @param idleModel
+     */
+    public void update(IdleModel idleModel) {
+        idleMapper.update(idleModel);
+    }
+
+    /**
+     * 根据id删除商品信息
+     *
+     * @param idleId
+     */
+    public void deleteById(String idleId) {
+        idleMapper.deleteById(idleId);
+    }
 }

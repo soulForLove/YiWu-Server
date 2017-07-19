@@ -12,11 +12,15 @@ public class IdleModel {
     private String typeName;//物品类别名称
     private String description;//描述
     private Double price;//单价
-    private Integer count;//数量
+    private Integer num;//数量
     private Date productionDate;//生产日期
     private Date guaranteeDate;//保质日期
     private String productionPlace;//产地
     private Integer extent;//新旧程度（0-100百分比）
+    private Date createTime;//创建时间
+    private Date updateTime;//更新时间
+    private String createBy;//创建者
+    private String updateBy;//修改者
 
     public String getId() {
         return id;
@@ -66,12 +70,12 @@ public class IdleModel {
         this.price = price;
     }
 
-    public Integer getCount() {
-        return count;
+    public Integer getNum() {
+        return num;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public Date getProductionDate() {
@@ -104,5 +108,37 @@ public class IdleModel {
 
     public void setExtent(Integer extent) {
         this.extent = extent;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }

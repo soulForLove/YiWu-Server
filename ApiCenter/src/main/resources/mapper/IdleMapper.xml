@@ -8,13 +8,17 @@
         yi.`name`,
         yi.description,
         yi.price,
-        yi.count,
+        yi.num,
         yi.type_id,
         yt.`name` typeName,
         yi.production_date,
         yi.production_place,
         yi.guarantee_date,
-        yi.extent
+        yi.extent,
+        yi.create_time,
+        yi.create_by,
+        yi.update_time,
+        yi.update_by
         FROM
         yw_idle yi
         LEFT JOIN yw_type yt ON yi.type_id = yt.id
@@ -33,7 +37,7 @@
 
     <select id="getIdleCount" resultType="java.lang.Integer">
         SELECT
-          count(1)
+        count(1)
         FROM
         yw_idle yi
         LEFT JOIN yw_type yt ON yi.type_id = yt.id
@@ -43,4 +47,86 @@
             </if>
         </where>
     </select>
+
+    <select id="getIdleById" resultType="com.yiwu.changething.sec1.model.IdleModel">
+        SELECT
+        yi.id,
+        yi.`name`,
+        yi.description,
+        yi.price,
+        yi.num,
+        yi.type_id,
+        yi.production_date,
+        yi.production_place,
+        yi.guarantee_date,
+        yi.extent,
+        yi.create_time,
+        yi.create_by,
+        yi.update_time,
+        yi.update_by
+        FROM
+        yw_idle yi
+        <where>
+            <if test="idleId != null and idleId != ''">
+                id = #{idleId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.yiwu.changething.sec1.model.IdleModel">
+        INSERT INTO yw_idle (
+        yi.id,
+        yi.`name`,
+        yi.description,
+        yi.price,
+        yi.num,
+        yi.type_id,
+        yi.production_date,
+        yi.production_place,
+        yi.guarantee_date,
+        yi.extent,
+        yi.create_time,
+        yi.create_by,
+        yi.update_time,
+        yi.update_by
+        )
+        VALUES  (
+        #{id},
+        #{name},
+        #{description},
+        #{price},
+        #{num},
+        #{typeId},
+        #{productionDate},
+        #{productionPlace},
+        #{guaranteeDate},
+        #{extent},
+        now(),
+        #{createBy},
+        null,
+        null
+        )
+    </insert>
+
+    <update id="update" parameterType="com.yiwu.changething.sec1.model.IdleModel">
+        UPDATE  yw_idle
+        set
+        `name`= #{name},
+        description = #{description},
+        price = #{price},
+        num = #{num},
+        type_id = #{typeId},
+        production_date = #{productionDate},
+        production_place = #{productionPlace},
+        guarantee_date = #{guaranteeDate},
+        extent = #{extent},
+        update_time = #{updateTime},
+        update_by = #{updateBy}
+        WHERE
+        id =  #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM yw_idle WHERE id = #{idleId}
+    </delete>
 </mapper>

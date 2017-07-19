@@ -33,4 +33,33 @@ public interface IdleMapper {
      * @return
      */
     Integer getIdleCount(@Param("name") String name);
+
+    /**
+     * 根据id获取商品信息
+     *
+     * @param idleId
+     * @return
+     */
+    IdleModel getIdleById(@Param("idleId") String idleId);
+
+    /**
+     * 新增商品信息
+     *
+     * @param idleModel
+     */
+    void insert(IdleModel idleModel);
+
+    /**
+     * 修改商品信息
+     *
+     * @param idleModel
+     */
+    void update(IdleModel idleModel);
+
+    /**
+     * 根据id删除商品信息
+     *
+     * @param idleId
+     */
+    void deleteById(@Param("idleId") String idleId);
 }
