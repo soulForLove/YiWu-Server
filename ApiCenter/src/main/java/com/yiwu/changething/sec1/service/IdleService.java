@@ -1,0 +1,49 @@
+package com.yiwu.changething.sec1.service;
+
+import com.yiwu.changething.sec1.enums.IdleOrder;
+import com.yiwu.changething.sec1.enums.OrderType;
+import com.yiwu.changething.sec1.mapper.IdleMapper;
+import com.yiwu.changething.sec1.model.IdleModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * Created by LinZhongtai <linzhongtai@gengee.cn>
+ */
+@Service
+public class IdleService {
+
+    @Autowired
+    private IdleMapper idleMapper;
+
+    /**
+     * 获取商品列表
+     *
+     * @param name
+     * @param idleOrder
+     * @param orderType
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public List<IdleModel> getIdleList(String name, IdleOrder idleOrder, OrderType orderType, Integer page,
+                                       Integer pageSize) {
+        Integer pageIndex = null;
+        if (page != null && pageSize != null) {
+            pageIndex = (page - 1) * pageSize;
+        }
+        return idleMapper.getIdleList(name, idleOrder, orderType, pageIndex, pageSize);
+    }
+
+    /**
+     * 获取商品列表总数
+     *
+     * @param name
+     * @return
+     */
+    public Integer getIdleCount(String name) {
+        return idleMapper.getIdleCount(name);
+    }
+}

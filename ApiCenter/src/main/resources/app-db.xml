@@ -35,7 +35,7 @@
 
     <bean id="mapperConfig" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
-        <property name="basePackage" value="com.gengee.insait.mc1.web.mapper"/>
+        <property name="basePackage" value="com.yiwu.changething.sec1.mapper"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiwu.changething.sec1.mapper.IdleMapper">
+
+    <select id="getIdleList" resultType="com.yiwu.changething.sec1.model.IdleModel">
+        SELECT
+        yi.id,
+        yi.`name`,
+        yi.description,
+        yi.price,
+        yi.count,
+        yi.type_id,
+        yt.`name` typeName,
+        yi.production_date,
+        yi.production_place,
+        yi.guarantee_date,
+        yi.extent
+        FROM
+        yw_idle yi
+        LEFT JOIN yw_type yt ON yi.type_id = yt.id
+        <where>
+            <if test="name != null and name != ''">
+                yi.name LIKE CONCAT("%",#{name},"%")
+            </if>
+        </where>
+        <if test="IdleOrder != null ">
+            ORDER BY #{IdleOrder} #{orderType}
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getIdleCount" resultType="java.lang.Integer">
+        SELECT
+          count(1)
+        FROM
+        yw_idle yi
+        LEFT JOIN yw_type yt ON yi.type_id = yt.id
+        <where>
+            <if test="name != null and name != ''">
+                yi.name LIKE CONCAT("%",#{name},"%")
+            </if>
+        </where>
+    </select>
+</mapper>
