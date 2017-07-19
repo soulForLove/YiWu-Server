@@ -6,7 +6,7 @@
 
     <context:property-placeholder location="classpath:app*.properties" local-override="true" file-encoding="UTF-8"/>
 
-    <context:component-scan base-package="com.gengee.insait.mc1">
+    <context:component-scan base-package="com.yiwu.changething.sec1">
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

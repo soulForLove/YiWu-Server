@@ -19,7 +19,7 @@
     <logger name="org.apache.shiro" level="INFO"/>
     <logger name="org.mybatis.spring" level="INFO"/>
     <logger name="org.apache.ibatis" level="INFO"/>
-    <logger name="com.gengee" level="DEBUG"/>
+    <logger name="com.yiwu" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="logFile"/>

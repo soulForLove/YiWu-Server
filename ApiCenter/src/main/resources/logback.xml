@@ -14,7 +14,7 @@
 
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG"/>
-    <logger name="com.gengee" level="DEBUG"/>
+    <logger name="com.yiwu" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="console"/>

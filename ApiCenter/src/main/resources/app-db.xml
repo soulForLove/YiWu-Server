@@ -25,7 +25,7 @@
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:/mybatis.xml"/>
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.gengee.insait.mc1.web.model"/>
+        <property name="typeAliasesPackage" value="com.yiwu.changething.sec1.model"/>
         <property name="mapperLocations">
             <list>
                 <value>classpath:/mapper/*.xml</value>
