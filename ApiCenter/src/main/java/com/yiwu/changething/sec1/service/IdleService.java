@@ -66,6 +66,10 @@ public class IdleService {
      * @param idleModel
      */
     public void update(IdleModel idleModel) {
+        IdleModel idle = idleMapper.getIdleById(idleModel.getId());
+        if (idle == null) {
+            throw new YwException(101007);
+        }
         idleMapper.update(idleModel);
     }
 
