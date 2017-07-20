@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.enums.IdleOrder;
 import com.yiwu.changething.sec1.enums.OrderType;
+import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.IdleMapper;
 import com.yiwu.changething.sec1.model.IdleModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,19 @@ public class IdleService {
      */
     public void deleteById(String idleId) {
         idleMapper.deleteById(idleId);
+    }
+
+    /**
+     * 根据id获取商品信息
+     *
+     * @param idleId
+     * @return
+     */
+    public IdleModel getIdleById(String idleId) {
+        IdleModel idleModel = idleMapper.getIdleById(idleId);
+        if (idleModel == null) {
+            throw new YwException(101007);
+        }
+        return idleModel;
     }
 }

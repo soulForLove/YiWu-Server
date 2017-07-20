@@ -35,6 +35,7 @@ public class IdleController {
         return resultMap;
     }
 
+
     /**
      * 新增商品信息
      *
@@ -63,5 +64,16 @@ public class IdleController {
     @DeleteMapping("/{idleId}")
     public void deleteById(@PathVariable String idleId) {
         idleService.deleteById(idleId);
+    }
+
+    /**
+     * 根据id获取商品信息
+     *
+     * @param idleId
+     * @return
+     */
+    @GetMapping("/{idleId}")
+    public IdleModel getIdleById(@PathVariable String idleId) {
+        return idleService.getIdleById(idleId);
     }
 }
