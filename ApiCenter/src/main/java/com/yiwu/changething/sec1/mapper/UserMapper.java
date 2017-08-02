@@ -9,12 +9,12 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface UserMapper {
     /**
-     * get user
+     * get user by name
      *
      * @param name
      * @return
      */
-    User getUser(@Param("name") String name);
+    User getByName(@Param("name") String name);
 
     /**
      * add user
@@ -22,4 +22,19 @@ public interface UserMapper {
      * @param user
      */
     void insert(User user);
+
+    /**
+     * get user by email
+     *
+     * @param email
+     * @return
+     */
+    User getByEmail(@Param("email") String email);
+
+    /**
+     * 修改密码
+     *
+     * @param user
+     */
+    void updatePassword(User user);
 }

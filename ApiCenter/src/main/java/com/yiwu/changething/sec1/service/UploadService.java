@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class UploadService extends BaseService {
 
-    @Autowired
-    private CommentUtil commentUtil;
 
     @Value("${qiniu.access.key}")
     private String accesskey;

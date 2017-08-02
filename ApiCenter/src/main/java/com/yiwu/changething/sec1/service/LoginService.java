@@ -29,7 +29,7 @@ public class LoginService {
      */
     public Principal loginByPassword(String name, String password, HttpServletRequest request) {
         // check user
-        User user = userMapper.getUser(name);
+        User user = userMapper.getByName(name);
         if (null == user) {
             throw new YwException(101006); //用户不存在
         }
@@ -49,7 +49,7 @@ public class LoginService {
      */
     private Principal loginAfterValidation(User user, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Principal principal = new Principal(user.getId(), user.getPhone(), user.getName(), user.getAvatar());
+        Principal principal = new Principal(user.getId(), user.getPhone(), user.getName(), user.getAvatar(), user.getEmail());
         session.setAttribute(SystemVariableService.USER_INFO, principal);
         return principal;
     }

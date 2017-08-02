@@ -3,13 +3,14 @@
 <mapper namespace="com.yiwu.changething.sec1.mapper.UserMapper">
 
 
-    <select id="getUser" resultType="com.yiwu.changething.sec1.bean.User">
+    <select id="getByName" resultType="com.yiwu.changething.sec1.bean.User">
         SELECT
             id,
             name,
             password,
             salt,
-            phone
+            phone,
+            email
         FROM
             yw_user
         WHERE
@@ -23,6 +24,7 @@
             password,
             salt,
             phone,
+            email,
             avatar,
             deleted,
             last_login_time,
@@ -33,10 +35,29 @@
             #{password},
             #{salt},
             #{phone},
+            #{email},
             #{avatar},
             0,
             now(),
             now()
         )
     </insert>
+
+    <select id="getByEmail" resultType="com.yiwu.changething.sec1.bean.User">
+        SELECT
+            id,
+            name,
+            password,
+            salt,
+            phone,
+            email
+        FROM
+            yw_user
+        WHERE
+            email = #{email}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE yw_user SET password = #{password} , salt = #{salt} where id = #{id}
+    </update>
 </mapper>

@@ -3,10 +3,7 @@ package com.yiwu.changething.sec1.controller;
 import com.yiwu.changething.sec1.bean.User;
 import com.yiwu.changething.sec1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +26,17 @@ public class UserController {
     @PostMapping
     public void insertUser(@RequestBody @Valid User user) {
         userService.insertUser(user);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param password
+     * @param request
+     */
+    @PostMapping("/password/{password}")
+    public void updatePassword(@PathVariable String password, HttpServletRequest request) {
+        userService.updatePassword(password, request);
     }
 
 }

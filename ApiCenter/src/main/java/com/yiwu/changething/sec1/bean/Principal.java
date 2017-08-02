@@ -16,14 +16,23 @@ public class Principal implements Serializable {
 
     private String avatar;
 
-    public Principal(String id, String phone, String name, String avatar) {
+    private String email;
+
+    public Principal(String id, String phone, String name, String avatar, String email) {
         this.id = id;
         this.phone = phone;
         this.name = name;
         this.avatar = avatar;
+        this.email = email;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getId() {
         return id;
@@ -57,14 +66,14 @@ public class Principal implements Serializable {
         this.avatar = avatar;
     }
 
-    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public String toString() {
         return "Principal{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", phone='" + phone + '\'' +
                 ", name='" + name + '\'' +
-                ", avatar=" + avatar +
+                ", avatar='" + avatar + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 
