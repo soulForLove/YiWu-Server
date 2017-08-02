@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,9 +60,9 @@ public class UploadController {
      * @throws UploadException
      */
     @PostMapping
-    public Map<String, Object> upload(@RequestParam MultipartFile file) throws UploadException {
+    public Map<String, Object> upload(@RequestParam MultipartFile file, HttpServletRequest request) throws UploadException {
         Map<String, Object> jsonObject = new HashMap<>();
-        jsonObject.put("url", uploadService.uploadImage(file));
+        jsonObject.put("url", uploadService.uploadImage(file, request));
         return jsonObject;
     }
 

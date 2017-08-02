@@ -16,4 +16,27 @@
             name = #{name}
     </select>
 
+    <insert id="insert" parameterType="com.yiwu.changething.sec1.bean.User">
+        INSERT INTO yw_user (
+            id,
+            name,
+            password,
+            salt,
+            phone,
+            avatar,
+            deleted,
+            last_login_time,
+            create_time
+        ) VALUES (
+            #{id},
+            #{name},
+            #{password},
+            #{salt},
+            #{phone},
+            #{avatar},
+            0,
+            now(),
+            now()
+        )
+    </insert>
 </mapper>

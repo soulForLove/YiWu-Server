@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
 @Service
-public class UploadService {
+public class UploadService extends BaseService {
 
     @Autowired
     private CommentUtil commentUtil;
@@ -31,8 +32,8 @@ public class UploadService {
     @Value("${qiniu.bucket.host.name}")
     private String bucketHostName;
 
-    public String uploadImage(MultipartFile image) throws UploadException {
-        Principal principal = commentUtil.getCurrentPrincipal();
+    public String uploadImage(MultipartFile image, HttpServletRequest request) throws UploadException {
+        Principal principal = checkUserLogin(request);
         UploadUtil uploadUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
                 this.bucketHostName, this.bucketName);
         return uploadUtil.uploadFile("/" + principal.getId() + "/", image);

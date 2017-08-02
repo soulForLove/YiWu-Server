@@ -1,16 +1,15 @@
 package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.Principal;
-import com.yiwu.changething.sec1.bean.RestToken;
 import com.yiwu.changething.sec1.bean.User;
-import com.yiwu.changething.sec1.bean.UserCache;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.UserMapper;
-import com.yiwu.changething.sec1.utils.CommentUtil;
 import com.yiwu.changething.sec1.utils.PasswordUtil;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -21,13 +20,6 @@ public class LoginService {
     @Autowired
     private UserMapper userMapper;
 
-
-    @Autowired
-    private CommentUtil commentUtil;
-
-    @Autowired
-    private UserCache userCache;
-
     /**
      * 通过密码登录
      *
@@ -35,7 +27,7 @@ public class LoginService {
      * @param password
      * @return
      */
-    public Principal loginByPassword(String name, String password) {
+    public Principal loginByPassword(String name, String password, HttpServletRequest request) {
         // check user
         User user = userMapper.getUser(name);
         if (null == user) {
@@ -46,7 +38,7 @@ public class LoginService {
         if (!user.getPassword().equals(PasswordUtil.encrypt(password, user.getSalt()))) {
             throw new YwException(101003);//密码错误
         }
-        return loginAfterValidation(user);
+        return loginAfterValidation(user, request);
     }
 
     /**
@@ -55,19 +47,20 @@ public class LoginService {
      * @param user
      * @return
      */
-    public Principal loginAfterValidation(User user) {
-        Principal principal = new Principal(user.getId(), user.getPhone(), user.getName(), true);
-
-        principal = userCache.cacheUser(principal); //缓存用户凭证
-
-        SecurityUtils.getSubject().login(new RestToken(principal.getToken()));
-
+    private Principal loginAfterValidation(User user, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Principal principal = new Principal(user.getId(), user.getPhone(), user.getName(), user.getAvatar());
+        session.setAttribute(SystemVariableService.USER_INFO, principal);
         return principal;
     }
 
-    public void cleanToken() {
-        Principal principal = commentUtil.getCurrentPrincipal();
-        userCache.removeUserToken(principal.getToken(), principal.getId().toString());
-        userCache.cleanAuthorizationCache(principal.getId());
+    /**
+     * 登出
+     *
+     * @param request
+     */
+    public void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute(SystemVariableService.USER_INFO);
     }
 }
