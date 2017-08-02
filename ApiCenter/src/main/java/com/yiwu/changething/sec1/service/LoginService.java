@@ -1,8 +1,14 @@
 package com.yiwu.changething.sec1.service;
 
-import com.yiwu.changething.sec1.mapper.LoginMapper;
-import com.yiwu.changething.sec1.utils.Digests;
-import com.yiwu.changething.sec1.utils.Encodes;
+import com.yiwu.changething.sec1.bean.Principal;
+import com.yiwu.changething.sec1.bean.RestToken;
+import com.yiwu.changething.sec1.bean.User;
+import com.yiwu.changething.sec1.bean.UserCache;
+import com.yiwu.changething.sec1.exception.YwException;
+import com.yiwu.changething.sec1.mapper.UserMapper;
+import com.yiwu.changething.sec1.utils.CommentUtil;
+import com.yiwu.changething.sec1.utils.PasswordUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,28 +19,55 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     @Autowired
-    private LoginMapper loginMapper;
+    private UserMapper userMapper;
 
-    public static final String HASH_ALGORITHM = "MD5";
-    public static final int HASH_INTERATIONS = 2;
-    public static final String HASH_SALT = "5bd6b9691273c47db7002fc80b5896";
+
+    @Autowired
+    private CommentUtil commentUtil;
+
+    @Autowired
+    private UserCache userCache;
 
     /**
-     * 生成安全的密码
+     * 通过密码登录
+     *
+     * @param name
+     * @param password
+     * @return
      */
-    public static String entryptPassword(String plainPassword) {
-        byte[] hashPassword = Digests.md5(plainPassword.getBytes(), HASH_SALT.getBytes(), HASH_INTERATIONS);
-        return Encodes.encodeHex(hashPassword);
+    public Principal loginByPassword(String name, String password) {
+        // check user
+        User user = userMapper.getUser(name);
+        if (null == user) {
+            throw new YwException(101006); //用户不存在
+        }
+        // check password
+        //PasswordUtil.generateSaltStr()获取salt的混淆值
+        if (!user.getPassword().equals(PasswordUtil.encrypt(password, user.getSalt()))) {
+            throw new YwException(101003);//密码错误
+        }
+        return loginAfterValidation(user);
     }
 
     /**
-     * 验证密码
+     * 验证(包括密码验证和手机验证码验证这两种方式）之后调用的登录逻辑
      *
-     * @param plainPassword 明文密码
-     * @param password      密文密码
-     * @return 验证成功返回true
+     * @param user
+     * @return
      */
-    public static boolean validatePassword(String plainPassword, String password) {
-        return password.equals(entryptPassword(plainPassword));
+    public Principal loginAfterValidation(User user) {
+        Principal principal = new Principal(user.getId(), user.getPhone(), user.getName(), true);
+
+        principal = userCache.cacheUser(principal); //缓存用户凭证
+
+        SecurityUtils.getSubject().login(new RestToken(principal.getToken()));
+
+        return principal;
+    }
+
+    public void cleanToken() {
+        Principal principal = commentUtil.getCurrentPrincipal();
+        userCache.removeUserToken(principal.getToken(), principal.getId().toString());
+        userCache.cleanAuthorizationCache(principal.getId());
     }
 }
