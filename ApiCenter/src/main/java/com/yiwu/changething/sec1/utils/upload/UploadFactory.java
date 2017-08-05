@@ -35,7 +35,7 @@ package com.yiwu.changething.sec1.utils.upload;
 import com.qiniu.util.Auth;
 
 /**
- * @author Maxwell <huangxiongyi@gengee.cn>
+ * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
 public class UploadFactory {
 

@@ -1,5 +1,6 @@
 package com.yiwu.changething.sec1.controller;
 
+import com.yiwu.changething.common.service.CommonService;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
 import com.yiwu.changething.sec1.service.IdleService;
@@ -20,6 +21,9 @@ public class IdleController {
     @Autowired
     private IdleService idleService;
 
+    @Autowired
+    private CommonService baseService;
+
     /**
      * 获取商品列表
      *
@@ -32,6 +36,7 @@ public class IdleController {
         resultMap.put("idleList", idleService.getIdleList(idleResModel.getName(), idleResModel.getIdleOrder(),
                 idleResModel.getOrderType(), idleResModel.getPage(), idleResModel.getPageSize()));
         resultMap.put("totalCount", idleService.getIdleCount(idleResModel.getName()));
+        resultMap.put("test", baseService.getName());
         return resultMap;
     }
 

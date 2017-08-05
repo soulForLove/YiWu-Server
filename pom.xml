@@ -9,6 +9,8 @@
     <modules>
         <module>ApiCenter</module>
         <module>DbManager</module>
+        <module>Common</module>
+        <module>Compoment</module>
     </modules>
 
     <dependencyManagement>

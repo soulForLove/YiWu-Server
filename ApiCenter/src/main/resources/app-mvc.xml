@@ -54,4 +54,6 @@
                      allow-credentials="true"/>
     </mvc:cors>
 
+    <import resource="classpath:app-rmi.xml"/>
+
 </beans>
