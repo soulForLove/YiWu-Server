@@ -37,14 +37,13 @@ package com.yiwu.changething.sec1.exception;
  */
 public class YwException extends RuntimeException {
 
-    private Integer errorCode;
+    private ErrorModel errorModel;
 
-    public YwException(Integer errorCode) {
-        this.errorCode = errorCode;
+    public YwException(ErrorModel errorModel) {
+        this.errorModel = errorModel;
     }
 
-    public Integer getErrorCode() {
-        return errorCode;
+    public ErrorModel getErrorModel() {
+        return errorModel;
     }
-
 }

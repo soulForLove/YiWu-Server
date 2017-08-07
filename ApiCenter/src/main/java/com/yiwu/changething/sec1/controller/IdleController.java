@@ -36,7 +36,6 @@ public class IdleController {
         resultMap.put("idleList", idleService.getIdleList(idleResModel.getName(), idleResModel.getIdleOrder(),
                 idleResModel.getOrderType(), idleResModel.getPage(), idleResModel.getPageSize()));
         resultMap.put("totalCount", idleService.getIdleCount(idleResModel.getName()));
-        resultMap.put("test", baseService.getName());
         return resultMap;
     }
 

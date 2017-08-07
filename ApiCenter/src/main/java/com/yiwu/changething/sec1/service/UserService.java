@@ -3,6 +3,7 @@ package com.yiwu.changething.sec1.service;
 import com.yiwu.changething.sec1.bean.Mail;
 import com.yiwu.changething.sec1.bean.Principal;
 import com.yiwu.changething.sec1.bean.User;
+import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.UserMapper;
 import com.yiwu.changething.sec1.utils.CommentUtil;
@@ -50,7 +51,7 @@ public class UserService {
     private void checkUserNameExist(String name) {
         User userInfo = userMapper.getByName(name);
         if (userInfo != null) {
-            throw new YwException(101008);
+            throw new YwException(ErrorBuilder.E101008);
         }
     }
 
@@ -62,7 +63,7 @@ public class UserService {
     private void checkUserEmailExist(String email) {
         User userInfo = userMapper.getByEmail(email);
         if (userInfo != null) {
-            throw new YwException(101009);
+            throw new YwException(ErrorBuilder.E101009);
         }
     }
 

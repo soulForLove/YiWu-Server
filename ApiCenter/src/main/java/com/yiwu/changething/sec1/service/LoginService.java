@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.Principal;
 import com.yiwu.changething.sec1.bean.User;
+import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.UserMapper;
 import com.yiwu.changething.sec1.utils.PasswordUtil;
@@ -31,12 +32,12 @@ public class LoginService {
         // check user
         User user = userMapper.getByName(name);
         if (null == user) {
-            throw new YwException(101006); //用户不存在
+            throw new YwException(ErrorBuilder.E101006); //用户不存在
         }
         // check password
         //PasswordUtil.generateSaltStr()获取salt的混淆值
         if (!user.getPassword().equals(PasswordUtil.encrypt(password, user.getSalt()))) {
-            throw new YwException(101003);//密码错误
+            throw new YwException(ErrorBuilder.E101003);//密码错误
         }
         return loginAfterValidation(user, request);
     }

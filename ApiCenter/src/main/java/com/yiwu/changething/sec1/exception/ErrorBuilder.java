@@ -32,20 +32,29 @@
 
 package com.yiwu.changething.sec1.exception;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-
 /**
- * Created by LinZhongtai <linzhongtai@gengee.cn>
+ * Created by Maxwell <huangxiongyi@gengee.cn>
  */
-public class ErrorMsgConfig {
+public class ErrorBuilder {
 
-    @Bean(name = "errorMessage")
-    public ReloadableResourceBundleMessageSource errorMsg() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setBasename("classpath:/exception");
-        return messageSource;
-    }
+    // 系统错误
+    public static final ErrorModel E101000 = new ErrorModel(101000, "未知错误");
 
+    public static final ErrorModel E101001 = new ErrorModel(101001, "系统错误");
+
+    public static final ErrorModel E101002 = new ErrorModel(101002, "用户未登录");
+
+    public static final ErrorModel E101003 = new ErrorModel(101003, "用户名或密码错误，请重新输入");
+
+    public static final ErrorModel E101004 = new ErrorModel(101004, "没有权限访问该资源");
+
+    public static final ErrorModel E101005 = new ErrorModel(101005, "参数错误");
+
+    public static final ErrorModel E101006 = new ErrorModel(101006, "未知用户");
+
+    public static final ErrorModel E101007 = new ErrorModel(101007, "不存在该商品");
+
+    public static final ErrorModel E101008 = new ErrorModel(101008, "用户名已存在");
+
+    public static final ErrorModel E101009 = new ErrorModel(101009, "邮箱已注册");
 }

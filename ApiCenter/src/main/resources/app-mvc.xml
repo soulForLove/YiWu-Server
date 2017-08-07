@@ -37,7 +37,6 @@
         <property name="cacheSeconds" value="60"/>
     </bean>
 
-    <bean class="com.yiwu.changething.sec1.exception.ErrorMsgConfig"/>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>

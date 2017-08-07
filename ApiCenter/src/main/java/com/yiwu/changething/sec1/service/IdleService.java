@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.enums.IdleOrder;
 import com.yiwu.changething.sec1.enums.OrderType;
+import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.IdleMapper;
 import com.yiwu.changething.sec1.model.IdleModel;
@@ -68,7 +69,7 @@ public class IdleService {
     public void update(IdleModel idleModel) {
         IdleModel idle = idleMapper.getIdleById(idleModel.getId());
         if (idle == null) {
-            throw new YwException(101007);
+            throw new YwException(ErrorBuilder.E101007);
         }
         idleMapper.update(idleModel);
     }
@@ -91,7 +92,7 @@ public class IdleService {
     public IdleModel getIdleById(String idleId) {
         IdleModel idleModel = idleMapper.getIdleById(idleId);
         if (idleModel == null) {
-            throw new YwException(101007);
+            throw new YwException(ErrorBuilder.E101007);
         }
         return idleModel;
     }
