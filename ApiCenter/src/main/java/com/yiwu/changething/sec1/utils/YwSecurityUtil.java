@@ -1,8 +1,11 @@
-package com.yiwu.changething.sec1.service;
+package com.yiwu.changething.sec1.utils;
 
 import com.yiwu.changething.sec1.bean.Principal;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
+import com.yiwu.changething.sec1.service.SystemVariableService;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,7 +13,9 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
-public class BaseService {
+@Component
+public class YwSecurityUtil extends SecurityUtils{
+
     /**
      * 验证用户是否登录
      *

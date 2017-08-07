@@ -22,7 +22,7 @@ public class IdleController {
     private IdleService idleService;
 
     @Autowired
-    private CommonService baseService;
+    private CommonService commonService;
 
     /**
      * 获取商品列表
@@ -36,6 +36,7 @@ public class IdleController {
         resultMap.put("idleList", idleService.getIdleList(idleResModel.getName(), idleResModel.getIdleOrder(),
                 idleResModel.getOrderType(), idleResModel.getPage(), idleResModel.getPageSize()));
         resultMap.put("totalCount", idleService.getIdleCount(idleResModel.getName()));
+        resultMap.put("test", commonService.getName());
         return resultMap;
     }
 
