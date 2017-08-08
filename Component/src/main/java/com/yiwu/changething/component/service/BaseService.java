@@ -1,4 +1,4 @@
-package com.yiwu.changething.compoment.service;
+package com.yiwu.changething.component.service;
 
 import com.yiwu.changething.common.service.CommonService;
 import org.springframework.stereotype.Service;

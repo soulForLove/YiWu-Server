@@ -25,13 +25,13 @@
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:/mybatis.xml"/>
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.yiwu.changething.compoment.model"/>
+        <property name="typeAliasesPackage" value="com.yiwu.changething.component.model"/>
 
     </bean>
 
     <bean id="mapperConfig" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
-        <property name="basePackage" value="com.yiwu.changething.compoment.mapper"/>
+        <property name="basePackage" value="com.yiwu.changething.component.mapper"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
