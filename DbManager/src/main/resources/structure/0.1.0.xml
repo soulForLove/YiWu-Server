@@ -4,5 +4,87 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
+    <changeSet author="Lin (generated)" id="create.table.yw_idle" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable tableName="yw_idle">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" remarks="物品名称" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_id" remarks="物品类别" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" remarks="详细描述" type="VARCHAR(200)"/>
+            <column name="price" remarks="单价" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num" remarks="数量" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="production_date" remarks="生产日期" type="date"/>
+            <column name="guarantee_date" remarks="保质日期" type="date"/>
+            <column name="production_place" remarks="产地" type="VARCHAR(16)"/>
+            <column name="extent" remarks="新旧程度（0-100）" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_by" type="VARCHAR(16)"/>
+            <column name="update_time" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="update_by" type="VARCHAR(16)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lin (generated)" id="create.table.yw_type" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable tableName="yw_type">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" remarks="类别名称" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lin (generated)" id="create.table.yw_user" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable tableName="yw_user">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" remarks="用户名" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" remarks="密码" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salt" remarks="混淆盐" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="avatar" remarks="头像" type="VARCHAR(255)"/>
+            <column defaultValueNumeric="0" name="deleted" remarks="是否删除" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_login_time" remarks="最后登录时间" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" remarks="创建时间" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

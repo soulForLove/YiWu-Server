@@ -3,6 +3,79 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-
+    <changeSet author="Lin (generated)" id="init.table.yw_type" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <insert tableName="yw_type">
+            <column name="id" value="1"/>
+            <column name="code" value="00"/>
+            <column name="parent_code" value="0"/>
+            <column name="name" value="生活用品"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="10"/>
+            <column name="code" value="02"/>
+            <column name="parent_code" value="0"/>
+            <column name="name" value="运动用品"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="11"/>
+            <column name="code" value="02.01"/>
+            <column name="parent_code" value="02"/>
+            <column name="name" value="篮球"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="12"/>
+            <column name="code" value="02.02"/>
+            <column name="parent_code" value="02"/>
+            <column name="name" value="足球"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="2"/>
+            <column name="code" value="00.01"/>
+            <column name="parent_code" value="00"/>
+            <column name="name" value="电灯泡"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="3"/>
+            <column name="code" value="00.02"/>
+            <column name="parent_code" value="00"/>
+            <column name="name" value="拖把"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="4"/>
+            <column name="code" value="00.03"/>
+            <column name="parent_code" value="00"/>
+            <column name="name" value="雨伞"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="5"/>
+            <column name="code" value="00.04"/>
+            <column name="parent_code" value="00"/>
+            <column name="name" value="雨衣"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="6"/>
+            <column name="code" value="01"/>
+            <column name="parent_code" value="0"/>
+            <column name="name" value="学习用品"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="7"/>
+            <column name="code" value="01.01"/>
+            <column name="parent_code" value="01"/>
+            <column name="name" value="毛笔"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="8"/>
+            <column name="code" value="01.02"/>
+            <column name="parent_code" value="01"/>
+            <column name="name" value="素描纸"/>
+        </insert>
+        <insert tableName="yw_type">
+            <column name="id" value="9"/>
+            <column name="code" value="01.03"/>
+            <column name="parent_code" value="01"/>
+            <column name="name" value="铅笔"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>
