@@ -117,6 +117,9 @@
                     <propertyFileWillOverride>true</propertyFileWillOverride>
                     <databaseChangeLogTableName>database_change_log</databaseChangeLogTableName>
                     <databaseChangeLogLockTableName>database_change_log_lock</databaseChangeLogLockTableName>
+                    <diffIncludeObjects></diffIncludeObjects>
+                    <diffTypes>data</diffTypes>
+                    <outputChangeLogFile>${project.build.outputDirectory}/test_data.xml</outputChangeLogFile>
                 </configuration>
             </plugin>
         </plugins>
