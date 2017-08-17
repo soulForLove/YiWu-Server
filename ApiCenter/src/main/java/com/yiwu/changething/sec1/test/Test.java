@@ -74,6 +74,9 @@ public class Test {
         //数据处理完成结果通知地址
         //String persistentNotifyUrl = "http://localhost:8080/ApiCenter/eventType/level/1";
         //构造一个带指定Zone对象的配置类
+
+
+
 //        Configuration cfg = new Configuration(Zone.zone0());
 //        //...其他参数参考类注释
 //        //构建持久化数据处理对象
