@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiwu.changething.sec1.mapper.OrderMapper">
+
+
+    <select id="getOrderById" resultType="com.yiwu.changething.sec1.model.OrderModel">
+          SELECT
+            yo.id,
+            yo.user_id,
+            yo.idle_id,
+            yu.name as userName,
+            yi.name as idleName,
+            yo.create_time,
+            yo.share_value
+          FROM yw_order yo
+          LEFT JOIN  yw_user yu on yu.id = yo.user_id
+          LEFT JOIN  yw_idle yi on yi.id = yo.idle_id
+          WHERE yo.id = #{orderId}
+    </select>
+
+    <insert id="insert" parameterType="com.yiwu.changething.sec1.bean.OrderBean">
+        INSERT INTO yw_order(
+          id,
+          user_id,
+          idle_id,
+          create_time,
+          share_value
+        )VALUES (
+          UUID(),
+          #{userId},
+          #{idleId},
+          now(),
+          #{shareValue}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.yiwu.changething.sec1.bean.OrderBean">
+        UPDATE  yw_order
+        SET
+          idle_id = #{idleId},
+          user_id = #{userId},
+          update_time = now(),
+          share_value = #{shareValue}
+        WHERE
+          id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM yw_order WHERE id = #{orderId}
+    </delete>
+</mapper>
