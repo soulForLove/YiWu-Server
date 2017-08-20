@@ -27,7 +27,7 @@
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitionMap">
             <map>
-                <entry key="/idle/**" value="idleAuth"/>
+                <!--<entry key="/idle/**" value="idleAuth"/>-->
             </map>
         </property>
 

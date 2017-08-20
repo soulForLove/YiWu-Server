@@ -5,7 +5,9 @@ import com.yiwu.changething.sec1.enums.OrderType;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.IdleMapper;
+import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.model.IdleModel;
+import com.yiwu.changething.sec1.model.IdleResModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,30 +26,25 @@ public class IdleService {
     /**
      * 获取商品列表
      *
-     * @param name
-     * @param idleOrder
-     * @param orderType
-     * @param page
-     * @param pageSize
+     * @param idleResModel
      * @return
      */
-    public List<IdleModel> getIdleList(String name, IdleOrder idleOrder, OrderType orderType, Integer page,
-                                       Integer pageSize) {
-        Integer pageIndex = null;
-        if (page != null && pageSize != null) {
-            pageIndex = (page - 1) * pageSize;
+    public List<IdleBean> getIdleList(IdleResModel idleResModel) {
+
+        if (idleResModel.getPage() != null && idleResModel.getPageSize() != null) {
+            idleResModel.setPage((idleResModel.getPage() - 1) * idleResModel.getPageSize());
         }
-        return idleMapper.getIdleList(name, idleOrder, orderType, pageIndex, pageSize);
+        return idleMapper.getIdleList(idleResModel);
     }
 
     /**
      * 获取商品列表总数
      *
-     * @param name
+     * @param idleResModel
      * @return
      */
-    public Integer getIdleCount(String name) {
-        return idleMapper.getIdleCount(name);
+    public Integer getIdleCount(IdleResModel idleResModel) {
+        return idleMapper.getIdleCount(idleResModel);
     }
 
     /**
@@ -56,8 +53,7 @@ public class IdleService {
      * @param idleModel
      */
     public void insert(IdleModel idleModel) {
-        String id = UUID.randomUUID().toString();
-        idleModel.setId(id);
+        idleModel.setId(UUID.randomUUID().toString());
         idleMapper.insert(idleModel);
     }
 
@@ -67,7 +63,7 @@ public class IdleService {
      * @param idleModel
      */
     public void update(IdleModel idleModel) {
-        IdleModel idle = idleMapper.getIdleById(idleModel.getId());
+        IdleBean idle = idleMapper.getIdleById(idleModel.getId());
         if (idle == null) {
             throw new YwException(ErrorBuilder.E101007);
         }
@@ -89,8 +85,8 @@ public class IdleService {
      * @param idleId
      * @return
      */
-    public IdleModel getIdleById(String idleId) {
-        IdleModel idleModel = idleMapper.getIdleById(idleId);
+    public IdleBean getIdleById(String idleId) {
+        IdleBean idleModel = idleMapper.getIdleById(idleId);
         if (idleModel == null) {
             throw new YwException(ErrorBuilder.E101007);
         }

@@ -1,4 +1,4 @@
-package com.yiwu.changething.sec1.model;
+package com.yiwu.changething.sec1.bean;
 
 import org.springframework.format.annotation.NumberFormat;
 
@@ -9,22 +9,18 @@ import java.util.Date;
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
-public class IdleModel {
+public class IdleBean {
 
     private String id;
 
-    @NotNull
     private String name;//商品名称
 
-    @NotNull
     private String typeId;//物品类别id
 
     private String description;//描述
 
-    @NotNull
     private Double price;//单价
 
-    @NumberFormat
     private Integer num;//数量
 
     private Date productionDate;//生产日期
@@ -33,13 +29,12 @@ public class IdleModel {
 
     private String productionPlace;//产地
 
-    @Max(100)
     private Integer extent;//新旧程度（0-100百分比）
 
     private Date createTime;//创建时间
 
     private Date updateTime;//更新时间
-    @NotNull
+
     private String createBy;//创建者
 
     private String updateBy;//修改者

@@ -1,6 +1,7 @@
 package com.yiwu.changething.sec1.controller;
 
 import com.yiwu.changething.common.service.CommonService;
+import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
 import com.yiwu.changething.sec1.service.IdleService;
@@ -33,10 +34,9 @@ public class IdleController {
     @GetMapping("/list")
     public Map<String, Object> getIdleList(@Valid IdleResModel idleResModel) {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("idleList", idleService.getIdleList(idleResModel.getName(), idleResModel.getIdleOrder(),
-                idleResModel.getOrderType(), idleResModel.getPage(), idleResModel.getPageSize()));
-        resultMap.put("totalCount", idleService.getIdleCount(idleResModel.getName()));
-        resultMap.put("test", commonService.getName());
+        resultMap.put("idleList", idleService.getIdleList(idleResModel));
+        resultMap.put("totalCount", idleService.getIdleCount(idleResModel));
+//        resultMap.put("test", commonService.getName());
         return resultMap;
     }
 
@@ -78,7 +78,7 @@ public class IdleController {
      * @return
      */
     @GetMapping("/{idleId}")
-    public IdleModel getIdleById(@PathVariable String idleId) {
+    public IdleBean getIdleById(@PathVariable String idleId) {
         return idleService.getIdleById(idleId);
     }
 }

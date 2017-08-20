@@ -4,6 +4,7 @@ package com.yiwu.changething.sec1.enums;
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
 public enum IdleOrder {
+
     PRICE("price", "单价"),
 
     EXTENT("extent", "新旧程度");
