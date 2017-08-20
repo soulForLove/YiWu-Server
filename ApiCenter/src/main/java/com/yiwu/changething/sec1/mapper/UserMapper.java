@@ -1,6 +1,6 @@
 package com.yiwu.changething.sec1.mapper;
 
-import com.yiwu.changething.sec1.bean.User;
+import com.yiwu.changething.sec1.bean.UserBean;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -14,14 +14,14 @@ public interface UserMapper {
      * @param name
      * @return
      */
-    User getByName(@Param("name") String name);
+    UserBean getByName(@Param("name") String name);
 
     /**
      * add user
      *
      * @param user
      */
-    void insert(User user);
+    void insert(UserBean user);
 
     /**
      * get user by email
@@ -29,12 +29,12 @@ public interface UserMapper {
      * @param email
      * @return
      */
-    User getByEmail(@Param("email") String email);
+    UserBean getByEmail(@Param("email") String email);
 
     /**
      * 修改密码
      *
      * @param user
      */
-    void updatePassword(User user);
+    void updatePassword(UserBean user);
 }

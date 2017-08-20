@@ -3,7 +3,7 @@ package com.yiwu.changething.sec1.bean;
 /**
  * Created by linww <linwenwei@gengee.cn>
  */
-public class User {
+public class UserBean {
 
     private String id;
 
@@ -13,11 +13,21 @@ public class User {
 
     private String phone;
 
-    private String salt;
+    private String salt;//混淆盐
 
-    private String avatar;
+    private String avatar;//头像
 
-    private String email;
+    private String email;//邮箱
+
+    private Integer shareValue;//共享值
+
+    public Integer getShareValue() {
+        return shareValue;
+    }
+
+    public void setShareValue(Integer shareValue) {
+        this.shareValue = shareValue;
+    }
 
     public String getEmail() {
         return email;

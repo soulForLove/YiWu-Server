@@ -1,10 +1,9 @@
 package com.yiwu.changething.sec1.controller;
 
-import com.yiwu.changething.sec1.bean.User;
+import com.yiwu.changething.sec1.bean.UserBean;
 import com.yiwu.changething.sec1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -24,7 +23,7 @@ public class UserController {
      * @param user
      */
     @PostMapping
-    public void insertUser(@RequestBody @Valid User user) {
+    public void insertUser(@RequestBody @Valid UserBean user) {
         userService.insertUser(user);
     }
 

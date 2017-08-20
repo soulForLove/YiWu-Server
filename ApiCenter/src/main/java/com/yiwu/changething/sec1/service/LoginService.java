@@ -1,7 +1,7 @@
 package com.yiwu.changething.sec1.service;
 
-import com.yiwu.changething.sec1.bean.Principal;
-import com.yiwu.changething.sec1.bean.User;
+import com.yiwu.changething.sec1.utils.Principal;
+import com.yiwu.changething.sec1.bean.UserBean;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.UserMapper;
@@ -30,7 +30,7 @@ public class LoginService {
      */
     public Principal loginByPassword(String name, String password, HttpServletRequest request) {
         // check user
-        User user = userMapper.getByName(name);
+        UserBean user = userMapper.getByName(name);
         if (null == user) {
             throw new YwException(ErrorBuilder.E101006); //用户不存在
         }
@@ -48,7 +48,7 @@ public class LoginService {
      * @param user
      * @return
      */
-    private Principal loginAfterValidation(User user, HttpServletRequest request) {
+    private Principal loginAfterValidation(UserBean user, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Principal principal = new Principal(user.getId(), user.getPhone(), user.getName(), user.getAvatar(), user.getEmail());
         session.setAttribute(SystemVariableService.USER_INFO, principal);

@@ -4,6 +4,7 @@ package com.yiwu.changething.sec1.enums;
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
 public enum OrderType {
+
     DESC("desc", "降序"),
 
     ASC("asc", "升序");

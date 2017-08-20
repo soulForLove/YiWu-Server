@@ -1,8 +1,7 @@
 package com.yiwu.changething.sec1.service;
 
-import com.yiwu.changething.sec1.bean.Principal;
+import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.exception.UploadException;
-import com.yiwu.changething.sec1.utils.CommentUtil;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import com.yiwu.changething.sec1.utils.upload.UploadFactory;
 import com.yiwu.changething.sec1.utils.upload.UploadUtil;

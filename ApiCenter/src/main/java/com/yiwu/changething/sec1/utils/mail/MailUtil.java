@@ -1,6 +1,6 @@
 package com.yiwu.changething.sec1.utils.mail;
 
-import com.yiwu.changething.sec1.bean.Mail;
+import com.yiwu.changething.sec1.utils.Mail;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;

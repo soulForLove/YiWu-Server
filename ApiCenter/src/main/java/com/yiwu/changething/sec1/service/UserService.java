@@ -1,16 +1,13 @@
 package com.yiwu.changething.sec1.service;
 
-import com.yiwu.changething.sec1.bean.Mail;
-import com.yiwu.changething.sec1.bean.Principal;
-import com.yiwu.changething.sec1.bean.User;
+import com.yiwu.changething.sec1.utils.Principal;
+import com.yiwu.changething.sec1.bean.UserBean;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.UserMapper;
 import com.yiwu.changething.sec1.utils.CommentUtil;
 import com.yiwu.changething.sec1.utils.PasswordUtil;
-import com.yiwu.changething.sec1.utils.mail.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +26,10 @@ public class UserService {
     @Autowired
     private CommentUtil commentUtil;
 
-    public void insertUser(User userModel) {
+    public void insertUser(UserBean userModel) {
         checkUserNameExist(userModel.getName());
         checkUserEmailExist(userModel.getEmail());
-        User user = new User();
+        UserBean user = new UserBean();
         user.setId(UUID.randomUUID().toString());
         user.setName(userModel.getName());
         user.setEmail(userModel.getEmail());
@@ -49,7 +46,7 @@ public class UserService {
      * @param name
      */
     private void checkUserNameExist(String name) {
-        User userInfo = userMapper.getByName(name);
+        UserBean userInfo = userMapper.getByName(name);
         if (userInfo != null) {
             throw new YwException(ErrorBuilder.E101008);
         }
@@ -61,7 +58,7 @@ public class UserService {
      * @param email
      */
     private void checkUserEmailExist(String email) {
-        User userInfo = userMapper.getByEmail(email);
+        UserBean userInfo = userMapper.getByEmail(email);
         if (userInfo != null) {
             throw new YwException(ErrorBuilder.E101009);
         }
@@ -75,7 +72,7 @@ public class UserService {
      */
     public void updatePassword(String password, HttpServletRequest request) {
         Principal currentPrincipal = commentUtil.getCurrentPrincipal(request);
-        User user = userMapper.getByName(currentPrincipal.getName());
+        UserBean user = userMapper.getByName(currentPrincipal.getName());
         HttpSession session = request.getSession();
         user.setSalt(PasswordUtil.generateSaltStr());
         user.setPassword(PasswordUtil.encrypt(password, user.getSalt()));

@@ -1,4 +1,4 @@
-package com.yiwu.changething.sec1.bean;
+package com.yiwu.changething.sec1.utils;
 
 import java.io.Serializable;
 

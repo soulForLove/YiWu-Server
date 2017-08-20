@@ -30,39 +30,66 @@
  * contact GenGee Technology Co. Ltd at www.GenGee.cn.
  */
 
-package com.yiwu.changething.sec1.bean;
+package com.yiwu.changething.sec1.utils;
 
-import org.apache.shiro.authc.AuthenticationToken;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Maxwell <huangxiongyi@gengee.cn>
  */
-public class RestToken implements AuthenticationToken {
+@Component
+public class TokenExpireComponent {
 
-    private String token;
+    @Value("${security.key.expire}")
+    private Long keyExpire;
 
-    private Principal principal;
+    @Value("${security.token.expire}")
+    private Long tokenExpire;
 
-    public RestToken(String token) {
-        this.token = token;
+    private String keyPrefix = "GSM:TOKEN:KEY:";
+
+    private String roleKeyPrefix = "GSM:ROLE:KEY:";
+
+    private String permissionsKeyPrefix = "GSM:PERMISSIONS:KEY:";
+
+    public Long getKeyExpire() {
+        return keyExpire;
     }
 
-    public RestToken(String token, Principal principal) {
-        this.token = token;
-        this.principal = principal;
+    public void setKeyExpire(Long keyExpire) {
+        this.keyExpire = keyExpire;
     }
 
-    @Override
-    public Object getPrincipal() {
-        return principal;
+    public Long getTokenExpire() {
+        return tokenExpire;
     }
 
-    @Override
-    public Object getCredentials() {
-        return token;
+    public void setTokenExpire(Long tokenExpire) {
+        this.tokenExpire = tokenExpire;
     }
 
-    public void setPrincipal(Principal principal) {
-        this.principal = principal;
+    public String getKeyPrefix() {
+        return keyPrefix;
+    }
+
+    public void setKeyPrefix(String keyPrefix) {
+        this.keyPrefix = keyPrefix;
+    }
+
+    public String getRoleKeyPrefix() {
+        return roleKeyPrefix;
+    }
+
+    public void setRoleKeyPrefix(String roleKeyPrefix) {
+        this.roleKeyPrefix = roleKeyPrefix;
+    }
+
+    public String getPermissionsKeyPrefix() {
+        return permissionsKeyPrefix;
+    }
+
+    public void setPermissionsKeyPrefix(String permissionsKeyPrefix) {
+        this.permissionsKeyPrefix = permissionsKeyPrefix;
     }
 }
