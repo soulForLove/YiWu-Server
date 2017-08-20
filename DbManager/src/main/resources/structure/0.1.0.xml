@@ -36,6 +36,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="update_by" type="VARCHAR(16)"/>
+            <column defaultValueNumeric="0" name="share" remarks="是否共享" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="share_value" remarks="共享值" type="INT"/>
         </createTable>
     </changeSet>
     <changeSet author="Lin (generated)" id="create.table.yw_type" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
@@ -84,7 +88,33 @@
             <column name="create_time" remarks="创建时间" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
+            <column defaultValueNumeric="0" name="share_value" type="INT"/>
         </createTable>
     </changeSet>
 
+    <changeSet author="Lin (generated)" id="create.table.yw_order" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable tableName="yw_order">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="idle_id" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="idle_name" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="share_value" remarks="共享值" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
