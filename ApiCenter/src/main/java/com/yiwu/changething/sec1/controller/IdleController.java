@@ -4,6 +4,7 @@ import com.yiwu.changething.common.service.CommonService;
 import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
+import com.yiwu.changething.sec1.model.IdleShareResModel;
 import com.yiwu.changething.sec1.service.IdleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -80,5 +81,16 @@ public class IdleController {
     @GetMapping("/{idleId}")
     public IdleBean getIdleById(@PathVariable String idleId) {
         return idleService.getIdleById(idleId);
+    }
+
+    /**
+     * 更新商品共享状态以及共享值
+     *
+     * @param idleShareResModel
+     */
+    @PutMapping("/share")
+    public void updateShare(@RequestBody @Valid IdleShareResModel idleShareResModel) {
+        idleService.updateShare(idleShareResModel.getShare(), idleShareResModel.getShareValue(),
+                idleShareResModel.getIdleId());
     }
 }

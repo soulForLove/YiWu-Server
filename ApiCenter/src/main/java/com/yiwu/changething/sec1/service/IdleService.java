@@ -1,5 +1,6 @@
 package com.yiwu.changething.sec1.service;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.yiwu.changething.sec1.enums.IdleOrder;
 import com.yiwu.changething.sec1.enums.OrderType;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
@@ -63,10 +64,7 @@ public class IdleService {
      * @param idleModel
      */
     public void update(IdleModel idleModel) {
-        IdleBean idle = idleMapper.getIdleById(idleModel.getId());
-        if (idle == null) {
-            throw new YwException(ErrorBuilder.E101007);
-        }
+        checkIdleExist(idleModel.getId());
         idleMapper.update(idleModel);
     }
 
@@ -91,5 +89,32 @@ public class IdleService {
             throw new YwException(ErrorBuilder.E101007);
         }
         return idleModel;
+    }
+
+    /**
+     * 验证商品是否存在
+     *
+     * @param idleId
+     */
+    private void checkIdleExist(String idleId) {
+        IdleBean idleModel = idleMapper.getIdleById(idleId);
+        if (idleModel == null) {
+            throw new YwException(ErrorBuilder.E101007);
+        }
+    }
+
+    /**
+     * 更新商品共享状态以及共享值
+     *
+     * @param share
+     * @param shareValue
+     * @param idleId
+     */
+    public void updateShare(Boolean share, Integer shareValue, String idleId) {
+        checkIdleExist(idleId);
+        if (!share) {
+            shareValue = 0;
+        }
+        idleMapper.updateShare(share, shareValue, idleId);
     }
 }

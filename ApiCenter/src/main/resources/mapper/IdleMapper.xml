@@ -181,4 +181,11 @@
     <delete id="deleteById">
         DELETE FROM yw_idle WHERE id = #{idleId}
     </delete>
+
+    <update id="updateShare">
+        UPDATE yw_idle
+        SET share = #{share},
+        share_value = #{shareValue}
+        WHERE id = #{idleId}
+    </update>
 </mapper>

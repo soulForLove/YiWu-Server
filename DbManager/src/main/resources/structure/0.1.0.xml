@@ -36,7 +36,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="update_by" type="VARCHAR(16)"/>
-            <column defaultValueNumeric="0" name="share" remarks="是否共享" type="BIT(1)">
+            <column defaultValueNumeric="0" name="share" remarks="是否共享(0-否,1-是)" type="BIT(1)">
                 <constraints nullable="false"/>
             </column>
             <column name="share_value" remarks="共享值" type="INT"/>
@@ -108,6 +108,9 @@
             </column>
             <column name="update_time" type="datetime(6)"/>
             <column name="share_value" remarks="共享值" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="share" remarks="状态（0-未完成，1-进行中，2-已完成）" type="BIT(1)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
