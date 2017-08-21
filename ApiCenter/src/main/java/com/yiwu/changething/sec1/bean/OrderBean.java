@@ -1,5 +1,8 @@
 package com.yiwu.changething.sec1.bean;
 
+import com.yiwu.changething.sec1.enums.OrderStatusType;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -9,15 +12,28 @@ public class OrderBean {
 
     private String id;
 
+    @NotNull
     private String userId;
 
+    @NotNull
     private String idleId;
 
     private Date createTime;
 
     private Date updateTime;
 
+    @NotNull
     private Integer shareValue;
+
+    private OrderStatusType status;
+
+    public OrderStatusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatusType status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;

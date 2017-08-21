@@ -59,4 +59,6 @@ public class ErrorBuilder {
     public static final ErrorModel E101009 = new ErrorModel(101009, "邮箱已注册");
 
     public static final ErrorModel E101010 = new ErrorModel(101009, "该订单不存在");
+
+    public static final ErrorModel E101011 = new ErrorModel(101009, "共享值不足");
 }

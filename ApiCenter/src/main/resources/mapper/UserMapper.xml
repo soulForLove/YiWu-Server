@@ -60,4 +60,30 @@
     <update id="updatePassword">
         UPDATE yw_user SET password = #{password} , salt = #{salt} where id = #{id}
     </update>
+
+    <select id="getShareValue" resultType="java.lang.Integer">
+        SELECT share_value
+        FROM yw_user
+        WHERE id = #{userId}
+    </select>
+
+    <update id="updateShareValue">
+        UPDATE yw_user
+        SET share_value = #{shareValue}
+        where id = #{userId}
+    </update>
+
+    <select id="getById" resultType="com.yiwu.changething.sec1.bean.UserBean">
+        SELECT
+        id,
+        name,
+        password,
+        salt,
+        phone,
+        email
+        FROM
+        yw_user
+        WHERE
+        id = #{userId}
+    </select>
 </mapper>

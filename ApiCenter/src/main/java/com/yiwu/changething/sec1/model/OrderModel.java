@@ -1,5 +1,7 @@
 package com.yiwu.changething.sec1.model;
 
+import com.yiwu.changething.sec1.enums.OrderStatusType;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -23,6 +25,16 @@ public class OrderModel {
     private Date updateTime;
 
     private Integer shareValue;
+
+    private OrderStatusType status;
+
+    public OrderStatusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatusType status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;

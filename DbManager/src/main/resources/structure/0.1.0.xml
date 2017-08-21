@@ -31,7 +31,9 @@
             <column name="create_time" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
-            <column name="create_by" type="VARCHAR(16)"/>
+            <column name="create_by" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
             <column name="update_time" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
@@ -110,7 +112,7 @@
             <column name="share_value" remarks="共享值" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueNumeric="0" name="share" remarks="状态（0-未完成，1-进行中，2-已完成）" type="BIT(1)">
+            <column name="status" type="VARCHAR(16)" remarks="状态,参考OrderStatusType">
                 <constraints nullable="false"/>
             </column>
         </createTable>

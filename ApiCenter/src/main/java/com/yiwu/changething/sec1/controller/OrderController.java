@@ -1,11 +1,13 @@
 package com.yiwu.changething.sec1.controller;
 
 import com.yiwu.changething.sec1.bean.OrderBean;
+import com.yiwu.changething.sec1.enums.OrderStatusType;
 import com.yiwu.changething.sec1.model.OrderModel;
 import com.yiwu.changething.sec1.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -57,5 +59,18 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public OrderModel getIdleById(@PathVariable String orderId) {
         return orderService.getOrderById(orderId);
+    }
+
+    /**
+     * 更新订单状态
+     *
+     * @param orderId
+     * @param status
+     * @param request
+     */
+    @PutMapping("/status/{orderId}")
+    public void updateOrderStatus(@PathVariable String orderId, @RequestParam OrderStatusType status,
+                                  HttpServletRequest request) {
+        orderService.updateOrderStatus(orderId, status, request);
     }
 }

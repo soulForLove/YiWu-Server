@@ -24,13 +24,15 @@
           user_id,
           idle_id,
           create_time,
-          share_value
+          share_value,
+          status
         )VALUES (
           UUID(),
           #{userId},
           #{idleId},
           now(),
-          #{shareValue}
+          #{shareValue},
+          #{status}
         )
     </insert>
 
@@ -48,4 +50,12 @@
     <delete id="deleteById">
         DELETE FROM yw_order WHERE id = #{orderId}
     </delete>
+
+    <update id="updateStatus">
+        UPDATE yw_order
+        SET status = #{status},
+        update_time = now()
+        WHERE id = #{orderId}
+    </update>
+
 </mapper>
