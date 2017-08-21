@@ -43,6 +43,16 @@ public class IdleBean {
 
     private Integer shareValue;//共享值
 
+    private Integer shareCycle;//共享周期
+
+    public Integer getShareCycle() {
+        return shareCycle;
+    }
+
+    public void setShareCycle(Integer shareCycle) {
+        this.shareCycle = shareCycle;
+    }
+
     public String getId() {
         return id;
     }

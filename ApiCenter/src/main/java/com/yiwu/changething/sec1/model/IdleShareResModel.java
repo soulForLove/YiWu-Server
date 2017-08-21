@@ -12,8 +12,18 @@ public class IdleShareResModel {
 
     private Integer shareValue;//共享值
 
+    private Integer shareCycle;//共享周期
+
     @NotNull
     private String idleId;//商品id
+
+    public Integer getShareCycle() {
+        return shareCycle;
+    }
+
+    public void setShareCycle(Integer shareCycle) {
+        this.shareCycle = shareCycle;
+    }
 
     public Boolean getShare() {
         return share;

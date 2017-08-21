@@ -84,13 +84,13 @@ public class IdleController {
     }
 
     /**
-     * 更新商品共享状态以及共享值
+     * 更新商品共享状态以及共享值、共享周期
      *
      * @param idleShareResModel
      */
     @PutMapping("/share")
     public void updateShare(@RequestBody @Valid IdleShareResModel idleShareResModel) {
         idleService.updateShare(idleShareResModel.getShare(), idleShareResModel.getShareValue(),
-                idleShareResModel.getIdleId());
+                idleShareResModel.getIdleId(), idleShareResModel.getShareCycle());
     }
 }

@@ -60,11 +60,14 @@ public interface IdleMapper {
     void deleteById(@Param("idleId") String idleId);
 
     /**
-     * 更新商品共享状态以及共享值
-     *
+     * 更新商品共享状态以及共享值、共享周期
      * @param share
      * @param shareValue
      * @param idleId
+     * @param shareCycle
      */
-    void updateShare(@Param("share") Boolean share, @Param("shareValue") Integer shareValue, @Param("idleId") String idleId);
+    void updateShare(@Param("share") Boolean share,
+                     @Param("shareValue") Integer shareValue,
+                     @Param("idleId") String idleId,
+                     @Param("shareCycle") Integer shareCycle);
 }

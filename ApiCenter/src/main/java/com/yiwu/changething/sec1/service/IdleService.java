@@ -104,17 +104,18 @@ public class IdleService {
     }
 
     /**
-     * 更新商品共享状态以及共享值
+     * 更新商品共享状态以及共享值、共享周期
      *
      * @param share
      * @param shareValue
      * @param idleId
+     * @param shareCycle
      */
-    public void updateShare(Boolean share, Integer shareValue, String idleId) {
+    public void updateShare(Boolean share, Integer shareValue, String idleId, Integer shareCycle) {
         checkIdleExist(idleId);
         if (!share) {
             shareValue = 0;
         }
-        idleMapper.updateShare(share, shareValue, idleId);
+        idleMapper.updateShare(share, shareValue, idleId, shareCycle);
     }
 }

@@ -20,7 +20,8 @@
         yi.update_time,
         yi.update_by,
         yi.share,
-        yi.share_value
+        yi.share_value,
+        yi.share_cycle
         FROM
         yw_idle yi
         LEFT JOIN yw_type yt ON yi.type_id = yt.id
@@ -109,7 +110,8 @@
         yi.update_time,
         yi.update_by,
         yi.share,
-        yi.share_value
+        yi.share_value,
+        yi.share_cycle
         FROM
         yw_idle yi
         <where>
@@ -136,7 +138,8 @@
         update_time,
         update_by,
         share,
-        share_value
+        share_value,
+        share_cycle
         )
         VALUES  (
         #{id},
@@ -154,7 +157,8 @@
         now(),
         null,
         0,
-        0
+        0,
+        #{shareCycle}
         )
     </insert>
 
@@ -173,7 +177,8 @@
         update_time = now(),
         update_by = #{updateBy},
         share = #{share},
-        share_value = #{shareValue}
+        share_value = #{shareValue},
+        share_cycle = #{shareCycle}
         WHERE
         id =  #{id}
     </update>
@@ -185,7 +190,8 @@
     <update id="updateShare">
         UPDATE yw_idle
         SET share = #{share},
-        share_value = #{shareValue}
+        share_value = #{shareValue},
+        share_cycle = #{shareCycle}
         WHERE id = #{idleId}
     </update>
 </mapper>
