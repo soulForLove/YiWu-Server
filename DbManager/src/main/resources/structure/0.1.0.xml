@@ -38,14 +38,11 @@
                 <constraints nullable="false"/>
             </column>
             <column name="update_by" type="VARCHAR(16)"/>
-            <column defaultValueNumeric="0" name="share" remarks="是否共享(0-否,1-是)" type="BIT(1)">
-                <constraints nullable="false"/>
-            </column>
             <column name="share_value" remarks="共享值" type="INT"/>
             <column name="share_cycle" remarks="共享周期" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="status" type="VARCHAR(16)" remarks="商品状态">
+            <column name="status" type="VARCHAR(16)" remarks="商品状态ShareStatus">
                 <constraints nullable="false"/>
             </column>
         </createTable>

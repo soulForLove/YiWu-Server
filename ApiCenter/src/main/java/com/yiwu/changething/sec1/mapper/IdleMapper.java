@@ -3,6 +3,7 @@ package com.yiwu.changething.sec1.mapper;
 import com.yiwu.changething.sec1.enums.IdleOrder;
 import com.yiwu.changething.sec1.enums.OrderType;
 import com.yiwu.changething.sec1.bean.IdleBean;
+import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
 import org.apache.ibatis.annotations.Param;
@@ -66,8 +67,8 @@ public interface IdleMapper {
      * @param idleId
      * @param shareCycle
      */
-    void updateShare(@Param("share") Boolean share,
-                     @Param("shareValue") Integer shareValue,
-                     @Param("idleId") String idleId,
-                     @Param("shareCycle") Integer shareCycle);
+    void updateShareStatus(@Param("share") ShareStatus share,
+                           @Param("shareValue") Integer shareValue,
+                           @Param("idleId") String idleId,
+                           @Param("shareCycle") Integer shareCycle);
 }

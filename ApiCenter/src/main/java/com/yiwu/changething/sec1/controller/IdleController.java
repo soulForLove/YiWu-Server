@@ -89,9 +89,9 @@ public class IdleController {
      *
      * @param idleShareResModel
      */
-    @PutMapping("/share")
-    public void updateShare(@RequestBody @Valid IdleShareResModel idleShareResModel, HttpServletRequest request) {
-        idleService.updateShare(idleShareResModel.getShare(), idleShareResModel.getShareValue(),
+    @PutMapping("/shareStatus")
+    public void updateShareStatus(@RequestBody @Valid IdleShareResModel idleShareResModel, HttpServletRequest request) {
+        idleService.updateShareStatus(idleShareResModel.getShareStatus(), idleShareResModel.getShareValue(),
                 idleShareResModel.getIdleId(), idleShareResModel.getShareCycle(), request);
     }
 }

@@ -1,5 +1,6 @@
 package com.yiwu.changething.sec1.model;
 
+import com.yiwu.changething.sec1.enums.ShareStatus;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.Max;
@@ -44,7 +45,7 @@ public class IdleModel {
 
     private String updateBy;//修改者
 
-    private Boolean share;//是否共享
+    private ShareStatus shareStatus;//是否共享
 
     private Integer shareValue;//共享值
 
@@ -170,12 +171,12 @@ public class IdleModel {
         this.updateBy = updateBy;
     }
 
-    public Boolean getShare() {
-        return share;
+    public ShareStatus getShareStatus() {
+        return shareStatus;
     }
 
-    public void setShare(Boolean share) {
-        this.share = share;
+    public void setShareStatus(ShareStatus shareStatus) {
+        this.shareStatus = shareStatus;
     }
 
     public Integer getShareValue() {

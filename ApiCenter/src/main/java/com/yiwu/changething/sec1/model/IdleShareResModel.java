@@ -1,5 +1,7 @@
 package com.yiwu.changething.sec1.model;
 
+import com.yiwu.changething.sec1.enums.ShareStatus;
+
 import javax.validation.constraints.NotNull;
 
 /**
@@ -8,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class IdleShareResModel {
 
     @NotNull
-    private Boolean share;//是否共享
+    private ShareStatus shareStatus;//是否共享
 
     private Integer shareValue;//共享值
 
@@ -25,12 +27,12 @@ public class IdleShareResModel {
         this.shareCycle = shareCycle;
     }
 
-    public Boolean getShare() {
-        return share;
+    public ShareStatus getShareStatus() {
+        return shareStatus;
     }
 
-    public void setShare(Boolean share) {
-        this.share = share;
+    public void setShareStatus(ShareStatus shareStatus) {
+        this.shareStatus = shareStatus;
     }
 
     public Integer getShareValue() {

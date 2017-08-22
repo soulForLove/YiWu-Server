@@ -49,13 +49,6 @@
         id = #{id}
     </update>
 
-    <update id="updateStatus">
-        UPDATE yw_share
-        SET status = #{status},
-        update_time = now()
-        WHERE id = #{shareId}
-    </update>
-
     <select id="getShareById" resultType="com.yiwu.changething.sec1.bean.ShareBean">
         SELECT
           id,

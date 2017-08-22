@@ -180,18 +180,26 @@
         share_value = #{shareValue},
         share_cycle = #{shareCycle}
         WHERE
-        id =  #{id}
+        id =  #{id} and status = 'NOTLOCK'
     </update>
 
     <delete id="deleteById">
         DELETE FROM yw_idle WHERE id = #{idleId}
     </delete>
 
-    <update id="updateShare">
+    <update id="updateShareStatus">
         UPDATE yw_idle
-        SET share = #{share},
-        share_value = #{shareValue},
-        share_cycle = #{shareCycle}
+        <set>
+            <if test="share != null">
+                share = #{share},
+            </if>
+            <if test="shareValue != null">
+                share_value = #{shareValue},
+            </if>
+            <if test="shareCycle != null">
+                share_cycle = #{shareCycle}
+            </if>
+        </set>
         WHERE id = #{idleId}
     </update>
 </mapper>

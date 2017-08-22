@@ -1,9 +1,7 @@
 package com.yiwu.changething.sec1.service;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.yiwu.changething.sec1.bean.ShareBean;
-import com.yiwu.changething.sec1.enums.IdleOrder;
-import com.yiwu.changething.sec1.enums.OrderType;
+import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.IdleMapper;
@@ -115,21 +113,23 @@ public class IdleService {
     /**
      * 更新商品共享状态以及共享值、共享周期
      *
-     * @param share
+     * @param shareStatus
      * @param shareValue
      * @param idleId
      * @param shareCycle
      */
-    public void updateShare(Boolean share, Integer shareValue, String idleId, Integer shareCycle,
+    public void updateShareStatus(ShareStatus shareStatus, Integer shareValue, String idleId, Integer shareCycle,
                             HttpServletRequest request) {
         checkIdleExist(idleId);
-        if (!share) {
-            shareValue = 0;
-        }
-        idleMapper.updateShare(share, shareValue, idleId, shareCycle);
-        if (share) {
-            //将商品上传共享圈子
-            insertShare(idleId, shareValue, shareCycle, request);
+        switch (shareStatus) {
+            case LOCK:
+                idleMapper.updateShareStatus(shareStatus, 0, idleId, shareCycle);
+                break;
+            case NOTLOCK:
+                idleMapper.updateShareStatus(shareStatus, shareValue, idleId, shareCycle);
+                //将商品上传共享圈子
+                insertShare(idleId, shareValue, shareCycle, request);
+                break;
         }
     }
 

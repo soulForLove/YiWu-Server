@@ -1,7 +1,6 @@
 package com.yiwu.changething.sec1.mapper;
 
 import com.yiwu.changething.sec1.model.ShareModel;
-import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.bean.ShareBean;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +17,4 @@ public interface ShareMapper {
 
     ShareBean getShareByIdleId(@Param("idleId") String idleId);
 
-    void updateStatus(@Param("shareId") String shareId, @Param("status") ShareStatus status);
 }
