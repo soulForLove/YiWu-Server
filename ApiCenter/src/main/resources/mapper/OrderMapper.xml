@@ -13,7 +13,7 @@
             yo.create_time,
             yo.share_value,
             yo.share_cycle,
-            yo.share_num
+            yo.cycle_num
           FROM yw_order yo
           LEFT JOIN  yw_user yu on yu.id = yo.user_id
           LEFT JOIN  yw_idle yi on yi.id = yo.idle_id
@@ -29,7 +29,7 @@
           share_value,
           status,
           share_cycle,
-          share_num
+          cycle_num
         )VALUES (
           UUID(),
           #{userId},
@@ -38,7 +38,7 @@
           #{shareValue},
           #{status},
           #{shareCycle},
-          #{shareNum}
+          #{cycleNum}
         )
     </insert>
 
@@ -50,7 +50,7 @@
           update_time = now(),
           share_value = #{shareValue},
           share_cycle = #{shareCycle},
-          share_num = #{shareNum}
+          cycle_num = #{cycleNum}
         WHERE
           id = #{id}
     </update>
@@ -71,6 +71,13 @@
             count(DISTINCT id)
         FROM
             yw_order
-        WHERE  idle_id = #{idleId} and status = 'COMPLETED'
+        WHERE  idle_id = #{idleId} and status != 'NOTPAY'
     </select>
+
+    <update id="renewOrder">
+        UPDATE yw_order
+        SET cycle_num = #{cycleNum},
+        status = 'RENEW'
+        WHERE id = #{orderId}
+    </update>
 </mapper>

@@ -28,6 +28,7 @@ public class OrderModel {
     @NotNull
     private Integer shareCycle;
 
+    @NotNull
     private Integer cycleNum;
 
     private OrderStatusType status;

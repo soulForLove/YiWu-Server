@@ -6,7 +6,9 @@ package com.yiwu.changething.sec1.enums;
 public enum OrderStatusType {
     NOTPAY("notPay", "未付款"),
 
-    COMPLETED("completed", "已完成");
+    PAY("pay", "已付款"),
+
+    RENEW("renew", "续费");
 
     private String chineseName;
 

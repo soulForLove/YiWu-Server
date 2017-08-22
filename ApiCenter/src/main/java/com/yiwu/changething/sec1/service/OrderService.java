@@ -140,7 +140,13 @@ public class OrderService {
      */
     public void recharge(String idleId, Integer shareValue) {
         IdleBean idleBean = idleMapper.getIdleById(idleId);
+        if (idleBean == null) {
+            throw new YwException(ErrorBuilder.E101007);
+        }
         UserBean seller = userMapper.getById(idleBean.getCreateBy());
+        if (seller == null) {
+            throw new YwException(ErrorBuilder.E101012);
+        }
         Integer sellerValue = userMapper.getShareValue(seller.getId());
         userMapper.updateShareValue(sellerValue + shareValue, seller.getId());
     }
@@ -160,6 +166,21 @@ public class OrderService {
             updateShare.setId(shareBean.getId());
             shareMapper.update(updateShare);
         }
+    }
 
+    /**
+     * 共享订单续费
+     *
+     * @param orderId
+     */
+    public void renew(String orderId, Integer cycleNum, HttpServletRequest request) {
+        OrderBean orderModel = checkOrderExist(orderId);
+        Integer cost = cycleNum * orderModel.getShareCycle() * orderModel.getShareValue();
+        //买家扣值
+        deduct(cost, request);
+        //卖家充值
+        recharge(orderModel.getIdleId(), cost);
+        //更新订单状态、修改订单周期次数
+        orderMapper.renewOrder(orderId, cycleNum + orderModel.getCycleNum());
     }
 }

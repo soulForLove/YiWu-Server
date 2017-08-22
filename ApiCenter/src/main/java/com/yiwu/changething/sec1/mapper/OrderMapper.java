@@ -21,4 +21,6 @@ public interface OrderMapper {
     void updateStatus(@Param("orderId") String orderId, @Param("status") OrderStatusType status);
 
     Integer getOrderCountByIdleId(@Param("idleId") String idleId);
+
+    void renewOrder(@Param("orderId") String orderId, @Param("cycleNum") Integer cycleNum);
 }

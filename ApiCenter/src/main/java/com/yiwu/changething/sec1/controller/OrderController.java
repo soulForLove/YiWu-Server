@@ -73,4 +73,17 @@ public class OrderController {
                                   HttpServletRequest request) {
         orderService.updateOrderStatus(orderId, status, request);
     }
+
+    /**
+     * 共享订单续费
+     *
+     * @param orderId
+     * @param cycleNum
+     * @param request
+     */
+    @PutMapping("/renew/{orderId}")
+    public void renewOrder(@PathVariable("orderId") String orderId, @RequestParam Integer cycleNum,
+                           HttpServletRequest request) {
+        orderService.renew(orderId, cycleNum, request);
+    }
 }
