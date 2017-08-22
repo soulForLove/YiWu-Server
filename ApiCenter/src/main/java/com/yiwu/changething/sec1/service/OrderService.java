@@ -1,6 +1,8 @@
 package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.IdleBean;
+import com.yiwu.changething.sec1.bean.ShareBean;
+import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.model.OrderModel;
 import com.yiwu.changething.sec1.bean.UserBean;
 import com.yiwu.changething.sec1.enums.OrderStatusType;
@@ -10,6 +12,7 @@ import com.yiwu.changething.sec1.mapper.IdleMapper;
 import com.yiwu.changething.sec1.mapper.OrderMapper;
 import com.yiwu.changething.sec1.mapper.UserMapper;
 import com.yiwu.changething.sec1.bean.OrderBean;
+import com.yiwu.changething.sec1.model.ShareModel;
 import com.yiwu.changething.sec1.utils.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,9 @@ public class OrderService {
 
     @Autowired
     private IdleMapper idleMapper;
+
+    @Autowired
+    private ShareMapper shareMapper;
 
     /**
      * 新增订单信息
@@ -101,6 +107,8 @@ public class OrderService {
         orderMapper.updateStatus(orderId, status);
         //卖家用户充值
         recharge(orderModel.getIdleId(), orderModel.getShareValue());
+        //更新商品共享次数
+        updateShareNum(orderModel.getIdleId());
     }
 
     /**
@@ -135,5 +143,23 @@ public class OrderService {
         UserBean seller = userMapper.getById(idleBean.getCreateBy());
         Integer sellerValue = userMapper.getShareValue(seller.getId());
         userMapper.updateShareValue(sellerValue + shareValue, seller.getId());
+    }
+
+    /**
+     * 更新商品共享次数
+     *
+     * @param idleId
+     */
+    public void updateShareNum(String idleId) {
+        //当商品已完成订单时，更新商品共享次数
+        Integer idleCount = orderMapper.getOrderCountByIdleId(idleId);
+        if (idleCount > 0) {
+            ShareBean shareBean = shareMapper.getShareByIdleId(idleId);
+            ShareModel updateShare = new ShareModel();
+            updateShare.setNum(shareBean.getNum() + 1);//商品共享次数加一
+            updateShare.setId(shareBean.getId());
+            shareMapper.update(updateShare);
+        }
+
     }
 }

@@ -153,11 +153,5 @@ public class IdleService {
             share.setValue(shareValue);
             shareMapper.insert(share);
         }
-        /*else {
-            ShareModel updateShare = new ShareModel();
-            updateShare.setNum(shareModel.getNum() + 1);//商品共享次数加一
-            updateShare.setId(shareModel.getId());
-            shareMapper.update(updateShare);
-        }*/
     }
 }

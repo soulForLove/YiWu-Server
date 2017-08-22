@@ -19,4 +19,6 @@ public interface OrderMapper {
     void deleteById(@Param("orderId") String orderId);
 
     void updateStatus(@Param("orderId") String orderId, @Param("status") OrderStatusType status);
+
+    Integer getOrderCountByIdleId(@Param("idleId") String idleId);
 }

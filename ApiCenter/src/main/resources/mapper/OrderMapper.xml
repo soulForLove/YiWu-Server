@@ -66,4 +66,11 @@
         WHERE id = #{orderId}
     </update>
 
+    <select id="getOrderCountByIdleId" resultType="java.lang.Integer">
+        SELECT
+            count(DISTINCT id)
+        FROM
+            yw_order
+        WHERE  idle_id = #{idleId} and status = 'COMPLETED'
+    </select>
 </mapper>
