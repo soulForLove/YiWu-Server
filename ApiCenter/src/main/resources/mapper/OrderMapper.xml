@@ -3,7 +3,7 @@
 <mapper namespace="com.yiwu.changething.sec1.mapper.OrderMapper">
 
 
-    <select id="getOrderById" resultType="com.yiwu.changething.sec1.model.OrderModel">
+    <select id="getOrderById" resultType="com.yiwu.changething.sec1.bean.OrderBean">
           SELECT
             yo.id,
             yo.user_id,
@@ -11,38 +11,46 @@
             yu.name as userName,
             yi.name as idleName,
             yo.create_time,
-            yo.share_value
+            yo.share_value,
+            yo.share_cycle,
+            yo.share_num
           FROM yw_order yo
           LEFT JOIN  yw_user yu on yu.id = yo.user_id
           LEFT JOIN  yw_idle yi on yi.id = yo.idle_id
           WHERE yo.id = #{orderId}
     </select>
 
-    <insert id="insert" parameterType="com.yiwu.changething.sec1.bean.OrderBean">
+    <insert id="insert" parameterType="com.yiwu.changething.sec1.model.OrderModel">
         INSERT INTO yw_order(
           id,
           user_id,
           idle_id,
           create_time,
           share_value,
-          status
+          status,
+          share_cycle,
+          share_num
         )VALUES (
           UUID(),
           #{userId},
           #{idleId},
           now(),
           #{shareValue},
-          #{status}
+          #{status},
+          #{shareCycle},
+          #{shareNum}
         )
     </insert>
 
-    <update id="update" parameterType="com.yiwu.changething.sec1.bean.OrderBean">
+    <update id="update" parameterType="com.yiwu.changething.sec1.model.OrderModel">
         UPDATE  yw_order
         SET
           idle_id = #{idleId},
           user_id = #{userId},
           update_time = now(),
-          share_value = #{shareValue}
+          share_value = #{shareValue},
+          share_cycle = #{shareCycle},
+          share_num = #{shareNum}
         WHERE
           id = #{id}
     </update>

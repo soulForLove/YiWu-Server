@@ -12,21 +12,41 @@ public class OrderModel {
 
     private String id;
 
+    @NotNull
     private String userId;
 
-    private String userName;
-
+    @NotNull
     private String idleId;
-
-    private String idleName;
 
     private Date createTime;
 
     private Date updateTime;
 
+    @NotNull
     private Integer shareValue;
 
+    @NotNull
+    private Integer shareCycle;
+
+    private Integer cycleNum;
+
     private OrderStatusType status;
+
+    public Integer getShareCycle() {
+        return shareCycle;
+    }
+
+    public void setShareCycle(Integer shareCycle) {
+        this.shareCycle = shareCycle;
+    }
+
+    public Integer getCycleNum() {
+        return cycleNum;
+    }
+
+    public void setCycleNum(Integer cycleNum) {
+        this.cycleNum = cycleNum;
+    }
 
     public OrderStatusType getStatus() {
         return status;
@@ -52,28 +72,12 @@ public class OrderModel {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getIdleId() {
         return idleId;
     }
 
     public void setIdleId(String idleId) {
         this.idleId = idleId;
-    }
-
-    public String getIdleName() {
-        return idleName;
-    }
-
-    public void setIdleName(String idleName) {
-        this.idleName = idleName;
     }
 
     public Date getCreateTime() {

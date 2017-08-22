@@ -1,7 +1,7 @@
 package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.IdleBean;
-import com.yiwu.changething.sec1.bean.OrderBean;
+import com.yiwu.changething.sec1.model.OrderModel;
 import com.yiwu.changething.sec1.bean.UserBean;
 import com.yiwu.changething.sec1.enums.OrderStatusType;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
@@ -9,7 +9,7 @@ import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.IdleMapper;
 import com.yiwu.changething.sec1.mapper.OrderMapper;
 import com.yiwu.changething.sec1.mapper.UserMapper;
-import com.yiwu.changething.sec1.model.OrderModel;
+import com.yiwu.changething.sec1.bean.OrderBean;
 import com.yiwu.changething.sec1.utils.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class OrderService {
      *
      * @param orderBean
      */
-    public void insert(OrderBean orderBean) {
+    public void insert(OrderModel orderBean) {
         orderBean.setId(UUID.randomUUID().toString());
         orderBean.setStatus(OrderStatusType.NOTPAY);
         orderMapper.insert(orderBean);
@@ -49,7 +49,7 @@ public class OrderService {
      *
      * @param orderBean
      */
-    public void update(OrderBean orderBean) {
+    public void update(OrderModel orderBean) {
         checkOrderExist(orderBean.getId());
         orderMapper.update(orderBean);
     }
@@ -69,7 +69,7 @@ public class OrderService {
      * @param orderId
      * @return
      */
-    public OrderModel getOrderById(String orderId) {
+    public OrderBean getOrderById(String orderId) {
         return checkOrderExist(orderId);
     }
 
@@ -78,8 +78,8 @@ public class OrderService {
      *
      * @param orderId
      */
-    private OrderModel checkOrderExist(String orderId) {
-        OrderModel orderModel = orderMapper.getOrderById(orderId);
+    private OrderBean checkOrderExist(String orderId) {
+        OrderBean orderModel = orderMapper.getOrderById(orderId);
         if (orderModel == null) {
             throw new YwException(ErrorBuilder.E101010);
         }
@@ -94,7 +94,7 @@ public class OrderService {
      * @param request
      */
     public void updateOrderStatus(String orderId, OrderStatusType status, HttpServletRequest request) {
-        OrderModel orderModel = checkOrderExist(orderId);
+        OrderBean orderModel = checkOrderExist(orderId);
         //卖家用户扣值
         deduct(orderModel.getShareValue(), request);
         //更新订单状态

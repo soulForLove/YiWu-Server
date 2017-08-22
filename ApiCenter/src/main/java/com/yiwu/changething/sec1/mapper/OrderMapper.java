@@ -1,8 +1,8 @@
 package com.yiwu.changething.sec1.mapper;
 
-import com.yiwu.changething.sec1.bean.OrderBean;
-import com.yiwu.changething.sec1.enums.OrderStatusType;
 import com.yiwu.changething.sec1.model.OrderModel;
+import com.yiwu.changething.sec1.enums.OrderStatusType;
+import com.yiwu.changething.sec1.bean.OrderBean;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -10,11 +10,11 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface OrderMapper {
 
-    OrderModel getOrderById(@Param("orderId") String orderId);
+    OrderBean getOrderById(@Param("orderId") String orderId);
 
-    void insert(OrderBean orderBean);
+    void insert(OrderModel orderBean);
 
-    void update(OrderBean orderBean);
+    void update(OrderModel orderBean);
 
     void deleteById(@Param("orderId") String orderId);
 

@@ -1,8 +1,8 @@
 package com.yiwu.changething.sec1.controller;
 
-import com.yiwu.changething.sec1.bean.OrderBean;
-import com.yiwu.changething.sec1.enums.OrderStatusType;
 import com.yiwu.changething.sec1.model.OrderModel;
+import com.yiwu.changething.sec1.enums.OrderStatusType;
+import com.yiwu.changething.sec1.bean.OrderBean;
 import com.yiwu.changething.sec1.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class OrderController {
      * @param orderBean
      */
     @PostMapping
-    public void insert(@RequestBody @Valid OrderBean orderBean) {
+    public void insert(@RequestBody @Valid OrderModel orderBean) {
         orderService.insert(orderBean);
     }
 
@@ -36,7 +36,7 @@ public class OrderController {
      * @param orderBean
      */
     @PutMapping
-    public void update(@RequestBody @Valid OrderBean orderBean) {
+    public void update(@RequestBody @Valid OrderModel orderBean) {
         orderService.update(orderBean);
     }
 
@@ -57,7 +57,7 @@ public class OrderController {
      * @return
      */
     @GetMapping("/{orderId}")
-    public OrderModel getIdleById(@PathVariable String orderId) {
+    public OrderBean getIdleById(@PathVariable String orderId) {
         return orderService.getOrderById(orderId);
     }
 
