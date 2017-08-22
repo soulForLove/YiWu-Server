@@ -9,6 +9,7 @@ import com.yiwu.changething.sec1.service.IdleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,8 +90,8 @@ public class IdleController {
      * @param idleShareResModel
      */
     @PutMapping("/share")
-    public void updateShare(@RequestBody @Valid IdleShareResModel idleShareResModel) {
+    public void updateShare(@RequestBody @Valid IdleShareResModel idleShareResModel, HttpServletRequest request) {
         idleService.updateShare(idleShareResModel.getShare(), idleShareResModel.getShareValue(),
-                idleShareResModel.getIdleId(), idleShareResModel.getShareCycle());
+                idleShareResModel.getIdleId(), idleShareResModel.getShareCycle(), request);
     }
 }

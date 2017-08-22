@@ -42,6 +42,12 @@
                 <constraints nullable="false"/>
             </column>
             <column name="share_value" remarks="共享值" type="INT"/>
+            <column name="share_cycle" remarks="共享周期" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(16)" remarks="商品状态">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
     <changeSet author="Lin (generated)" id="create.table.yw_type" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
@@ -113,6 +119,42 @@
                 <constraints nullable="false"/>
             </column>
             <column name="status" type="VARCHAR(16)" remarks="状态,参考OrderStatusType">
+                <constraints nullable="false"/>
+            </column>
+            <column name="share_cycle" type="VARCHAR(32)" remarks="共享周期">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cycle_num" type="VARCHAR(32)" remarks="共享次数">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Lin (generated)" id="create.table.yw_share" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable tableName="yw_share">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="idle_id" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="update_time" type="datetime(6)"/>
+            <column name="value" remarks="共享值" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(16)" remarks="状态,参考ShareStatus">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cycle" type="VARCHAR(32)" remarks="共享周期">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num" type="VARCHAR(32)" remarks="共享次数">
                 <constraints nullable="false"/>
             </column>
         </createTable>
