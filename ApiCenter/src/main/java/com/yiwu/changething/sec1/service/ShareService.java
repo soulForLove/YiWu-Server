@@ -18,10 +18,10 @@ public class ShareService {
     /**
      * 新增订单信息
      *
-     * @param shareBean
+     * @param shareModel
      */
-    public void insert(ShareModel shareBean) {
-        shareMapper.insert(shareBean);
+    public void insert(ShareModel shareModel) {
+        shareMapper.insert(shareModel);
     }
 
     /**

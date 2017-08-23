@@ -24,13 +24,11 @@ public class ShareBean {
 
     private Date updateTime;
 
-    private Integer cycle;
+    private Integer shareCycle;
 
-    private Integer num;
+    private Integer cycleNum;
 
-    private Integer value;
-
-    private ShareStatus status;
+    private Integer shareValue;
 
     public String getId() {
         return id;
@@ -88,35 +86,28 @@ public class ShareBean {
         this.updateTime = updateTime;
     }
 
-    public Integer getCycle() {
-        return cycle;
+    public Integer getShareCycle() {
+        return shareCycle;
     }
 
-    public void setCycle(Integer cycle) {
-        this.cycle = cycle;
+    public void setShareCycle(Integer shareCycle) {
+        this.shareCycle = shareCycle;
     }
 
-    public Integer getNum() {
-        return num;
+    public Integer getCycleNum() {
+        return cycleNum;
     }
 
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setCycleNum(Integer cycleNum) {
+        this.cycleNum = cycleNum;
     }
 
-    public Integer getValue() {
-        return value;
+    public Integer getShareValue() {
+        return shareValue;
     }
 
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setShareValue(Integer shareValue) {
+        this.shareValue = shareValue;
     }
 
-    public ShareStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ShareStatus status) {
-        this.status = status;
-    }
 }

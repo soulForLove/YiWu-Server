@@ -1,6 +1,5 @@
 package com.yiwu.changething.sec1.service;
 
-import com.yiwu.changething.sec1.bean.ShareBean;
 import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
@@ -9,8 +8,6 @@ import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
-import com.yiwu.changething.sec1.model.ShareModel;
-import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,30 +127,8 @@ public class IdleService {
                 break;
             case NOTLOCK:
                 idleMapper.updateShareStatus(shareStatus, shareValue, idleId, shareCycle);
-                //将商品上传共享圈子
-                insertShare(idleId, shareValue, shareCycle, request);
                 break;
         }
     }
 
-    /**
-     * 上传共享圈子
-     *
-     * @param idleId
-     * @param shareValue
-     * @param shareCycle
-     * @param request
-     */
-    public void insertShare(String idleId, Integer shareValue, Integer shareCycle, HttpServletRequest request) {
-        ShareBean shareModel = shareMapper.getShareByIdleId(idleId);
-        Principal currentPrincipal = ywSecurityUtil.checkUserLogin(request);
-        if (shareModel == null) {
-            ShareModel share = new ShareModel();
-            share.setIdleId(idleId);
-            share.setUserId(currentPrincipal.getId());
-            share.setCycle(shareCycle);
-            share.setValue(shareValue);
-            shareMapper.insert(share);
-        }
-    }
 }

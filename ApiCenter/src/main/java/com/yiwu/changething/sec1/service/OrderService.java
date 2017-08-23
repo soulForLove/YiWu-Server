@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -113,14 +112,14 @@ public class OrderService {
         OrderBean orderModel = checkOrderExist(orderId);
         //买家用户扣值
         deduct(orderModel.getShareValue(), request);
+        //更新商品共享次数
+        updateShareNum(orderModel.getIdleId());
         //更新订单状态
         orderMapper.updateStatus(orderId, status);
         //卖家用户充值
         recharge(orderModel.getIdleId(), orderModel.getShareValue());
         //更新商品状态
         idleMapper.updateShareStatus(ShareStatus.LOCK, null, orderModel.getIdleId(), null);
-        //更新商品共享次数
-        updateShareNum(orderModel.getIdleId());
 
     }
 
@@ -166,18 +165,36 @@ public class OrderService {
      * @param idleId
      */
     public void updateShareNum(String idleId) {
-        //当商品已完成订单时，更新商品共享次数
+        //在商品已完成订单中获取商品共享次数
         Integer idleCount = orderMapper.getOrderCountByIdleId(idleId);
-        ShareBean share = shareMapper.getShareByIdleId(idleId);
-        if (share ==null ){
-            throw new YwException(ErrorBuilder.E101008);
-        }
+        //新增共享圈子信息
+        insertShare(idleId);
+        //更新商品共享次数
         if (idleCount > 0) {
             ShareBean shareBean = shareMapper.getShareByIdleId(idleId);
             ShareModel updateShare = new ShareModel();
-            updateShare.setNum(shareBean.getNum() + 1);//商品共享次数加一
+            updateShare.setCycleNum(shareBean.getCycleNum() + 1);//商品共享次数加一
             updateShare.setId(shareBean.getId());
             shareMapper.update(updateShare);
+        }
+    }
+
+    /**
+     * 新增共享圈子信息
+     *
+     * @param idleId
+     */
+    public void insertShare(String idleId) {
+        ShareBean share = shareMapper.getShareByIdleId(idleId);
+        if (share == null) {
+            IdleBean idle = idleMapper.getIdleById(idleId);
+            ShareModel shareModel = new ShareModel();
+            shareModel.setCycleNum(1);
+            shareModel.setIdleId(idleId);
+            shareModel.setUserId(idle.getCreateBy());
+            shareModel.setShareCycle(idle.getShareCycle());
+            shareModel.setShareValue(idle.getShareValue());
+            shareMapper.insert(shareModel);
         }
     }
 

@@ -1,11 +1,12 @@
 package com.yiwu.changething.sec1.controller;
 
-import com.yiwu.changething.common.service.CommonService;
 import com.yiwu.changething.sec1.bean.IdleBean;
+import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
 import com.yiwu.changething.sec1.model.IdleShareResModel;
 import com.yiwu.changething.sec1.service.IdleService;
+import com.yiwu.changething.sec1.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class IdleController {
     private IdleService idleService;
 
     @Autowired
-    private CommonService commonService;
+    private OrderService orderService;
 
     /**
      * 获取商品列表
@@ -93,5 +94,8 @@ public class IdleController {
     public void updateShareStatus(@RequestBody @Valid IdleShareResModel idleShareResModel, HttpServletRequest request) {
         idleService.updateShareStatus(idleShareResModel.getShareStatus(), idleShareResModel.getShareValue(),
                 idleShareResModel.getIdleId(), idleShareResModel.getShareCycle(), request);
+        if (idleShareResModel.getShareStatus().equals(ShareStatus.NOTLOCK)) {
+            orderService.updateShareNum(idleShareResModel.getIdleId());
+        }
     }
 }

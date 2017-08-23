@@ -4,29 +4,27 @@
 
 
     <insert id="insert" parameterType="com.yiwu.changething.sec1.model.ShareModel">
-        INSERT INTO yw_order(
+        INSERT INTO yw_share(
           id,
           user_id,
           idle_id,
           create_time,
-          value,
-          status,
-          cycle,
-          num
+          share_value,
+          share_cycle,
+          cycle_num
         )VALUES (
           UUID(),
           #{userId},
           #{idleId},
           now(),
-          #{value},
-          #{status},
-          #{cycle},
-          #{num}
+          #{shareValue},
+          #{shareCycle},
+          #{cycleNum}
         )
     </insert>
 
     <update id="update" parameterType="com.yiwu.changething.sec1.model.ShareModel">
-        UPDATE yw_order
+        UPDATE yw_share
         <set>
             <if test="idleId != null and idleId != ''">
                 idle_id = #{idleId},
@@ -34,14 +32,14 @@
             <if test="userId != null and userId != ''">
                 user_id = #{userId},
             </if>
-            <if test="value != null">
-                value = #{value},
+            <if test="shareValue != null">
+                share_value = #{shareValue},
             </if>
-            <if test="num != null">
-                num = #{num},
+            <if test="cycleNum != null">
+                cycle_num = #{cycleNum},
             </if>
-            <if test="cycle != null">
-                cycle = #{cycle},
+            <if test="shareCycle != null">
+                share_cycle = #{shareCycle},
             </if>
             update_time = now()
         </set>
@@ -55,10 +53,9 @@
           user_id,
           idle_id,
           create_time,
-          value,
-          status,
-          cycle,
-          num
+          share_value,
+          share_cycle,
+          cycle_num
         FROM yw_share
         WHERE id = #{shareId}
     </select>
@@ -69,10 +66,9 @@
         user_id,
         idle_id,
         create_time,
-        value,
-        status,
-        cycle,
-        num
+        share_value,
+        share_cycle,
+        cycle_num
         FROM yw_share
         WHERE idle_id = #{idleId}
     </select>

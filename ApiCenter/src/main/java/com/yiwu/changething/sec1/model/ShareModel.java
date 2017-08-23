@@ -23,14 +23,13 @@ public class ShareModel {
     private Date updateTime;
 
     @NotNull
-    private Integer value;
+    private Integer shareValue;
 
     @NotNull
-    private Integer cycle;
+    private Integer shareCycle;
 
-    private Integer num;
+    private Integer cycleNum;
 
-    private OrderStatusType status;
 
     public String getId() {
         return id;
@@ -72,35 +71,28 @@ public class ShareModel {
         this.updateTime = updateTime;
     }
 
-    public Integer getValue() {
-        return value;
+    public Integer getShareValue() {
+        return shareValue;
     }
 
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setShareValue(Integer shareValue) {
+        this.shareValue = shareValue;
     }
 
-    public Integer getCycle() {
-        return cycle;
+    public Integer getShareCycle() {
+        return shareCycle;
     }
 
-    public void setCycle(Integer cycle) {
-        this.cycle = cycle;
+    public void setShareCycle(Integer shareCycle) {
+        this.shareCycle = shareCycle;
     }
 
-    public Integer getNum() {
-        return num;
+    public Integer getCycleNum() {
+        return cycleNum;
     }
 
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setCycleNum(Integer cycleNum) {
+        this.cycleNum = cycleNum;
     }
 
-    public OrderStatusType getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatusType status) {
-        this.status = status;
-    }
 }
