@@ -124,6 +124,9 @@
             <column name="cycle_num" type="VARCHAR(32)" remarks="共享次数">
                 <constraints nullable="false"/>
             </column>
+            <column name="duration" type="VARCHAR(32)" remarks="剩余共享时长">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 

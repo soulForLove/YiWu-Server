@@ -47,6 +47,7 @@ public class OrderService {
     public void insert(OrderModel orderBean) {
         orderBean.setId(UUID.randomUUID().toString());
         orderBean.setStatus(OrderStatusType.NOTPAY);
+        orderBean.setDuration(orderBean.getCycleNum() * orderBean.getShareCycle());
         orderMapper.insert(orderBean);
     }
 
@@ -182,5 +183,7 @@ public class OrderService {
         recharge(orderModel.getIdleId(), cost);
         //更新订单状态、修改订单周期次数
         orderMapper.renewOrder(orderId, cycleNum + orderModel.getCycleNum());
+        //更新订单剩余时长
+        orderMapper.updateDuration(orderId, orderModel.getDuration() + cycleNum * orderModel.getShareCycle());
     }
 }

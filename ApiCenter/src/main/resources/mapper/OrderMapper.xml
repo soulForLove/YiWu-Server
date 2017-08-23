@@ -29,7 +29,8 @@
           share_value,
           status,
           share_cycle,
-          cycle_num
+          cycle_num,
+          duration
         )VALUES (
           UUID(),
           #{userId},
@@ -38,7 +39,8 @@
           #{shareValue},
           #{status},
           #{shareCycle},
-          #{cycleNum}
+          #{cycleNum},
+          #{duration}
         )
     </insert>
 
@@ -78,6 +80,12 @@
         UPDATE yw_order
         SET cycle_num = #{cycleNum},
         status = 'RENEW'
+        WHERE id = #{orderId}
+    </update>
+
+    <update id="updateDuration">
+        UPDATE yw_order
+        SET duration = #{duration}
         WHERE id = #{orderId}
     </update>
 </mapper>
