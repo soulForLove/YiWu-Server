@@ -62,6 +62,7 @@ public interface IdleMapper {
 
     /**
      * 更新商品共享状态以及共享值、共享周期
+     *
      * @param share
      * @param shareValue
      * @param idleId
@@ -71,4 +72,11 @@ public interface IdleMapper {
                            @Param("shareValue") Integer shareValue,
                            @Param("idleId") String idleId,
                            @Param("shareCycle") Integer shareCycle);
+
+    /**
+     * 批量更新商品状态
+     *
+     * @param idleIds
+     */
+    void updateBatchStatus(@Param("idleIds") List<String> idleIds);
 }

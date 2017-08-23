@@ -202,4 +202,13 @@
         </set>
         WHERE id = #{idleId}
     </update>
+
+    <update id="updateBatchStatus">
+        UPDATE yw_idle
+        SET  share = 'NOTLOCK'
+        WHERE id in
+        <foreach collection="idleIds" index="index" item="idleId" open="(" close=")" separator=",">
+            #{idleId}
+        </foreach>
+    </update>
 </mapper>

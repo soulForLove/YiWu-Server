@@ -5,6 +5,8 @@ import com.yiwu.changething.sec1.enums.OrderStatusType;
 import com.yiwu.changething.sec1.bean.OrderBean;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
@@ -20,9 +22,15 @@ public interface OrderMapper {
 
     void updateStatus(@Param("orderId") String orderId, @Param("status") OrderStatusType status);
 
+    void updateBatchStatus(@Param("orderIds") List<String> orderIds, @Param("status") OrderStatusType status);
+
     Integer getOrderCountByIdleId(@Param("idleId") String idleId);
 
     void renewOrder(@Param("orderId") String orderId, @Param("cycleNum") Integer cycleNum);
 
     void updateDuration(@Param("orderId") String orderId, @Param("duration") Integer duration);
+
+    void reduceDuration();
+
+    List<OrderBean> getDurationList();
 }

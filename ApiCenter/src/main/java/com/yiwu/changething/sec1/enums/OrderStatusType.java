@@ -8,7 +8,9 @@ public enum OrderStatusType {
 
     PAY("pay", "已付款"),
 
-    RENEW("renew", "续费");
+    RENEW("renew", "续费"),
+
+    COMPLETED("completed", "完成");
 
     private String chineseName;
 

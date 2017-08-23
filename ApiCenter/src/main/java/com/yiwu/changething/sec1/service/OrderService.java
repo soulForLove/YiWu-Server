@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.bean.ShareBean;
+import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.model.OrderModel;
 import com.yiwu.changething.sec1.bean.UserBean;
@@ -19,7 +20,10 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -185,5 +189,23 @@ public class OrderService {
         orderMapper.renewOrder(orderId, cycleNum + orderModel.getCycleNum());
         //更新订单剩余时长
         orderMapper.updateDuration(orderId, orderModel.getDuration() + cycleNum * orderModel.getShareCycle());
+    }
+
+    /**
+     * 定时更新订单剩余时长
+     */
+    public void reduceDuration() {
+        //定时更新订单剩余时长
+        orderMapper.reduceDuration();
+        List<OrderBean> durationList = orderMapper.getDurationList();
+        if (durationList.size() > 0) {
+            List<String> idleIds = durationList.stream().map(OrderBean::getIdleId).collect(Collectors.toList());
+            List<String> orderIds = durationList.stream().map(OrderBean::getId).collect(Collectors.toList());
+            //更新订单状态
+            orderMapper.updateBatchStatus(orderIds, OrderStatusType.COMPLETED);
+            //更新商品状态
+            idleMapper.updateBatchStatus(idleIds);
+        }
+
     }
 }
