@@ -2,7 +2,6 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.bean.ShareBean;
-import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.model.OrderModel;
 import com.yiwu.changething.sec1.bean.UserBean;
@@ -15,6 +14,7 @@ import com.yiwu.changething.sec1.mapper.UserMapper;
 import com.yiwu.changething.sec1.bean.OrderBean;
 import com.yiwu.changething.sec1.model.ShareModel;
 import com.yiwu.changething.sec1.utils.Principal;
+import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +41,9 @@ public class OrderService {
 
     @Autowired
     private ShareMapper shareMapper;
+
+    @Autowired
+    private YwSecurityUtil ywSecurityUtil;
 
     /**
      * 新增订单信息
@@ -123,18 +125,14 @@ public class OrderService {
      * @param request
      */
     public void deduct(Integer shareValue, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Principal buyer = (Principal) session.getAttribute(SystemVariableService.USER_INFO);
-        if (buyer == null) {
-            throw new YwException(ErrorBuilder.E101002);
-        }
-        Integer buyerValue = userMapper.getShareValue(buyer.getId());
+        Principal currentPrincipal = ywSecurityUtil.checkUserLogin(request);
+        Integer buyerValue = userMapper.getShareValue(currentPrincipal.getId());
         //共享值不足
         if (buyerValue < shareValue) {
             throw new YwException(ErrorBuilder.E101011);
         }
         //买家用户扣值
-        userMapper.updateShareValue(buyerValue - shareValue, buyer.getId());
+        userMapper.updateShareValue(buyerValue - shareValue, currentPrincipal.getId());
     }
 
     /**

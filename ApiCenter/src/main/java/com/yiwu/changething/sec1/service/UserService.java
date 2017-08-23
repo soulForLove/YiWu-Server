@@ -5,8 +5,8 @@ import com.yiwu.changething.sec1.bean.UserBean;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.mapper.UserMapper;
-import com.yiwu.changething.sec1.utils.CommentUtil;
 import com.yiwu.changething.sec1.utils.PasswordUtil;
+import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class UserService {
     private UserMapper userMapper;
 
     @Autowired
-    private CommentUtil commentUtil;
+    private YwSecurityUtil ywSecurityUtil;
 
     public void insertUser(UserBean userModel) {
         checkUserNameExist(userModel.getName());
@@ -71,7 +71,7 @@ public class UserService {
      * @param request
      */
     public void updatePassword(String password, HttpServletRequest request) {
-        Principal currentPrincipal = commentUtil.getCurrentPrincipal(request);
+        Principal currentPrincipal = ywSecurityUtil.checkUserLogin(request);
         UserBean user = userMapper.getByName(currentPrincipal.getName());
         HttpSession session = request.getSession();
         user.setSalt(PasswordUtil.generateSaltStr());

@@ -13,10 +13,10 @@ import javax.servlet.http.HttpSession;
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
 @Component
-public class YwSecurityUtil extends SecurityUtils{
+public class YwSecurityUtil extends SecurityUtils {
 
     /**
-     * 验证用户是否登录
+     * 获取当前用户的principal,验证用户是否登录
      *
      * @param request
      */
