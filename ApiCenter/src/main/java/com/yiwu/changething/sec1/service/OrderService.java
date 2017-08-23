@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.bean.ShareBean;
+import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.model.OrderModel;
 import com.yiwu.changething.sec1.bean.UserBean;
@@ -50,7 +51,9 @@ public class OrderService {
      *
      * @param orderBean
      */
-    public void insert(OrderModel orderBean) {
+    public void insert(OrderModel orderBean, HttpServletRequest request) {
+        Principal principal = ywSecurityUtil.checkUserLogin(request);
+        orderBean.setUserId(principal.getId());
         orderBean.setId(UUID.randomUUID().toString());
         orderBean.setStatus(OrderStatusType.NOTPAY);
         orderBean.setDuration(orderBean.getCycleNum() * orderBean.getShareCycle());
@@ -108,14 +111,17 @@ public class OrderService {
      */
     public void updateOrderStatus(String orderId, OrderStatusType status, HttpServletRequest request) {
         OrderBean orderModel = checkOrderExist(orderId);
-        //卖家用户扣值
+        //买家用户扣值
         deduct(orderModel.getShareValue(), request);
         //更新订单状态
         orderMapper.updateStatus(orderId, status);
         //卖家用户充值
         recharge(orderModel.getIdleId(), orderModel.getShareValue());
+        //更新商品状态
+        idleMapper.updateShareStatus(ShareStatus.LOCK, null, orderModel.getIdleId(), null);
         //更新商品共享次数
         updateShareNum(orderModel.getIdleId());
+
     }
 
     /**
@@ -162,6 +168,10 @@ public class OrderService {
     public void updateShareNum(String idleId) {
         //当商品已完成订单时，更新商品共享次数
         Integer idleCount = orderMapper.getOrderCountByIdleId(idleId);
+        ShareBean share = shareMapper.getShareByIdleId(idleId);
+        if (share ==null ){
+            throw new YwException(ErrorBuilder.E101008);
+        }
         if (idleCount > 0) {
             ShareBean shareBean = shareMapper.getShareByIdleId(idleId);
             ShareModel updateShare = new ShareModel();

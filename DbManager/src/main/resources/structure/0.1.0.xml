@@ -42,7 +42,7 @@
             <column name="share_cycle" remarks="共享周期" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="status" type="VARCHAR(16)" remarks="商品状态ShareStatus">
+            <column name="share_status" type="VARCHAR(16)" remarks="商品状态ShareStatus">
                 <constraints nullable="false"/>
             </column>
         </createTable>

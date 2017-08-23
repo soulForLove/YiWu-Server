@@ -12,7 +12,6 @@ public class OrderModel {
 
     private String id;
 
-    @NotNull
     private String userId;
 
     @NotNull

@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.model;
 
 import com.yiwu.changething.sec1.enums.IdleOrder;
 import com.yiwu.changething.sec1.enums.OrderType;
+import com.yiwu.changething.sec1.enums.ShareStatus;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -18,7 +19,7 @@ public class IdleResModel extends PageModel {
 
     private String productionPlace;//產地
 
-    private Boolean share;//是否共享
+    private ShareStatus shareStatus;//是否共享
 
     private Integer minShareValue;//最低共享值
 
@@ -69,12 +70,12 @@ public class IdleResModel extends PageModel {
         this.productionPlace = productionPlace;
     }
 
-    public Boolean getShare() {
-        return share;
+    public ShareStatus getShareStatus() {
+        return shareStatus;
     }
 
-    public void setShare(Boolean share) {
-        this.share = share;
+    public void setShareStatus(ShareStatus shareStatus) {
+        this.shareStatus = shareStatus;
     }
 
     public Integer getMinShareValue() {

@@ -41,8 +41,8 @@
             <if test="productionPlace != null and productionPlace != ''">
                 yi.production_place like CONCAT("%",#{productionPlace},"%")
             </if>
-            <if test="share != null">
-                yi.share = #{share}
+            <if test="shareStatus != null">
+                yi.share_status = #{shareStatus}
             </if>
             <if test="minShareValue != null">
                 yi.share_value &gt; #{minShareValue}
@@ -81,8 +81,8 @@
             <if test="productionPlace != null and productionPlace != ''">
                 yi.production_place like CONCAT("%",#{productionPlace},"%")
             </if>
-            <if test="share != null">
-                yi.share = #{share}
+            <if test="shareStatus != null">
+                yi.share_status = #{shareStatus}
             </if>
             <if test="minShareValue != null">
                 yi.share_value &gt; #{minShareValue}
@@ -109,7 +109,7 @@
         yi.create_by,
         yi.update_time,
         yi.update_by,
-        yi.share,
+        yi.share_status,
         yi.share_value,
         yi.share_cycle
         FROM
@@ -137,7 +137,7 @@
         create_by,
         update_time,
         update_by,
-        share,
+        share_status,
         share_value,
         share_cycle
         )
@@ -156,8 +156,8 @@
         #{createBy},
         now(),
         null,
-        0,
-        0,
+        'NOTLOCK',
+        #{shareValue},
         #{shareCycle}
         )
     </insert>
@@ -176,7 +176,7 @@
         extent = #{extent},
         update_time = now(),
         update_by = #{updateBy},
-        share = #{share},
+        share_status = #{shareStatus},
         share_value = #{shareValue},
         share_cycle = #{shareCycle}
         WHERE
@@ -190,8 +190,8 @@
     <update id="updateShareStatus">
         UPDATE yw_idle
         <set>
-            <if test="share != null">
-                share = #{share},
+            <if test="shareStatus != null">
+                share_status = #{shareStatus},
             </if>
             <if test="shareValue != null">
                 share_value = #{shareValue},

@@ -26,8 +26,8 @@ public class OrderController {
      * @param orderBean
      */
     @PostMapping
-    public void insert(@RequestBody @Valid OrderModel orderBean) {
-        orderService.insert(orderBean);
+    public void insert(@RequestBody @Valid OrderModel orderBean, HttpServletRequest request) {
+        orderService.insert(orderBean, request);
     }
 
     /**

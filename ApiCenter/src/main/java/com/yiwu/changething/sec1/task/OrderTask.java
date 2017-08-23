@@ -28,7 +28,7 @@ public class OrderTask {
     //    每月1号凌晨1点执行一次：0 0 1 1 * ?
     //    每月最后一天23点执行一次：0 0 23 L * ?
     //    每周星期天凌晨1点实行一次：0 0 1 ? * L
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 1 * * * ?")
     public void reduceOrderDuration() {
         LOGGER.info("定时任务开始");
         orderService.reduceDuration();
