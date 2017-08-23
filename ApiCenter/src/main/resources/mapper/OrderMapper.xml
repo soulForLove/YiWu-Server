@@ -29,7 +29,8 @@
           share_value,
           status,
           share_cycle,
-          cycle_num
+          cycle_num,
+          duration
         )VALUES (
           UUID(),
           #{userId},
@@ -38,7 +39,8 @@
           #{shareValue},
           #{status},
           #{shareCycle},
-          #{cycleNum}
+          #{cycleNum},
+          #{duration}
         )
     </insert>
 
@@ -63,7 +65,23 @@
         UPDATE yw_order
         SET status = #{status},
         update_time = now()
-        WHERE id = #{orderId}
+        <where>
+            <if test="orderId != null and orderId != ''">
+                id = #{orderId}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateBatchStatus">
+        UPDATE yw_order
+        SET status = #{status},
+        update_time = now()
+        <where>
+            id in
+            <foreach collection="orderIds" index="index" item="orderId" open="(" close=")" separator=",">
+                #{orderId}
+            </foreach>
+        </where>
     </update>
 
     <select id="getOrderCountByIdleId" resultType="java.lang.Integer">
@@ -71,13 +89,40 @@
             count(DISTINCT id)
         FROM
             yw_order
-        WHERE  idle_id = #{idleId} and status != 'NOTPAY'
+        WHERE  idle_id = #{idleId} and status != 'NOTPAY' AND status != 'COMPLETED'
     </select>
 
     <update id="renewOrder">
         UPDATE yw_order
         SET cycle_num = #{cycleNum},
         status = 'RENEW'
-        WHERE id = #{orderId}
+        WHERE id = #{orderId} and status != 'NOTPAY' AND status != 'COMPLETED'
     </update>
+
+    <update id="updateDuration">
+        UPDATE yw_order
+        SET duration = #{duration}
+        WHERE id = #{orderId} and status != 'NOTPAY' AND status != 'COMPLETED'
+    </update>
+
+    <update id="reduceDuration">
+        UPDATE yw_order
+        SET duration = duration - 1
+        WHERE status != 'NOTPAY' AND status != 'COMPLETED'
+    </update>
+
+    <select id="getDurationList" resultType="com.yiwu.changething.sec1.bean.OrderBean">
+        SELECT
+            id,
+            user_id,
+            idle_id,
+            create_time,
+            share_value,
+            status,
+            share_cycle,
+            cycle_num,
+            duration
+        FROM yw_order
+        WHERE duration &lt; 1
+    </select>
 </mapper>

@@ -28,9 +28,19 @@ public class OrderBean {
 
     private Integer cycleNum;
 
+    private Integer duration;
+
     private Integer shareValue;
 
     private OrderStatusType status;
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
     public Integer getShareCycle() {
         return shareCycle;

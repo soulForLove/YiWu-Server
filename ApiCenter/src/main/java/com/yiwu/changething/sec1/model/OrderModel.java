@@ -31,7 +31,17 @@ public class OrderModel {
     @NotNull
     private Integer cycleNum;
 
+    private Integer duration;//订单剩余时长（初始shareCycle*cycleNum）
+
     private OrderStatusType status;
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
     public Integer getShareCycle() {
         return shareCycle;
