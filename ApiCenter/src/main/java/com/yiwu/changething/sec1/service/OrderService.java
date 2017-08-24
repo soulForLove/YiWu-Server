@@ -17,6 +17,7 @@ import com.yiwu.changething.sec1.model.ShareModel;
 import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,28 +46,31 @@ public class OrderService {
     @Autowired
     private YwSecurityUtil ywSecurityUtil;
 
+    @Value("${share.value.rate}")
+    private Double shareValueRate;
+
     /**
      * 新增订单信息
      *
-     * @param orderBean
+     * @param orderModel
      */
-    public void insert(OrderModel orderBean, HttpServletRequest request) {
+    public void insert(OrderModel orderModel, HttpServletRequest request) {
         Principal principal = ywSecurityUtil.checkUserLogin(request);
-        orderBean.setUserId(principal.getId());
-        orderBean.setId(UUID.randomUUID().toString());
-        orderBean.setStatus(OrderStatusType.NOTPAY);
-        orderBean.setDuration(orderBean.getCycleNum() * orderBean.getShareCycle());
-        orderMapper.insert(orderBean);
+        orderModel.setUserId(principal.getId());
+        orderModel.setId(UUID.randomUUID().toString());
+        orderModel.setStatus(OrderStatusType.NOTPAY);
+        orderModel.setDuration(orderModel.getCycleNum() * orderModel.getShareCycle());
+        orderMapper.insert(orderModel);
     }
 
     /**
      * 修改订单信息
      *
-     * @param orderBean
+     * @param orderModel
      */
-    public void update(OrderModel orderBean) {
-        checkOrderExist(orderBean.getId());
-        orderMapper.update(orderBean);
+    public void update(OrderModel orderModel) {
+        checkOrderExist(orderModel.getId());
+        orderMapper.update(orderModel);
     }
 
     /**
@@ -118,6 +122,9 @@ public class OrderService {
         orderMapper.updateStatus(orderId, status);
         //卖家用户充值
         recharge(orderModel.getIdleId(), orderModel.getShareValue());
+        //更新订单利润
+        updateProfit(orderId, orderModel.getProfit() != null ? orderModel.getProfit() : 0.0 +
+                orderModel.getShareValue() * shareValueRate);
         //更新商品状态
         idleMapper.updateShareStatus(ShareStatus.LOCK, null, orderModel.getIdleId(), null);
 
@@ -137,7 +144,7 @@ public class OrderService {
             throw new YwException(ErrorBuilder.E101011);
         }
         //买家用户扣值
-        userMapper.updateShareValue(buyerValue - shareValue, currentPrincipal.getId());
+        userMapper.updateShareValue(buyerValue.doubleValue() - shareValue, currentPrincipal.getId());
     }
 
     /**
@@ -156,7 +163,7 @@ public class OrderService {
             throw new YwException(ErrorBuilder.E101012);
         }
         Integer sellerValue = userMapper.getShareValue(seller.getId());
-        userMapper.updateShareValue(sellerValue + shareValue, seller.getId());
+        userMapper.updateShareValue(sellerValue + shareValue * (1 - shareValueRate), seller.getId());
     }
 
     /**
@@ -214,6 +221,8 @@ public class OrderService {
         orderMapper.renewOrder(orderId, cycleNum + orderModel.getCycleNum());
         //更新订单剩余时长
         orderMapper.updateDuration(orderId, orderModel.getDuration() + cycleNum * orderModel.getShareCycle());
+        //更新订单利润
+        updateProfit(orderId, orderModel.getProfit() != null ? orderModel.getProfit() : 0.0 + cost * shareValueRate);
     }
 
     /**
@@ -231,6 +240,15 @@ public class OrderService {
             //更新商品状态
             idleMapper.updateBatchStatus(idleIds);
         }
+    }
 
+    /**
+     * 更新订单利润
+     *
+     * @param orderId
+     * @param profit
+     */
+    public void updateProfit(String orderId, Double profit) {
+        orderMapper.updateProfit(orderId, profit);
     }
 }

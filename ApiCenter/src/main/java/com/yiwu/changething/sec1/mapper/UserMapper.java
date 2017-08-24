@@ -54,7 +54,7 @@ public interface UserMapper {
      * @param shareValue
      * @param userId
      */
-    void updateShareValue(@Param("shareValue") Integer shareValue, @Param("userId") String userId);
+    void updateShareValue(@Param("shareValue") Double shareValue, @Param("userId") String userId);
 
     /**
      * 获取用户

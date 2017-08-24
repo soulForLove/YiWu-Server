@@ -91,4 +91,12 @@ public interface OrderMapper {
      * @return
      */
     List<OrderBean> getDurationList();
+
+    /**
+     * 更新订单利润
+     *
+     * @param orderId
+     * @param profit
+     */
+    void updateProfit(@Param("orderId") String orderId, @Param("profit") Double profit);
 }

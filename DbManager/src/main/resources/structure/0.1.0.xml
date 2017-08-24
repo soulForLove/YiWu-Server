@@ -93,7 +93,7 @@
             <column name="create_time" remarks="创建时间" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueNumeric="0" name="share_value" type="INT"/>
+            <column name="share_value" type="DOUBLE"/>
         </createTable>
     </changeSet>
 
@@ -127,6 +127,7 @@
             <column name="duration" type="VARCHAR(32)" remarks="剩余共享时长">
                 <constraints nullable="false"/>
             </column>
+            <column name="profit" type="DOUBLE" remarks="订单利润"/>
         </createTable>
     </changeSet>
 

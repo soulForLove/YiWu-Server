@@ -13,7 +13,8 @@
             yo.create_time,
             yo.share_value,
             yo.share_cycle,
-            yo.cycle_num
+            yo.cycle_num,
+            yo.duration
           FROM yw_order yo
           LEFT JOIN  yw_user yu on yu.id = yo.user_id
           LEFT JOIN  yw_idle yi on yi.id = yo.idle_id
@@ -125,4 +126,10 @@
         FROM yw_order
         WHERE duration &lt; 1
     </select>
+
+    <update id="updateProfit">
+        UPDATE yw_order
+        SET profit = #{profit}
+        WHERE id = #{orderId}
+    </update>
 </mapper>

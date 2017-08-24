@@ -34,6 +34,16 @@ public class OrderModel {
 
     private OrderStatusType status;
 
+    private Double profit;//订单利润
+
+    public Double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(Double profit) {
+        this.profit = profit;
+    }
+
     public Integer getDuration() {
         return duration;
     }
