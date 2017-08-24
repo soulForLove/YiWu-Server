@@ -252,4 +252,24 @@ public class OrderService {
     public void updateProfit(String orderId, Double profit) {
         orderMapper.updateProfit(orderId, profit);
     }
+
+    /**
+     * 获取订单列表
+     *
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public List<OrderBean> getOrderList(Integer page, Integer pageSize) {
+        return orderMapper.getOrderList(page, pageSize);
+    }
+
+    /**
+     * 获取订单列表數目
+     *
+     * @return
+     */
+    public Integer countOrderList() {
+        return shareMapper.countOrderList();
+    }
 }

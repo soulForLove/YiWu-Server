@@ -3,12 +3,15 @@ package com.yiwu.changething.sec1.controller;
 import com.yiwu.changething.sec1.model.OrderModel;
 import com.yiwu.changething.sec1.enums.OrderStatusType;
 import com.yiwu.changething.sec1.bean.OrderBean;
+import com.yiwu.changething.sec1.model.PageModel;
 import com.yiwu.changething.sec1.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -85,5 +88,18 @@ public class OrderController {
     public void renewOrder(@PathVariable("orderId") String orderId, @RequestParam Integer cycleNum,
                            HttpServletRequest request) {
         orderService.renew(orderId, cycleNum, request);
+    }
+
+    /**
+     * 获取订单信息列表
+     *
+     * @return
+     */
+    @GetMapping("/list")
+    public Map<String, Object> getShareList(PageModel pageModel) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("orderList", orderService.getOrderList(pageModel.getPage(), pageModel.getPageSize()));
+        resultMap.put("totalCount", orderService.countOrderList());
+        return resultMap;
     }
 }

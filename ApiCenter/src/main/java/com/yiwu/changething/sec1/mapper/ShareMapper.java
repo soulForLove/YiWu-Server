@@ -54,6 +54,6 @@ public interface ShareMapper {
      *
      * @return
      */
-    Integer countShareList();
+    Integer countOrderList();
 
 }

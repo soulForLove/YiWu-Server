@@ -99,4 +99,21 @@ public interface OrderMapper {
      * @param profit
      */
     void updateProfit(@Param("orderId") String orderId, @Param("profit") Double profit);
+
+    /**
+     * 获取订单列表
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    List<OrderBean> getOrderList(@Param("pageIndex") Integer pageIndex,
+                                 @Param("pageSize") Integer pageSize);
+
+    /**
+     * 获取订单列表数目
+     *
+     * @return
+     */
+    Integer countOrderList();
 }
