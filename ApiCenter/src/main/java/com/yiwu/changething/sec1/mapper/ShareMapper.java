@@ -1,8 +1,11 @@
 package com.yiwu.changething.sec1.mapper;
 
+import com.yiwu.changething.sec1.model.ShareListModel;
 import com.yiwu.changething.sec1.model.ShareModel;
 import com.yiwu.changething.sec1.bean.ShareBean;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -37,5 +40,20 @@ public interface ShareMapper {
      * @return
      */
     ShareBean getShareByIdleId(@Param("idleId") String idleId);
+
+    /**
+     * 獲取共享列表
+     *
+     * @return
+     */
+    List<ShareListModel> getShareList(@Param("pageIndex") Integer pageIndex,
+                                      @Param("pageSize") Integer pageSize);
+
+    /**
+     * 獲取共享列表數目
+     *
+     * @return
+     */
+    Integer countShareList();
 
 }

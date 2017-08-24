@@ -73,9 +73,36 @@
         create_time,
         share_value,
         share_cycle,
+        share_status,
         cycle_num
         FROM yw_share
         WHERE idle_id = #{idleId} AND share_status = 'NOTLOCK'
+    </select>
+
+    <select id="getShareList" resultType="com.yiwu.changething.sec1.model.ShareListModel">
+        SELECT
+        ys.id,
+        ys.user_id,
+        ys.idle_id,
+        ys.create_time,
+        ys.share_value,
+        ys.share_cycle,
+        ys.share_status,
+        ys.cycle_num,
+        yi.name as idleName,
+        yu.name as userName
+        FROM yw_share ys
+        LEFT JOIN yw_idle yi on yi.id = ys.idle_id
+        LEFT JOIN yw_user yu on yu.id = ys.user_id
+        WHERE ys.idle_id = #{idleId} AND ys.share_status = 'NOTLOCK'
+        ORDER BY ys.create_time DESC
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+
+    <select id="countShareList" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM yw_share WHERE share_status = 'NOTLOCK'
     </select>
 
 </mapper>
