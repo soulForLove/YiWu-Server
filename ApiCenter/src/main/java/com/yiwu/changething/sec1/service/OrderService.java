@@ -174,15 +174,18 @@ public class OrderService {
     public void updateShareNum(String idleId) {
         //在商品已完成订单中获取商品共享次数
         Integer idleCount = orderMapper.getOrderCountByIdleId(idleId);
-        //新增共享圈子信息
-        insertShare(idleId);
         //更新商品共享次数
         if (idleCount > 0) {
             ShareBean shareBean = shareMapper.getShareByIdleId(idleId);
-            ShareModel updateShare = new ShareModel();
-            updateShare.setCycleNum(shareBean.getCycleNum() + 1);//商品共享次数加一
-            updateShare.setId(shareBean.getId());
-            shareMapper.update(updateShare);
+            if (shareBean == null) {
+                //新增共享圈子信息
+                insertShare(idleId);
+            } else {
+                ShareModel updateShare = new ShareModel();
+                updateShare.setCycleNum(shareBean.getCycleNum() + 1);//商品共享次数加一
+                updateShare.setId(shareBean.getId());
+                shareMapper.update(updateShare);
+            }
         }
     }
 
@@ -192,17 +195,15 @@ public class OrderService {
      * @param idleId
      */
     public void insertShare(String idleId) {
-        ShareBean share = shareMapper.getShareByIdleId(idleId);
-        if (share == null) {
-            IdleBean idle = idleMapper.getIdleById(idleId);
-            ShareModel shareModel = new ShareModel();
-            shareModel.setCycleNum(1);
-            shareModel.setIdleId(idleId);
-            shareModel.setUserId(idle.getCreateBy());
-            shareModel.setShareCycle(idle.getShareCycle());
-            shareModel.setShareValue(idle.getShareValue());
-            shareMapper.insert(shareModel);
-        }
+        IdleBean idle = idleMapper.getIdleById(idleId);
+        ShareModel shareModel = new ShareModel();
+        shareModel.setCycleNum(1);
+        shareModel.setIdleId(idleId);
+        shareModel.setUserId(idle.getCreateBy());
+        shareModel.setShareCycle(idle.getShareCycle());
+        shareModel.setShareValue(idle.getShareValue());
+        shareModel.setShareStatus(ShareStatus.NOTLOCK);
+        shareMapper.insert(shareModel);
     }
 
     /**

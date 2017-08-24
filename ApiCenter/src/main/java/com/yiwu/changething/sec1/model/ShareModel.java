@@ -1,6 +1,7 @@
 package com.yiwu.changething.sec1.model;
 
 import com.yiwu.changething.sec1.enums.OrderStatusType;
+import com.yiwu.changething.sec1.enums.ShareStatus;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -30,6 +31,15 @@ public class ShareModel {
 
     private Integer cycleNum;
 
+    private ShareStatus shareStatus;
+
+    public ShareStatus getShareStatus() {
+        return shareStatus;
+    }
+
+    public void setShareStatus(ShareStatus shareStatus) {
+        this.shareStatus = shareStatus;
+    }
 
     public String getId() {
         return id;

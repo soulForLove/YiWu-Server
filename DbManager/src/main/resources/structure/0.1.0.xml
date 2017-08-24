@@ -155,6 +155,9 @@
             <column name="cycle_num" type="VARCHAR(32)" remarks="共享次数">
                 <constraints nullable="false"/>
             </column>
+            <column name="share_status" type="VARCHAR(16)" remarks="共享状态ShareStatus">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

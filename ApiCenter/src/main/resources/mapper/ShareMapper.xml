@@ -11,7 +11,8 @@
           create_time,
           share_value,
           share_cycle,
-          cycle_num
+          cycle_num,
+          share_status
         )VALUES (
           UUID(),
           #{userId},
@@ -19,7 +20,8 @@
           now(),
           #{shareValue},
           #{shareCycle},
-          #{cycleNum}
+          #{cycleNum},
+          #{shareStatus}
         )
     </insert>
 
@@ -41,10 +43,13 @@
             <if test="shareCycle != null">
                 share_cycle = #{shareCycle},
             </if>
+            <if test="shareStatus != null">
+                share_status = #{shareStatus}
+            </if>
             update_time = now()
         </set>
         WHERE
-        id = #{id}
+        id = #{id} AND share_status = 'NOTLOCK'
     </update>
 
     <select id="getShareById" resultType="com.yiwu.changething.sec1.bean.ShareBean">
@@ -57,7 +62,7 @@
           share_cycle,
           cycle_num
         FROM yw_share
-        WHERE id = #{shareId}
+        WHERE id = #{shareId} AND share_status = 'NOTLOCK'
     </select>
 
     <select id="getShareByIdleId" resultType="com.yiwu.changething.sec1.bean.ShareBean">
@@ -70,7 +75,7 @@
         share_cycle,
         cycle_num
         FROM yw_share
-        WHERE idle_id = #{idleId}
+        WHERE idle_id = #{idleId} AND share_status = 'NOTLOCK'
     </select>
 
 </mapper>

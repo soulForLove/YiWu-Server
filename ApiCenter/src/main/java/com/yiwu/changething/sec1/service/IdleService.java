@@ -1,5 +1,6 @@
 package com.yiwu.changething.sec1.service;
 
+import com.yiwu.changething.sec1.bean.ShareBean;
 import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
@@ -8,6 +9,7 @@ import com.yiwu.changething.sec1.bean.IdleBean;
 import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
+import com.yiwu.changething.sec1.model.ShareModel;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -124,6 +126,13 @@ public class IdleService {
         switch (shareStatus) {
             case LOCK:
                 idleMapper.updateShareStatus(shareStatus, 0, idleId, shareCycle);
+                ShareBean shareBean = shareMapper.getShareByIdleId(idleId);
+                if (shareBean != null) {
+                    ShareModel updateShare = new ShareModel();
+                    updateShare.setShareStatus(ShareStatus.LOCK);//共享信息鎖定
+                    updateShare.setId(shareBean.getId());
+                    shareMapper.update(updateShare);
+                }
                 break;
             case NOTLOCK:
                 idleMapper.updateShareStatus(shareStatus, shareValue, idleId, shareCycle);

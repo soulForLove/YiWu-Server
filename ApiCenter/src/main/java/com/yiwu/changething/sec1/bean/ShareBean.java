@@ -30,6 +30,16 @@ public class ShareBean {
 
     private Integer shareValue;
 
+    private ShareStatus shareStatus;
+
+    public ShareStatus getShareStatus() {
+        return shareStatus;
+    }
+
+    public void setShareStatus(ShareStatus shareStatus) {
+        this.shareStatus = shareStatus;
+    }
+
     public String getId() {
         return id;
     }
