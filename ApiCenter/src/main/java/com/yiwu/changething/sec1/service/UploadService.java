@@ -31,6 +31,9 @@ public class UploadService {
     @Value("${qiniu.bucket.host.name}")
     private String bucketHostName;
 
+    @Value("${qiniu.image.style}")
+    private String imageStyle;
+
     @Autowired
     private YwSecurityUtil ywSecurityUtil;
 
@@ -38,6 +41,7 @@ public class UploadService {
         Principal principal = ywSecurityUtil.checkUserLogin(request);
         UploadUtil uploadUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
                 this.bucketHostName, this.bucketName);
-        return uploadUtil.uploadFile("/" + principal.getId() + "/", image);
+        String uploadFileString = uploadUtil.uploadFile("/" + principal.getId() + "/", image);
+        return uploadFileString.concat("-" + imageStyle);
     }
 }
