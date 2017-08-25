@@ -46,6 +46,16 @@ public class IdleBean {
 
     private Integer shareCycle;//共享周期
 
+    private String thumbnail;//缩略图
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     public Integer getShareCycle() {
         return shareCycle;
     }

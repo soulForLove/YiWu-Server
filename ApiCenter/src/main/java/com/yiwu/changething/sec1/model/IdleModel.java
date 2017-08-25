@@ -22,6 +22,8 @@ public class IdleModel {
 
     private String description;//描述
 
+    private String thumbnail;
+
     @NotNull
     private Double price;//单价
 
@@ -50,6 +52,14 @@ public class IdleModel {
     private Integer shareValue;//共享值
 
     private Integer shareCycle;//共享周期
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
     public Integer getShareCycle() {
         return shareCycle;

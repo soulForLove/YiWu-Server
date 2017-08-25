@@ -45,6 +45,7 @@
             <column name="share_status" type="VARCHAR(16)" remarks="商品状态ShareStatus">
                 <constraints nullable="false"/>
             </column>
+            <column name="thumbnail" remarks="缩略图" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
     <changeSet author="Lin (generated)" id="create.table.yw_type" objectQuotingStrategy="QUOTE_ALL_OBJECTS">

@@ -270,6 +270,6 @@ public class OrderService {
      * @return
      */
     public Integer countOrderList() {
-        return shareMapper.countOrderList();
+        return orderMapper.countOrderList();
     }
 }

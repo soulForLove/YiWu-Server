@@ -21,7 +21,8 @@
         yi.update_by,
         yi.share,
         yi.share_value,
-        yi.share_cycle
+        yi.share_cycle,
+        yi.thumbnail
         FROM
         yw_idle yi
         LEFT JOIN yw_type yt ON yi.type_id = yt.id
@@ -111,7 +112,8 @@
         yi.update_by,
         yi.share_status,
         yi.share_value,
-        yi.share_cycle
+        yi.share_cycle,
+        yi.thumbnail
         FROM
         yw_idle yi
         <where>
@@ -139,7 +141,8 @@
         update_by,
         share_status,
         share_value,
-        share_cycle
+        share_cycle,
+        thumbnail
         )
         VALUES  (
         #{id},
@@ -158,29 +161,60 @@
         null,
         'NOTLOCK',
         #{shareValue},
-        #{shareCycle}
+        #{shareCycle},
+        #{thumbnail}
         )
     </insert>
 
     <update id="update" parameterType="com.yiwu.changething.sec1.model.IdleModel">
-        UPDATE  yw_idle
-        set
-        `name`= #{name},
-        description = #{description},
-        price = #{price},
-        num = #{num},
-        type_id = #{typeId},
-        production_date = #{productionDate},
-        production_place = #{productionPlace},
-        guarantee_date = #{guaranteeDate},
-        extent = #{extent},
-        update_time = now(),
-        update_by = #{updateBy},
-        share_status = #{shareStatus},
-        share_value = #{shareValue},
-        share_cycle = #{shareCycle}
+        UPDATE yw_idle
+        <set>
+            <if test="name != null and name !=''">
+                `name`= #{name},
+            </if>
+            <if test="description != null and description !=''">
+                description = #{description},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="typeId != null and typeId !=''">
+                type_id = #{typeId},
+            </if>
+            <if test="productionDate != null">
+                production_date = #{productionDate},
+            </if>
+            <if test="productionPlace != null and productionPlace !=''">
+                production_place = #{productionPlace},
+            </if>
+            <if test="guaranteeDate != null">
+                guarantee_date = #{guaranteeDate},
+            </if>
+            <if test="extent != null">
+                extent = #{extent},
+            </if>
+            <if test="updateBy != null and updateBy !=''">
+                update_by = #{updateBy},
+            </if>
+            <if test="shareStatus != null and shareStatus !=''">
+                share_status = #{shareStatus},
+            </if>
+            <if test="shareValue != null ">
+                share_value = #{shareValue},
+            </if>
+            <if test="shareCycle != null ">
+                share_cycle = #{shareCycle},
+            </if>
+            <if test="thumbnail != null and thumbnail !=''">
+                thumbnail = #{thumbnail}
+            </if>
+            update_time = now()
+        </set>
         WHERE
-        id =  #{id} and status = 'NOTLOCK'
+        id = #{id} and status = 'NOTLOCK'
     </update>
 
     <delete id="deleteById">
@@ -205,7 +239,7 @@
 
     <update id="updateBatchStatus">
         UPDATE yw_idle
-        SET  share = 'NOTLOCK'
+        SET share = 'NOTLOCK'
         WHERE id in
         <foreach collection="idleIds" index="index" item="idleId" open="(" close=")" separator=",">
             #{idleId}
