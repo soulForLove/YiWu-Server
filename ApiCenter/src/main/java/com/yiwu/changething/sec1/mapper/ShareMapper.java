@@ -44,16 +44,41 @@ public interface ShareMapper {
     /**
      * 獲取共享列表
      *
+     * @param pageIndex
+     * @param pageSize
+     * @param name
+     * @param minShareValue
+     * @param maxShareValue
+     * @param shareCycle
+     * @param typeId
+     * @param extent
      * @return
      */
     List<ShareListModel> getShareList(@Param("pageIndex") Integer pageIndex,
-                                      @Param("pageSize") Integer pageSize);
+                                      @Param("pageSize") Integer pageSize,
+                                      @Param("name") String name,
+                                      @Param("minShareValue") Integer minShareValue,
+                                      @Param("maxShareValue") Integer maxShareValue,
+                                      @Param("shareCycle") Integer shareCycle,
+                                      @Param("typeId") String typeId,
+                                      @Param("extent") Integer extent);
 
     /**
      * 獲取共享列表數目
      *
+     * @param name
+     * @param minShareValue
+     * @param maxShareValue
+     * @param shareCycle
+     * @param typeId
+     * @param extent
      * @return
      */
-    Integer countShareList();
+    Integer countShareList(@Param("name") String name,
+                           @Param("minShareValue") Integer minShareValue,
+                           @Param("maxShareValue") Integer maxShareValue,
+                           @Param("shareCycle") Integer shareCycle,
+                           @Param("typeId") String typeId,
+                           @Param("extent") Integer extent);
 
 }

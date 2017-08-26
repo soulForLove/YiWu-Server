@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.controller;
 
 import com.yiwu.changething.sec1.bean.ShareBean;
 import com.yiwu.changething.sec1.model.PageModel;
+import com.yiwu.changething.sec1.model.ShareResModel;
 import com.yiwu.changething.sec1.service.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,10 +52,10 @@ public class ShareController {
      * @return
      */
     @GetMapping("/list")
-    public Map<String, Object> getShareList(PageModel pageModel) {
+    public Map<String, Object> getShareList(ShareResModel shareResModel) {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("shareList", shareService.getShareList(pageModel.getPage(), pageModel.getPageSize()));
-        resultMap.put("totalCount", shareService.countShareList());
+        resultMap.put("shareList", shareService.getShareList(shareResModel));
+        resultMap.put("totalCount", shareService.countShareList(shareResModel));
         return resultMap;
     }
 

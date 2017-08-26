@@ -4,6 +4,7 @@ import com.yiwu.changething.sec1.model.ShareListModel;
 import com.yiwu.changething.sec1.model.ShareModel;
 import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.bean.ShareBean;
+import com.yiwu.changething.sec1.model.ShareResModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,12 +53,14 @@ public class ShareService {
      *
      * @return
      */
-    public List<ShareListModel> getShareList(Integer page, Integer pageSize) {
+    public List<ShareListModel> getShareList(ShareResModel shareResModel) {
         Integer pageIndex = null;
-        if (page != null && pageSize != null) {
-            pageIndex = (page - 1) * pageSize;
+        if (shareResModel.getPage() != null && shareResModel.getPageSize() != null) {
+            pageIndex = (shareResModel.getPage() - 1) * shareResModel.getPageSize();
         }
-        return shareMapper.getShareList(pageIndex, pageSize);
+        return shareMapper.getShareList(pageIndex, shareResModel.getPageSize(), shareResModel.getName(),
+                shareResModel.getMinShareValue(), shareResModel.getMaxShareValue(), shareResModel.getShareCycle(),
+                shareResModel.getTypeId(), shareResModel.getExtent());
     }
 
     /**
@@ -65,7 +68,9 @@ public class ShareService {
      *
      * @return
      */
-    public Integer countShareList() {
-        return shareMapper.countShareList();
+    public Integer countShareList(ShareResModel shareResModel) {
+        return shareMapper.countShareList(shareResModel.getName(),
+                shareResModel.getMinShareValue(), shareResModel.getMaxShareValue(), shareResModel.getShareCycle(),
+                shareResModel.getTypeId(), shareResModel.getExtent());
     }
 }
