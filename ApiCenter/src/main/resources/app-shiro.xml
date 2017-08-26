@@ -5,16 +5,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
-    <bean id="idleRealm" class="com.yiwu.changething.sec1.filter.IdleRealm">
-        <property name="idleService" ref="idleService"/>
+    <bean id="userRealm" class="com.yiwu.changething.sec1.filter.UserRealm">
+        <property name="userService" ref="userService"/>
     </bean>
 
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="idleRealm"/>
+        <property name="realm" ref="userRealm"/>
     </bean>
 
-    <bean id="idleAuthorizationFilter" class="com.yiwu.changething.sec1.filter.IdleAuthorizationFilter"/>
+    <bean id="userAuthorizationFilter" class="com.yiwu.changething.sec1.filter.UserAuthorizationFilter"/>
 
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -27,13 +27,16 @@
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitionMap">
             <map>
-                <!--<entry key="/idle/**" value="idleAuth"/>-->
+                <entry key="/idle/**" value="userAuth"/>
+                <entry key="/order/**" value="userAuth"/>
+                <entry key="/share/**" value="userAuth"/>
+                <entry key="/upload/**" value="userAuth"/>
             </map>
         </property>
 
         <property name="filters">
             <util:map>
-                <entry key="idleAuth" value-ref="idleAuthorizationFilter"/>
+                <entry key="userAuth" value-ref="userAuthorizationFilter"/>
             </util:map>
         </property>
 

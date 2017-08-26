@@ -19,7 +19,7 @@
         yi.create_by,
         yi.update_time,
         yi.update_by,
-        yi.share,
+        yi.share_status,
         yi.share_value,
         yi.share_cycle,
         yi.thumbnail

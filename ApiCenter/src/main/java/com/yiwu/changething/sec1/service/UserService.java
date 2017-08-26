@@ -1,5 +1,6 @@
 package com.yiwu.changething.sec1.service;
 
+import com.yiwu.changething.sec1.model.UserModel;
 import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.bean.UserBean;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
@@ -26,17 +27,17 @@ public class UserService {
     @Autowired
     private YwSecurityUtil ywSecurityUtil;
 
-    public void insertUser(UserBean userModel) {
-        checkUserNameExist(userModel.getName());
-        checkUserEmailExist(userModel.getEmail());
+    public void insertUser(UserBean userBean) {
+        checkUserNameExist(userBean.getName());
+        checkUserEmailExist(userBean.getEmail());
         UserBean user = new UserBean();
         user.setId(UUID.randomUUID().toString());
-        user.setName(userModel.getName());
-        user.setEmail(userModel.getEmail());
-        user.setAvatar(userModel.getAvatar());
+        user.setName(userBean.getName());
+        user.setEmail(userBean.getEmail());
+        user.setAvatar(userBean.getAvatar());
         user.setSalt(PasswordUtil.generateSaltStr());
-        user.setPassword(PasswordUtil.encrypt(userModel.getPassword(), user.getSalt()));
-        user.setPhone(userModel.getPhone());
+        user.setPassword(PasswordUtil.encrypt(userBean.getPassword(), user.getSalt()));
+        user.setPhone(userBean.getPhone());
         userMapper.insert(user);
     }
 
@@ -79,5 +80,18 @@ public class UserService {
         userMapper.updatePassword(user);
         Principal principal = new Principal(user.getId(), user.getPhone(), user.getName(), user.getAvatar(), user.getEmail());
         session.setAttribute(SystemVariableService.USER_INFO, principal);
+    }
+
+    /**
+     * 根据用户id验证是否正确用户
+     *
+     * @param userId
+     */
+    public UserBean checkUserById(String userId) {
+        UserBean userBean = userMapper.getById(userId);
+        if (userBean == null) {
+            throw new YwException(ErrorBuilder.E101002);
+        }
+        return userBean;
     }
 }

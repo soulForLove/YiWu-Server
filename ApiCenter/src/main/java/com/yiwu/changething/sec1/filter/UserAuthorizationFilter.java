@@ -19,9 +19,9 @@ import java.util.HashMap;
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
-public class IdleAuthorizationFilter extends AuthenticatingFilter {
+public class UserAuthorizationFilter extends AuthenticatingFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IdleAuthorizationFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthorizationFilter.class);
 
     @Value("${resource.id}")
     private String resourceId;
@@ -29,8 +29,8 @@ public class IdleAuthorizationFilter extends AuthenticatingFilter {
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
-        String equipId = httpRequest.getHeader("Authorization");
-        return (new IdleToken(this.resourceId, equipId));
+        String userId = httpRequest.getHeader("Authorization");
+        return (new UserToken(this.resourceId, userId));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class IdleAuthorizationFilter extends AuthenticatingFilter {
                                      ServletResponse response) {
         HashMap<String, String> errMap = new HashMap<>();
         errMap.put("description", e.getMessage());
-        errMap.put("error", "invalid_equipId");
+        errMap.put("error", "invalid_userId");
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String errorJson = objectMapper.writeValueAsString(errMap);

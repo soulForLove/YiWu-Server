@@ -1,6 +1,7 @@
 package com.yiwu.changething.sec1.filter;
 
 import com.yiwu.changething.sec1.service.IdleService;
+import com.yiwu.changething.sec1.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
-public class IdleRealm extends AuthorizingRealm {
+public class UserRealm extends AuthorizingRealm {
 
-    private static final Logger LOG = LoggerFactory.getLogger(IdleRealm.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserRealm.class);
 
     @Autowired
-    private IdleService idleService;
+    private UserService userService;
 
     /**
      * 授权
@@ -41,20 +42,20 @@ public class IdleRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 
-        IdleToken idleToken = (IdleToken) authcToken;
+        UserToken userToken = (UserToken) authcToken;
 
-        if (idleService.getIdleById(idleToken.getCredentials().toString()) == null) {
-            LOG.warn("Invalid Credentials: {}, because it is null ", idleToken.getCredentials().toString());
-            throw new AuthenticationException("Invalid Credentials : " + idleToken.getCredentials().toString());
+        if (userService.checkUserById(userToken.getCredentials().toString()) == null) {
+            LOG.warn("Invalid Credentials: {}, because it is null ", userToken.getCredentials().toString());
+            throw new AuthenticationException("Invalid Credentials : " + userToken.getCredentials().toString());
         }
-        return new SimpleAuthenticationInfo(idleToken.getPrincipal(), idleToken.getCredentials(), this.getName());
+        return new SimpleAuthenticationInfo(userToken.getPrincipal(), userToken.getCredentials(), this.getName());
     }
 
     public boolean supports(AuthenticationToken token) {
-        return token instanceof IdleToken;
+        return token instanceof UserToken;
     }
 
-    public void setIdleService(IdleService idleService) {
-        this.idleService = idleService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

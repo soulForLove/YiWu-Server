@@ -5,14 +5,14 @@ import org.apache.shiro.authc.AuthenticationToken;
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
-public class IdleToken implements AuthenticationToken {
+public class UserToken implements AuthenticationToken {
 
     private String resourceId;
-    private String idleId;
+    private String userId;
 
-    public IdleToken(String resourceId, String idleId) {
+    public UserToken(String resourceId, String idleId) {
         this.resourceId = resourceId;
-        this.idleId = idleId;
+        this.userId = idleId;
     }
 
     public Object getPrincipal() {
@@ -20,14 +20,14 @@ public class IdleToken implements AuthenticationToken {
     }
 
     public Object getCredentials() {
-        return this.idleId;
+        return this.userId;
     }
 
     @Override
     public String toString() {
-        return "IdleToken{" +
+        return "UserToken{" +
                 "resourceId='" + resourceId + '\'' +
-                ", idleId='" + idleId + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }
