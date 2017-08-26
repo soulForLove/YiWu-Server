@@ -50,8 +50,8 @@ public class IdleController {
      * @param idleModel
      */
     @PostMapping
-    public void insert(@RequestBody @Valid IdleModel idleModel) {
-        idleService.insert(idleModel);
+    public void insert(@RequestBody @Valid IdleModel idleModel, HttpServletRequest request) {
+        idleService.insert(idleModel, request);
     }
 
     /**
@@ -60,8 +60,8 @@ public class IdleController {
      * @param idleModel
      */
     @PutMapping
-    public void update(@RequestBody @Valid IdleModel idleModel) {
-        idleService.update(idleModel);
+    public void update(@RequestBody @Valid IdleModel idleModel, HttpServletRequest request) {
+        idleService.update(idleModel, request);
     }
 
     /**

@@ -116,11 +116,7 @@
         yi.thumbnail
         FROM
         yw_idle yi
-        <where>
-            <if test="idleId != null and idleId != ''">
-                id = #{idleId}
-            </if>
-        </where>
+        WHERE  id = #{idleId}
     </select>
 
     <insert id="insert" parameterType="com.yiwu.changething.sec1.model.IdleModel">

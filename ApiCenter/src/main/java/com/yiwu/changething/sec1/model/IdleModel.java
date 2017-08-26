@@ -42,7 +42,7 @@ public class IdleModel {
     private Date createTime;//创建时间
 
     private Date updateTime;//更新时间
-    @NotNull
+
     private String createBy;//创建者
 
     private String updateBy;//修改者

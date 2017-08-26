@@ -10,6 +10,7 @@ import com.yiwu.changething.sec1.mapper.ShareMapper;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
 import com.yiwu.changething.sec1.model.ShareModel;
+import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,8 +63,10 @@ public class IdleService {
      *
      * @param idleModel
      */
-    public void insert(IdleModel idleModel) {
+    public void insert(IdleModel idleModel, HttpServletRequest request) {
+        Principal principal = ywSecurityUtil.checkUserLogin(request);
         idleModel.setId(UUID.randomUUID().toString());
+        idleModel.setCreateBy(principal.getId());
         idleMapper.insert(idleModel);
     }
 
@@ -72,8 +75,10 @@ public class IdleService {
      *
      * @param idleModel
      */
-    public void update(IdleModel idleModel) {
+    public void update(IdleModel idleModel, HttpServletRequest request) {
         checkIdleExist(idleModel.getId());
+        Principal principal = ywSecurityUtil.checkUserLogin(request);
+        idleModel.setUpdateBy(principal.getId());
         idleMapper.update(idleModel);
     }
 

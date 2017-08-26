@@ -1,77 +1,50 @@
 swagger: '2.0'
 info:
   version: '1.0-SNAPSHOT'
-  title: YiWu-Server-ApiCenter
-  description: 数据服务
-host: 127.0.0.1:8088
-basePath: /YiWu-Server
+  title: YiWu-Server
+  description: yw数据服务
+host: 127.0.0.1:8081
+#basePath: /YiWu-Server
 schemes:
   - http
 paths:
-  /player/list/total:
-      get:
-        tags:
-          - player
-        description: 获取球员总和统计数据
-        parameters:
-          - in: query
-            name: minAge
-            description: 最低年龄
-            required: false
-            type: integer
-          - in: query
-            name: maxAge
-            description: 最高年龄
-            required: false
-            type: integer
-          - in: query
-            name: gender
-            description: 性别
-            required: false
-            type: string
-            enum:
-               - F
-               - M
-          - in: query
-            name: searchName
-            description: 搜索名称
-            required: false
-            type: string
-          - in: query
-            name: participantType
-            description: 学校级别
-            required: false
-            type: string
-            enum:
-               - PRIMARY
-               - MIDDLE
-               - HIGH
-               - UNIVERSITY
-               - OTHER
-          - $ref: "#/parameters/pageSize"
-          - $ref: "#/parameters/page"
-        responses:
-          200:
-            description: 请求成功
-            schema:
-              type: object
-              properties:
-                totalCount:
-                  type: integer
-                  description: 统计数据数量
-                playerData:
-                  type: array
-                  description: 统计数据总和
-                  items:
-                    type: object
-                    description: 球员统计数据模型
-                    $ref: '#/definitions/PlayerDataModel'
-          500:
-              $ref: "#/responses/Standard500ErrorResponse"
-          404:
-              $ref: "#/responses/Standard404ErrorResponse"
-        security:
-          - access_token: []
+  /idle:
+    post:
+      tags:
+        - idle
+      description: 上传商品信息
+      parameters:
+        - in: body
+          name: IdleModel
+          description: 上传商品入参模型
+          schema:
+            type: object
+            $ref: "#/definitions/IdleModel"
+      responses:
+        200:
+          description: 请求成功
+        500:
+            $ref: "#/responses/Standard500ErrorResponse"
+        404:
+            $ref: "#/responses/Standard404ErrorResponse"
+    put:
+      tags:
+        - idle
+      description: 上传商品信息
+      parameters:
+        - in: body
+          name: IdleModel
+          description: 上传商品入参模型
+          schema:
+            type: object
+            $ref: "#/definitions/IdleModel"
+      responses:
+        200:
+          description: 请求成功
+        500:
+            $ref: "#/responses/Standard500ErrorResponse"
+        404:
+            $ref: "#/responses/Standard404ErrorResponse"
 securityDefinitions:
   access_token:
     type: apiKey
@@ -87,108 +60,53 @@ definitions:
               type: string
             message:
               type: string
-    PlayerDataModel:
+    IdleModel:
+          required:
+            - name
+            - typeId
+            - price
+            - num
+            - extent
           properties:
-            teamId:
+            name:
               type: string
-              description: 球队id
-            playerId:
+              description: 商品名称
+            description:
               type: string
-              description: 球员id
-            playerName:
-              type: string
-              description: 球员名称
-            participantName:
-              type: string
-              description: 机构名称
-            age:
+              description: 商品描述
+            price:
+              type: number
+              format: double
+              description: 商品单价
+            num:
               type: integer
-              description: 年龄
-            avatar:
+              description: 商品数量
+            typeId:
               type: string
-              description: 球员头像
-            gender:
+              description: 商品类型id
+            productionDate:
               type: string
-              description: 性别
-              enum:
-                - F
-                - M
-            possessTime:
-              type: number
-              description: 控球时间
-              format: double
-            touches:
-              type: number
-              description: 触球次数
-              format: double
-            totalPass:
-              type: number
-              description: 总共传球次数
-              format: double
-            successPass:
-              type: number
-              description: 传球成功次数
-              format: double
-            successPassRate:
-              type: number
-              description: 传球成功率
-              format: double
-            clearances:
-              type: number
-              description: 解围次数
-              format: double
-            intercepts:
-              type: number
-              description: 拦截次数
-              format: double
-            steals:
-              type: number
-              description: 抢断次数
-              format: double
-            goal:
-              type: number
-              description: 进球数
-              format: double
-            redCard:
-              type: number
-              description: 红牌
-              format: double
-            yellowCard:
-              type: number
-              description: 黄牌
-              format: double
-            playDuration:
-              type: number
-              description: 上场时长
-              format: double
-            appearance:
-              type: number
-              description: 出场次数
-              format: double
-            distance:
-              type: number
-              description: 跑动距离
-              format: double
-            maxDribbSp:
-              type: number
-              description: 最快带球速度
-              format: double
-            fastestSpeed:
-              type: number
-              description: 最快跑动速度
-              format: double
-            effectiveDistance:
-              type: number
-              description: 有效跑动距离
-              format: double
-            highSpeedDistance:
-              type: number
-              description: 高速跑动距离
-              format: double
-            sprintSpeedDistance:
-              type: number
-              description: 冲刺跑动距离
-              format: double
+              format: date
+              description: 商品生产日期
+            productionPlace:
+              type: string
+              description: 商品产地
+            guaranteeDate:
+              type: string
+              format: date
+              description: 商品保质日期
+            extent:
+              type: integer
+              description: 商品新旧程度（0-100）
+            shareValue:
+              type: integer
+              description: 商品共享值
+            shareCycle:
+              type: integer
+              description: 商品共享周期
+            thumbnail:
+              type: string
+              description: 商品缩略图
 responses:
   Standard500ErrorResponse:
     description: 请求失败
