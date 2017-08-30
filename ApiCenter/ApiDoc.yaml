@@ -3,11 +3,56 @@ info:
   version: '1.0-SNAPSHOT'
   title: YiWu-Server
   description: yw数据服务
-host: 127.0.0.1:8081
-#basePath: /YiWu-Server
+host: 60.205.205.160:8080
+basePath: /YiWu-Server
 schemes:
   - http
 paths:
+  /auth/login:
+    post:
+      tags:
+          - yiwu
+      description: 登录
+      parameters:
+        - in: body
+          name: userModel
+          description: 用户名密码
+          schema:
+            type: object
+            $ref: "#/definitions/UserModel"
+      responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  phone:
+                    type: number
+                  avatar:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+  /auth/logout:
+    delete:
+      tags:
+          - yiwu
+      description: 登出
+      responses:
+          200:
+            description: 请求成功
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
   /idle:
     post:
       tags:
@@ -27,14 +72,16 @@ paths:
             $ref: "#/responses/Standard500ErrorResponse"
         404:
             $ref: "#/responses/Standard404ErrorResponse"
+      security:
+        - access_token: []
     put:
       tags:
         - idle
-      description: 上传商品信息
+      description: 更新商品信息
       parameters:
         - in: body
           name: IdleModel
-          description: 上传商品入参模型
+          description: 商品入参模型
           schema:
             type: object
             $ref: "#/definitions/IdleModel"
@@ -45,6 +92,160 @@ paths:
             $ref: "#/responses/Standard500ErrorResponse"
         404:
             $ref: "#/responses/Standard404ErrorResponse"
+      security:
+        - access_token: []
+  /idle/list:
+     get:
+       tags:
+         - idle
+       description: 获取商品列表
+       parameters:
+            - in: query
+              name: name
+              type: string
+              required: false
+              description: 商品名称
+            - in: query
+              name: typeId
+              type: string
+              required: false
+              description: 类型id
+            - in: query
+              name: minPrice
+              type: string
+              format: double
+              required: false
+              description: 最小价格
+            - in: query
+              name: maxPrice
+              type: string
+              format: double
+              required: false
+              description: 最大价格
+            - in: query
+              name: productionPlace
+              type: string
+              required: false
+              description: 产地
+            - in: query
+              name: shareStatus
+              type: string
+              enum:
+                - LOCK
+                - NOTLOCK
+              required: false
+              description: 共享状态
+            - in: query
+              name: minShareValue
+              type: integer
+              required: false
+              description: 最小共享值
+            - in: query
+              name: maxShareValue
+              type: integer
+              required: false
+              description: 最大共享值
+            - in: query
+              name: idleOrder
+              type: string
+              enum:
+                - PRICE
+                - EXTENT
+              required: false
+              description: 排序字段
+            - in: query
+              name: orderType
+              description: 升降序
+              type: string
+              enum:
+                - DESC
+                - ASC
+              required: false
+            - $ref: '#/parameters/page'
+            - $ref: '#/parameters/pageSize'
+       responses:
+          200:
+            description: 请求成功
+            schema:
+              type: object
+              properties:
+                  totalCount:
+                    type: integer
+                  idleList:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/definitions/IdleBean'
+
+          500:
+              $ref: "#/responses/Standard500ErrorResponse"
+          404:
+              $ref: "#/responses/Standard404ErrorResponse"
+  /idle/shareStatus:
+    put:
+      tags:
+        - idle
+      description: 更新商品状态
+      parameters:
+        - in: body
+          name: IdleShareResModel
+          schema:
+              type: object
+              $ref: "#/definitions/IdleShareResModel"
+      responses:
+        200:
+          description: 请求成功
+        500:
+            $ref: "#/responses/Standard500ErrorResponse"
+        404:
+            $ref: "#/responses/Standard404ErrorResponse"
+      security:
+        - access_token: []
+  /idle/{idleId}:
+      delete:
+          tags:
+            - idle
+          description: 删除商品信息
+          parameters:
+            - in: path
+              type: string
+              name: idleId
+              description: 商品Id
+              required: true
+          responses:
+            200:
+              description: 请求成功
+            500:
+                $ref: "#/responses/Standard500ErrorResponse"
+            404:
+                $ref: "#/responses/Standard404ErrorResponse"
+          security:
+            - access_token: []
+  /upload:
+    post:
+      tags:
+        - upload
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: file
+          in: formData
+          type: file
+      responses:
+        200:
+          description: 请求成功
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+        500:
+            $ref: "#/responses/Standard500ErrorResponse"
+        404:
+            $ref: "#/responses/Standard404ErrorResponse"
+      security:
+        - access_token: []
+
 securityDefinitions:
   access_token:
     type: apiKey
@@ -59,6 +260,15 @@ definitions:
             code:
               type: string
             message:
+              type: string
+    UserModel:
+          required:
+            - name
+            - password
+          properties:
+            name:
+              type: string
+            password:
               type: string
     IdleModel:
           required:
@@ -107,6 +317,83 @@ definitions:
             thumbnail:
               type: string
               description: 商品缩略图
+    IdleBean:
+        properties:
+          createTime:
+            type: string
+            format: date
+            description: 创建时间
+          updateTime:
+            type: string
+            format: date
+            description: 更新时间
+          createBy:
+            type: string
+            description: 创建者
+          updateBy:
+            type: string
+            description: 更新人
+          shareStatus:
+            type: string
+            enum:
+              - LOCK
+              - NOTLOCK
+            description: 共享状态
+          name:
+            type: string
+            description: 商品名称
+          description:
+            type: string
+            description: 商品描述
+          price:
+            type: number
+            format: double
+            description: 商品单价
+          num:
+            type: integer
+            description: 商品数量
+          typeId:
+            type: string
+            description: 商品类型id
+          productionDate:
+            type: string
+            format: date
+            description: 商品生产日期
+          productionPlace:
+            type: string
+            description: 商品产地
+          guaranteeDate:
+            type: string
+            format: date
+            description: 商品保质日期
+          extent:
+            type: integer
+            description: 商品新旧程度（0-100）
+          shareValue:
+            type: integer
+            description: 商品共享值
+          shareCycle:
+            type: integer
+            description: 商品共享周期
+          thumbnail:
+            type: string
+            description: 商品缩略图
+    IdleShareResModel:
+       required:
+         - shareStatus
+         - idleId
+       properties:
+          shareStatus:
+            type: string
+            enum:
+             - LOCK
+             - NOTLOCK
+          idleId:
+            type: string
+          shareValue:
+            type: integer
+          shareCycle:
+            type: integer
 responses:
   Standard500ErrorResponse:
     description: 请求失败
