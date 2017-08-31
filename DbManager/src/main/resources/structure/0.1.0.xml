@@ -161,4 +161,28 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet author="Lin (generated)" id="create.table.yw_comments" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable tableName="yw_comments">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="idle_id" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reply_to" remarks="回复谁" type="VARCHAR(64)"/>
+            <column name="parent_id" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detail" type="VARCHAR(255)" remarks="内容">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
