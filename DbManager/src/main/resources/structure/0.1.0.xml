@@ -177,9 +177,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="reply_to" remarks="回复谁" type="VARCHAR(64)"/>
-            <column name="parent_id" type="VARCHAR(64)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="parent_id" type="VARCHAR(64)"/>
             <column name="detail" type="VARCHAR(255)" remarks="内容">
                 <constraints nullable="false"/>
             </column>

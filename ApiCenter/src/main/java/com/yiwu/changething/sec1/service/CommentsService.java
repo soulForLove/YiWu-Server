@@ -2,15 +2,19 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.CommentsBean;
 import com.yiwu.changething.sec1.mapper.CommentsMapper;
+import com.yiwu.changething.sec1.model.CommentsListModel;
 import com.yiwu.changething.sec1.model.CommentsModel;
 import com.yiwu.changething.sec1.utils.CommentUtil;
 import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -77,8 +81,31 @@ public class CommentsService {
      * @param idleId
      * @return
      */
-    public List<CommentsModel> getCommentsList(String idleId) {
-        return commentsMapper.getCommentsList(idleId);
+    public List<CommentsListModel> getCommentsList(String idleId) {
+        List<CommentsListModel> resultList = new ArrayList<>();
+        //获取评论列表
+        List<CommentsModel> commentsList = commentsMapper.getCommentsList(idleId);
+        //获取第一级评论列表
+        commentsList.stream().filter(commentsModel -> commentsModel.getParentId() == null)
+                .collect(Collectors.toList()).forEach(commentsModel -> {
+            CommentsListModel commentsListModel = new CommentsListModel();
+            BeanUtils.copyProperties(commentsListModel, commentsModel);
+            resultList.add(commentsListModel);
+        });
+        //获取第二级评论
+        List<CommentsModel> childComments = commentsList.stream()
+                .filter(commentsModel -> commentsModel.getParentId() != null).collect(Collectors.toList());
+        //将一二级评论进行匹配整合
+        resultList.forEach(parentModel -> {
+            List<CommentsModel> childList = new ArrayList<>();
+            childComments.forEach(childModel -> {
+                if (childModel.getParentId().equals(parentModel.getId())) {
+                    childList.add(childModel);
+                }
+            });
+            parentModel.setChildComments(childList);
+        });
+        return resultList;
     }
 
     /**

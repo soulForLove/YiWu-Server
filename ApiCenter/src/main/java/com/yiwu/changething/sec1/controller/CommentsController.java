@@ -1,6 +1,7 @@
 package com.yiwu.changething.sec1.controller;
 
 import com.yiwu.changething.sec1.bean.CommentsBean;
+import com.yiwu.changething.sec1.model.CommentsListModel;
 import com.yiwu.changething.sec1.model.CommentsModel;
 import com.yiwu.changething.sec1.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class CommentsController {
      * @return
      */
     @GetMapping("/list/{idleId}")
-    public List<CommentsModel> getCommentsList(@PathVariable("idleId") String idleId) {
+    public List<CommentsListModel> getCommentsList(@PathVariable("idleId") String idleId) {
         return commentsService.getCommentsList(idleId);
     }
 
