@@ -1,6 +1,7 @@
 package com.yiwu.changething.sec1.controller;
 
 import com.yiwu.changething.sec1.bean.IdleBean;
+import com.yiwu.changething.sec1.bean.TypeBean;
 import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.model.IdleModel;
 import com.yiwu.changething.sec1.model.IdleResModel;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,5 +99,15 @@ public class IdleController {
         if (idleShareResModel.getShareStatus().equals(ShareStatus.NOTLOCK)) {
             orderService.updateShareNum(idleShareResModel.getIdleId());
         }
+    }
+
+    /**
+     * 获取类别列表
+     *
+     * @return
+     */
+    @GetMapping("/typeList")
+    public List<TypeBean> getTypeList() {
+        return idleService.getTypeList();
     }
 }

@@ -1,5 +1,6 @@
 package com.yiwu.changething.sec1.mapper;
 
+import com.yiwu.changething.sec1.bean.TypeBean;
 import com.yiwu.changething.sec1.enums.IdleOrder;
 import com.yiwu.changething.sec1.enums.OrderType;
 import com.yiwu.changething.sec1.bean.IdleBean;
@@ -79,4 +80,11 @@ public interface IdleMapper {
      * @param idleIds
      */
     void updateBatchStatus(@Param("idleIds") List<String> idleIds);
+
+    /**
+     * 获取类别列表
+     *
+     * @return
+     */
+    List<TypeBean> getTypeList();
 }

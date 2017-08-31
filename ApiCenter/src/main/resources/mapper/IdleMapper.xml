@@ -241,4 +241,10 @@
             #{idleId}
         </foreach>
     </update>
+
+    <select id="getTypeList" resultType="com.yiwu.changething.sec1.bean.TypeBean">
+        SELECT
+          id,name,code,parent_code
+        FROM yw_type
+    </select>
 </mapper>

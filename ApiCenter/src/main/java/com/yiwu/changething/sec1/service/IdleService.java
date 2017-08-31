@@ -1,6 +1,7 @@
 package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.ShareBean;
+import com.yiwu.changething.sec1.bean.TypeBean;
 import com.yiwu.changething.sec1.enums.ShareStatus;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
@@ -143,6 +144,15 @@ public class IdleService {
                 idleMapper.updateShareStatus(shareStatus, shareValue, idleId, shareCycle);
                 break;
         }
+    }
+
+    /**
+     * 获取类别列表
+     *
+     * @return
+     */
+    public List<TypeBean> getTypeList() {
+        return idleMapper.getTypeList();
     }
 
 }
