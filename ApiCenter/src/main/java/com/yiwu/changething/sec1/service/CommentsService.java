@@ -2,12 +2,15 @@ package com.yiwu.changething.sec1.service;
 
 import com.yiwu.changething.sec1.bean.CommentsBean;
 import com.yiwu.changething.sec1.mapper.CommentsMapper;
+import com.yiwu.changething.sec1.model.CommentsModel;
+import com.yiwu.changething.sec1.utils.CommentUtil;
 import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -56,6 +59,37 @@ public class CommentsService {
      */
     public void deleteByIdleId(String idleId) {
         commentsMapper.deleteByIdleId(idleId, null);
+    }
+
+    /**
+     * 根據id获取评论信息
+     *
+     * @param commentsId
+     * @return
+     */
+    public CommentsModel getComments(String commentsId) {
+        return commentsMapper.getComments(commentsId);
+    }
+
+    /**
+     * 获取商品评论列表
+     *
+     * @param idleId
+     * @return
+     */
+    public List<CommentsModel> getCommentsList(String idleId) {
+        return commentsMapper.getCommentsList(idleId);
+    }
+
+    /**
+     * 获取用户评论列表
+     *
+     * @param request
+     * @return
+     */
+    public List<CommentsModel> getCommentsByUser(HttpServletRequest request) {
+        Principal principal = ywSecurityUtil.checkUserLogin(request);
+        return commentsMapper.getCommentsByUser(principal.getId());
     }
 }
 

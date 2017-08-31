@@ -33,4 +33,34 @@
         </if>
     </delete>
 
+    <select id="getComments" resultType="com.yiwu.changething.sec1.model.CommentsModel">
+        <include refid="getCommentsSql"/>
+        WHERE yc.id = #{commentsId}
+    </select>
+
+    <select id="getCommentsList" resultType="com.yiwu.changething.sec1.model.CommentsModel">
+        <include refid="getCommentsSql"/>
+        WHERE yc.idle_id = #{idleId}
+    </select>
+
+    <select id="getCommentsByUser" resultType="com.yiwu.changething.sec1.model.CommentsModel">
+        <include refid="getCommentsSql"/>
+        WHERE yc.user_id = #{userId}
+    </select>
+
+    <sql id="getCommentsSql">
+        SELECT
+        yc.id,
+        yc.idle_id,
+        yc.user_id,
+        yc.parent_id,
+        yc.create_time,
+        yc.detail,
+        yc.reply_to,
+        yu.name userName,
+        yus.name replyName
+        FROM yw_comments yc
+        LEFT JOIN yw_user yu on yu.id = yc.user_id
+        LEFT JOIN yw_user yus on yus.id = yc.reply_to
+    </sql>
 </mapper>

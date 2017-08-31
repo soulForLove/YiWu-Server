@@ -41,7 +41,7 @@ public class ShareController {
      * @param idleId
      * @return
      */
-    @GetMapping("/getByIdleId/{idleId}")
+    @GetMapping("/idleId/{idleId}")
     public ShareBean getShareByIdleId(@PathVariable("idleId") String idleId) {
         return shareService.getShareByIdleId(idleId);
     }

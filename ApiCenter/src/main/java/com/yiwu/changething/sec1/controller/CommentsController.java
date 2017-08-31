@@ -1,12 +1,14 @@
 package com.yiwu.changething.sec1.controller;
 
 import com.yiwu.changething.sec1.bean.CommentsBean;
+import com.yiwu.changething.sec1.model.CommentsModel;
 import com.yiwu.changething.sec1.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
@@ -48,5 +50,27 @@ public class CommentsController {
     @DeleteMapping("/deleteByIdleIdAndUserId/{idleId}")
     public void deleteByIdleIdAndUserId(@PathVariable("idleId") String idleId, HttpServletRequest request) {
         commentsService.deleteByIdleIdAndUserId(idleId, request);
+    }
+
+    /**
+     * 獲取商品評論
+     *
+     * @param idleId
+     * @return
+     */
+    @GetMapping("/list/{idleId}")
+    public List<CommentsModel> getCommentsList(@PathVariable("idleId") String idleId) {
+        return commentsService.getCommentsList(idleId);
+    }
+
+    /**
+     * 獲取用戶評論
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/user")
+    public List<CommentsModel> getCommentsList(HttpServletRequest request) {
+        return commentsService.getCommentsByUser(request);
     }
 }
