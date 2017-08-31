@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiwu.changething.sec1.mapper.CommentsMapper">
+
+    <insert id="insertComments" parameterType="com.yiwu.changething.sec1.bean.CommentsBean">
+      insert into yw_comments (
+          id,
+          idle_id,
+          user_id,
+          create_time,
+          reply_to,
+          parent_id,
+          detail
+      ) values (
+          UUID(),
+          #{idleId},
+          #{userId},
+          now(),
+          #{replyTo},
+          #{parentId},
+          #{detail}
+      )
+    </insert>
+
+    <delete id="deleteComments">
+        DELETE FROM yw_comments WHERE id = #{commentsId}
+    </delete>
+
+    <delete id="deleteByIdleId">
+        DELETE FROM yw_comments WHERE idle_id = #{idleId}
+        <if test="userId != null and userId != ''">
+            and user_id = #{userId}
+        </if>
+    </delete>
+
+</mapper>
