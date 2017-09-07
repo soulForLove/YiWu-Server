@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import static com.yiwu.changething.sec1.exception.ErrorBuilder.*;
 
 /**
- * @author Maxwell <huangxiongyi@gengee.cn>
+ * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
 @ControllerAdvice
 public class YwExceptionHandler {
