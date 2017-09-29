@@ -26,6 +26,11 @@
         <property name="configLocation" value="classpath:/mybatis.xml"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.yiwu.changething.component.model"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:/mapper/*.xml</value>
+            </list>
+        </property>
 
     </bean>
 
