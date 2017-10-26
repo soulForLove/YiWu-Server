@@ -19,6 +19,8 @@
 
     <import resource="classpath:app-shiro.xml"/>
 
+    <import resource="classpath:app-redis.xml"/>
+
     <!--<bean id="oauth2Config" class="com.gengee.insait.oauth.authe.config.Oauth2ConfigIml">-->
         <!--<property name="resource" value="classpath:oauth2-filter.properties"/>-->
     <!--</bean>-->
