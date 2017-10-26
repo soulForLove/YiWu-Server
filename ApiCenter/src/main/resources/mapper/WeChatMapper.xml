@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiwu.changething.sec1.mapper.WeChatMapper">
+
+    <select id="getByOpenId" resultType="com.yiwu.changething.sec1.bean.WeChatInfo">
+        SELECT * from wechat_user where open_id = #{openId}
+    </select>
+
+    <select id="getById" resultType="com.yiwu.changething.sec1.bean.WeChatInfo">
+        SELECT * from wechat_user where user_id = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="com.yiwu.changething.sec1.bean.WeChatInfo">
+        INSERT INTO wechat_user(
+          user_id,
+          open_id,
+          mobile,
+          gender,
+          nick_name,
+          avatar_url,
+          create_time
+        )VALUES (
+          UUID(),
+          #{openID},
+          #{mobile},
+          #{gender},
+          #{nickName},
+          #{avatarUrl},
+          now()
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE wechat_user
+        <set>
+            <if test="mobile != null">
+                mobile = #{mobile},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName},
+            </if>
+            <if test="avatarUrl != null">
+                avatar_url = #{avatarUrl},
+            </if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

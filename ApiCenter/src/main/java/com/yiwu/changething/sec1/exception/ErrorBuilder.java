@@ -31,4 +31,6 @@ public class ErrorBuilder {
     public static final ErrorModel E101011 = new ErrorModel(101011, "买家共享值不足");
 
     public static final ErrorModel E101012 = new ErrorModel(101012, "该用户不存在");
+
+    public static final ErrorModel E101013 = new ErrorModel(101013, "未能获取openid");
 }

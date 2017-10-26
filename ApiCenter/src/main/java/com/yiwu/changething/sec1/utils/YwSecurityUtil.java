@@ -1,5 +1,6 @@
 package com.yiwu.changething.sec1.utils;
 
+import com.yiwu.changething.sec1.bean.WeChatInfo;
 import com.yiwu.changething.sec1.exception.ErrorBuilder;
 import com.yiwu.changething.sec1.exception.YwException;
 import com.yiwu.changething.sec1.service.SystemVariableService;
@@ -27,5 +28,9 @@ public class YwSecurityUtil extends SecurityUtils {
             throw new YwException(ErrorBuilder.E101002);
         }
         return principal;
+    }
+
+    public WeChatInfo getUser(){
+        return ContextHolder.get();
     }
 }

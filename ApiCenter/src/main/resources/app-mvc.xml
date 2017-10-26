@@ -53,6 +53,20 @@
                      allow-credentials="true"/>
     </mvc:cors>
 
+    <!-- 开启HandlerInterceptor 拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <mvc:exclude-mapping path="/weChat/login/**" />
+            <mvc:exclude-mapping path="/weChat/pay/notify" />
+            <mvc:exclude-mapping path="/idle/**" />
+            <mvc:exclude-mapping path="/order/**" />
+            <mvc:exclude-mapping path="/share/**" />
+            <mvc:exclude-mapping path="/upload/**" />
+            <bean class="com.yiwu.changething.sec1.interceptor.ControllerInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <import resource="classpath:app-rmi.xml"/>
 
 </beans>

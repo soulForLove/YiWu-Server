@@ -4,7 +4,6 @@ import com.yiwu.changething.sec1.bean.CommentsBean;
 import com.yiwu.changething.sec1.mapper.CommentsMapper;
 import com.yiwu.changething.sec1.model.CommentsListModel;
 import com.yiwu.changething.sec1.model.CommentsModel;
-import com.yiwu.changething.sec1.utils.CommentUtil;
 import com.yiwu.changething.sec1.utils.Principal;
 import com.yiwu.changething.sec1.utils.YwSecurityUtil;
 import org.springframework.beans.BeanUtils;
