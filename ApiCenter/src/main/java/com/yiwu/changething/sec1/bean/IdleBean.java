@@ -1,6 +1,7 @@
 package com.yiwu.changething.sec1.bean;
 
 import com.yiwu.changething.sec1.enums.ShareStatus;
+import lombok.Data;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.Max;
@@ -10,6 +11,7 @@ import java.util.Date;
 /**
  * Created by LinZhongtai <linzhongtai@gengee.cn>
  */
+@Data
 public class IdleBean {
 
     private String id;
@@ -48,147 +50,4 @@ public class IdleBean {
 
     private String thumbnail;//缩略图
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public Integer getShareCycle() {
-        return shareCycle;
-    }
-
-    public void setShareCycle(Integer shareCycle) {
-        this.shareCycle = shareCycle;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-
-    public Date getProductionDate() {
-        return productionDate;
-    }
-
-    public void setProductionDate(Date productionDate) {
-        this.productionDate = productionDate;
-    }
-
-    public Date getGuaranteeDate() {
-        return guaranteeDate;
-    }
-
-    public void setGuaranteeDate(Date guaranteeDate) {
-        this.guaranteeDate = guaranteeDate;
-    }
-
-    public String getProductionPlace() {
-        return productionPlace;
-    }
-
-    public void setProductionPlace(String productionPlace) {
-        this.productionPlace = productionPlace;
-    }
-
-    public Integer getExtent() {
-        return extent;
-    }
-
-    public void setExtent(Integer extent) {
-        this.extent = extent;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public ShareStatus getShareStatus() {
-        return shareStatus;
-    }
-
-    public void setShareStatus(ShareStatus shareStatus) {
-        this.shareStatus = shareStatus;
-    }
-
-    public Integer getShareValue() {
-        return shareValue;
-    }
-
-    public void setShareValue(Integer shareValue) {
-        this.shareValue = shareValue;
-    }
 }
