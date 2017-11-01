@@ -21,7 +21,7 @@
           create_time
         )VALUES (
           UUID(),
-          #{openID},
+          #{openId},
           #{mobile},
           #{gender},
           #{nickName},

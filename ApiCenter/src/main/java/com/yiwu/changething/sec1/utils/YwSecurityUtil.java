@@ -30,7 +30,16 @@ public class YwSecurityUtil extends SecurityUtils {
         return principal;
     }
 
-    public WeChatInfo getUser(){
-        return ContextHolder.get();
+    /**
+     * 获取微信用户信息
+     *
+     * @return
+     */
+    public WeChatInfo getUser() {
+        WeChatInfo weChatInfo = ContextHolder.get();
+        if (weChatInfo == null) {
+            throw new YwException(ErrorBuilder.E101002);
+        }
+        return weChatInfo;
     }
 }

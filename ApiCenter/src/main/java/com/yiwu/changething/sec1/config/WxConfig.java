@@ -28,9 +28,12 @@ public class WxConfig {
     public static final String DEVICE_INFO_WEB = "WEB";
 
     // 支付回调地址
-    @Value("${wx.pay.notify.url}")
-    private static String wxPayNotifyurl;
+    public static String wxPayNotifyurl;
 
     public static final String URL_QRCODE_C = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
 
+    @Value("${wx.pay.notify.url}")
+    public void setWxPayNotifyurl(String wxPayNotifyurl) {
+        WxConfig.wxPayNotifyurl = wxPayNotifyurl;
+    }
 }
