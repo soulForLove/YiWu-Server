@@ -33,4 +33,6 @@ public class ErrorBuilder {
     public static final ErrorModel E101012 = new ErrorModel(101012, "该用户不存在");
 
     public static final ErrorModel E101013 = new ErrorModel(101013, "未能获取openid");
+
+    public static final ErrorModel E101014 = new ErrorModel(101014, "预支付失败");
 }
