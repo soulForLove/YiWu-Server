@@ -2,6 +2,7 @@ package com.yiwu.changething.sec1.utils.upload;
 
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
@@ -31,7 +32,7 @@ public class QiniuUtil implements UploadUtil {
 
     private Auth auth;
 
-    private UploadManager uploadManager = new UploadManager();
+    private UploadManager uploadManager = new UploadManager(new Configuration());
 
     /**
      * 构造函数
