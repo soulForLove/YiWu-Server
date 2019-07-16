@@ -6,7 +6,7 @@ info:
 host: 60.205.205.160:8080
 basePath: /YiWu-Server
 schemes:
-  - http
+  - https
 paths:
   /auth/login:
     post:
